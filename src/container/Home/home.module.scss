@@ -1,0 +1,7 @@
+.profile {
+    @apply relative w-full h-[600px] mt-8 rounded-lg;
+
+    img {
+        @apply object-cover object-top rounded-lg
+    }
+}

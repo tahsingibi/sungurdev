@@ -1,0 +1,39 @@
+.post {
+    @apply grid gap-2 paragraph-headings:mb-2 ;
+
+    .goBlog{
+        @apply fixed w-full text-center bottom-0 max-w-[650px] py-8 bg-gradient-to-t from-zinc-100 backdrop:blur-3xl;
+        &:before{
+            @apply w-full h-full block absolute bottom-0 bg-zinc-100 content-[''] -z-10 blur-3xl 
+        }
+    }
+
+    ul {
+        @apply grid gap-2 my-2 list-disc pl-5
+    }
+
+    pre{
+        @apply max-w-2xl text-sm whitespace-pre-wrap;
+    }
+
+    figcaption {
+        @apply text-center p-2 opacity-50;
+    }
+
+    [class*=divide]{
+        @apply h-5 w-10 border-b border-separate border-black/10 mx-auto;
+    }
+
+    iframe, figure, img{
+        @apply rounded-lg
+    }
+
+    iframe {
+        @apply w-full h-full aspect-video;
+    }
+
+    p {
+        max-width: 100% !important;
+
+    }
+}

@@ -1,0 +1,7 @@
+.sidebar {
+    @apply fixed -translate-x-[96vw] max-w-[96vw] py-12 z-30 sm:sticky top-0 sm:translate-x-0 w-full sm:max-w-[240px] flex flex-col bg-white gap-4 px-2 sm:py-2 h-screen border-r border-zinc-100;
+
+    &[class*=show]{
+        @apply translate-x-0;
+    }
+}
