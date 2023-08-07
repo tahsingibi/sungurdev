@@ -2,12 +2,7 @@ import React from 'react'
 import Link from 'next/link';
 import styles from './elements.module.scss'
 import { getBlogPost } from '@/src/lib/fetch'
-import formatDate from '@/src/lib/formatDate';
-
-
-function clearedDate(date: string) {
-    return formatDate(date)?.split(' ')[0]
-}
+import { clearedDate } from '@/src/lib/formatDate';
 
 export default async function BlogList() {
 

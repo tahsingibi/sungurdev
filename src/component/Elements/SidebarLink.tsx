@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
 import clsx from '@/src/lib/clsx';
 
 interface SidebarType {
@@ -14,5 +14,5 @@ interface SidebarType {
 export function SidebarLink({ children, href, target = '', customClass = [] }: SidebarType) {
     const pathname = usePathname();
 
-    return <Link href={href} target={target} className={clsx([pathname == href ? 'active' : '', ...customClass])}>{children}</Link>
+    return <Link href={href} target={target} className={clsx([pathname.endsWith(href) ? 'active' : '', ...customClass])}>{children}</Link>
 }
