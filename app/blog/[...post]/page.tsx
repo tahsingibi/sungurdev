@@ -1,4 +1,4 @@
-import BlogPost from "@/pages/Blog/Post";
+import BlogPost from "@/views/Blog/Post";
 import { formatDate, getBlogPost } from "@/utils";
 
 export default async function Page({ params }: any) {

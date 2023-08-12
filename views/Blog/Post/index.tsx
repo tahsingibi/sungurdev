@@ -7,7 +7,7 @@ import { clsx, arrowTR } from '@/utils';
 
 export default async function BlogPost({ post }: any) {
 
-    if (!post.success) {
+    if (!post?.success) {
         return (
             <>
                 <Heading>404 - Sayfa bulunamadı.</Heading>
