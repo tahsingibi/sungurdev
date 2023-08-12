@@ -1,6 +1,11 @@
-import AboutPage from '@/src/container/About'
-import React from 'react'
+import type { Metadata } from 'next'
+import AboutPage from '@/pages/About'
+
+export const metadata: Metadata = {
+    title: 'Hakkımda - Tahsin Sungur',
+}
+
 
 export default function About() {
-    return <AboutPage />
+    return <div className="container"><AboutPage /></div>
 }

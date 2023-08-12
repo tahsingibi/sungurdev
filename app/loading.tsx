@@ -1,4 +1,4 @@
-import { Skeleton } from '@/src/component/Elements/Skeleton'
+import { Skeleton } from '@/component/Elements/Skeleton'
 import React from 'react'
 
 export default function Loading() {
