@@ -13,7 +13,15 @@ interface SidebarType {
 
 export function Links({ children, href, target = '', customClass = [] }: SidebarType) {
     const pathname = usePathname();
-    const isActive = pathname === href;
+    const isActive = () => {
+        let state = false;
+        if (href == '/blog' && pathname.includes(href)) {
+            state = true
+        } else if (pathname.endsWith(href)) {
+            state = true
+        }
+        return state;
+    };
 
-    return <Link href={href} target={target} className={clsx([isActive ? 'active' : '', ...customClass])}>{children}</Link>
+    return <Link href={href} target={target} className={clsx([isActive() ? 'active' : '', ...customClass])}>{children}</Link>
 }
