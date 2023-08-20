@@ -1,3 +1,3 @@
-export function clsx(customClassName = ['']) {
-    return customClassName.join(' ')
+export function clsx(classes = ['']) {
+    return classes.join(' ')
 }

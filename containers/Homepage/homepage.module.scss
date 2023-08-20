@@ -1,0 +1,7 @@
+.about {
+  @apply relative w-[calc(100%+(96px*2))] h-[500px] mt-6 -mx-24;
+
+  img {
+    @apply object-cover object-top rounded-lg;
+  }
+}

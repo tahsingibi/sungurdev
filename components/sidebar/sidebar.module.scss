@@ -1,0 +1,7 @@
+.sidebar {
+  @apply bg-zinc-900/50 border-r border-r-zinc-900 overflow-y-auto max-w-[288px] max-h-screen w-full p-4 flex flex-col gap-4 font-medium;
+
+  a {
+    @apply hover:bg-zinc-900 text-zinc-300 rounded-lg;
+  }
+}

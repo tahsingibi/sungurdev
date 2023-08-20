@@ -1,0 +1,15 @@
+.nav {
+  @apply grid gap-2;
+
+  .link {
+    @apply flex gap-2 p-2 items-center;
+
+    svg {
+      @apply w-4 h-4;
+    }
+
+    &[class*='active'] {
+      @apply bg-white text-zinc-900 hover:bg-zinc-100 hover:text-zinc-900;
+    }
+  }
+}

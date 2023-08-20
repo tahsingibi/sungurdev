@@ -1,5 +1,5 @@
-import HomePage from '@/views/Home'
+import Homepage from "@/containers/Homepage";
 
 export default function Home() {
-  return <div className="container"><HomePage /></div>
+  return <Homepage />
 }
