@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 body {
-  @apply bg-black text-white antialiased;
-  &,
-  * {
-    @apply text-mid;
-  }
+  --sidebar-width: 280px;
+
+  @apply bg-white text-mid;
+}
+
+// DEBUG
+* {
+  // outline: 1px dashed red;
 }

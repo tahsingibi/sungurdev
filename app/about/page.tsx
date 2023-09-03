@@ -1,5 +1,6 @@
-import AboutPage from '@/containers/About'
+import React from 'react';
+import About from '@/container/about';
 
-export default function About() {
-    return <AboutPage />
+export default function AboutPage() {
+  return <About />;
 }

@@ -1,0 +1,24 @@
+.main {
+  @apply flex min-h-screen;
+
+  .container {
+    @apply px-4 py-20  max-w-3xl w-full md:mx-auto
+     text-base text-slate-600 font-normal leading-7 prose prose-headings:mt-0  prose-headings:text-slate-900 prose-h2:text-3xl prose-headings:font-medium prose-headings:-tracking-wider prose-headings:mb-4 prose-figcaption:text-center;
+
+     iframe{
+      @apply w-full aspect-video h-auto rounded-lg;
+     }
+
+    a {
+      @apply underline underline-offset-[6px] font-medium  hover:text-slate-900;
+    }
+  }
+  ≈ a,
+  a:hover {
+    @apply transition-all ease-linear duration-200;
+  }
+
+  img {
+    @apply rounded-lg;
+  }
+}

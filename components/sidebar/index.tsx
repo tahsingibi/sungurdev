@@ -1,11 +1,16 @@
-import { Logo, Navbar } from '..'
-import styles from './sidebar.module.scss'
+import React from 'react';
+import styles from './style.module.scss';
+import Logo from '@/components/logo';
+import Navbar from '@/components/navbar';
+import Socialbar from "@/components/socialbar"
 
-export function Sidebar() {
-    return (
-        <aside className={styles.sidebar}>
-            <Logo />
-            <Navbar />
-        </aside>
-    )
+export default function Sidebar() {
+  return (
+    <aside className={styles.sidebar} id="sidebar">
+      <Logo />
+      <Navbar />
+      <hr />
+      <Socialbar />
+    </aside>
+  );
 }

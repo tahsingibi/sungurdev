@@ -1,5 +1,5 @@
-import Homepage from "@/containers/Homepage";
+import Home from "@/container/home";
 
-export default function Home() {
-  return <Homepage />
+export default function Homepage() {
+  return <Home />
 }

@@ -1,0 +1,11 @@
+.mobilenav {
+  @apply bg-slate-100 border-b-2  md:hidden w-full top-0 left-0 py-1 px-3 fixed z-20 flex items-center gap-2 text-slate-700 font-medium;
+
+  button{
+    @apply p-1 rounded;
+
+    svg{
+      @apply w-4 h-4
+    }
+  }
+}

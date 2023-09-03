@@ -8,7 +8,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './styles/**/*.scss',
     './components/**/*.scss',
-    './containers/**/*.scss',
+    './containers/**/*.{js,ts,jsx,tsx,scss}',
   ],
   theme: {
     extend: {
@@ -18,6 +18,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
 export default config;
