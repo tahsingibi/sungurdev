@@ -1,6 +1,6 @@
-import '@/styles/globals.scss'
 import type { Metadata } from 'next'
 import MainLayout from '@/layout/MainLayout'
+import '@/styles/globals.scss'
 
 export const metadata: Metadata = {
   title: 'Tahsin Sungur',
@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-       {/* – Frontend Developer */}
+      {/* – Frontend Developer */}
       <body>
         <MainLayout>
           {children}
