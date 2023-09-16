@@ -1,7 +1,11 @@
 .placeholder {
   @apply grid gap-4;
   div {
-    @apply bg-gradient-to-r from-slate-50 via-slate-100 to-slate-50 block w-full h-5 rounded-lg animate-pulse;
+    @apply bg-zinc-900 block w-full h-5 rounded-lg animate-pulse;
+
+    &:after {
+      animation: placeholder 4s infinite linear;
+    }
   }
   .big {
     @apply block w-4/12 h-10;

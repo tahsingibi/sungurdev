@@ -4,8 +4,7 @@
 
 body {
   --sidebar-width: 280px;
-
-  @apply bg-white text-mid;
+  @apply bg-zinc-950 text-mid text-zinc-300 selection:bg-zinc-800;
 }
 
 // DEBUG

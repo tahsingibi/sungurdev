@@ -12,11 +12,11 @@
     @apply grid gap-0 flex-1;
 
     .name {
-      @apply font-semibold text-slate-700 -mb-0.5;
+      @apply font-semibold  -mb-0.5;
     }
 
     .title {
-      @apply text-slate-500;
+      @apply text-zinc-400;
     }
   }
 }
