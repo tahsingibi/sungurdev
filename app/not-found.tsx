@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function NotFound() {
   return (
-    <div>404 Not found</div>
+    <div className="container"><h1>404 Not found</h1></div>
   )
 }

@@ -1,17 +1,13 @@
 "use client";
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'
+import isActivePage from '@/utils/isActivePage';
 
-export default function NavLink({ href, icon, name }: { href: string, icon: ReactElement, name: string }) {
-
-  const params = usePathname();
-  const isActive = (href: string) => params == href
+export default function NavLink({ href, children, className, ...props }: { href: string, children: ReactNode, className: any }) {
 
   return (
-    <Link href={href} key={href} data-active={isActive(href)}>
-      {icon}
-      {name}
+    <Link href={href} key={href} data-active={isActivePage(href)} className={...className} {...props}>
+      {children}
     </Link>
   );
 }

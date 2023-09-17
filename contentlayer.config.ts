@@ -43,7 +43,7 @@ export default makeSource({
           }
         });
       },
-      [rehypePrettyCode, { theme: 'one-dark-pro' }],
+      [rehypePrettyCode, { theme: 'solarized-light' }],
       () => (tree) => {
         visit(tree, (node) => {
           if (node?.type === 'element' && node?.tagName === 'div') {

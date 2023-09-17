@@ -1,9 +1,7 @@
-import styles from './style.module.scss'
-
-export default function Codeblock({ children, raw }: any) {
+export default function Codeblock({ children }: any) {
 
     return (
-        <pre className={styles.codeblock}>
+        <pre>
             {children}
         </pre>
     )

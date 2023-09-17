@@ -5,6 +5,7 @@ import { Inter } from "next/font/google"
 import { clsx } from "@/utils";
 import MobileNav from "@/components/mobilenav";
 
+
 const font = Inter({ subsets: ['latin'] })
 
 export default function MainLayout({ children }: { children: ReactNode }) {
@@ -13,9 +14,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
         <main className={clsx([styles.main, font.className])}>
             <Sidebar />
             <MobileNav />
-            <div className={styles.container}>
-                {children}
-            </div>
+            {children}
         </main>
     )
 }

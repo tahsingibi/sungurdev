@@ -1,29 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap');
 
 body {
   --sidebar-width: 280px;
-  @apply bg-zinc-950 text-mid text-zinc-300 selection:bg-zinc-800;
+  @apply bg-white text-mid text-slate-600 selection:bg-amber-50;
 }
 
 // DEBUG
 * {
   // outline: 1px dashed red;
-}
-
-code[data-line-numbers] {
-  counter-reset: lineNumber;
-}
-
-code[data-line-numbers] .line::before {
-  counter-increment: lineNumber;
-  content: counter(lineNumber);
-  display: inline-block;
-  text-align: right;
-
-  /* stylistic preferences */
-  margin-right: 0.75rem;
-  width: 1rem;
-  color: rgb(255 255 255 / 0.2);
 }

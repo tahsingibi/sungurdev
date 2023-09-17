@@ -1,5 +1,8 @@
 export default function Project() {
   return (
-    <h2>Çalışmalar</h2>
+    <div className="container">
+      <h2>Çalışmalar</h2>
+
+    </div>
   )
 }

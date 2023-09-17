@@ -47,7 +47,7 @@ Remember to replace your_stripe_public_key and your_stripe_secret_key with your 
 
 In your components directory, create a new file called StripeCheckout.js. This component will handle the payment integration with Stripe. Here's a basic example of how it might look:
 
-```jsx title="How install" showLineNumbers {2}
+```jsx title="How install"  {4,6-8}
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
@@ -72,7 +72,7 @@ import StripeCheckout from '../components/StripeCheckout';
 
 To complete your purchase, enter your payment details below:
 
-```js
+```js title="components/core/button.js"
 <StripeCheckout>
   <YourPaymentFormComponent />
 </StripeCheckout>

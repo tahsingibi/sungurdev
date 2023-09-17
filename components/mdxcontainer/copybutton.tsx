@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 import styles from './style.module.scss'
+import copyClipboard from "@/utils/copyClipboard";
 
 export const CopyButton = ({ text }: { text: string }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const copy = async () => {
-    await navigator.clipboard.writeText(text);
+    await copyClipboard(text);
     setIsCopied(true);
 
     setTimeout(() => {
@@ -19,7 +20,7 @@ export const CopyButton = ({ text }: { text: string }) => {
       disabled={isCopied}
       onClick={copy}
       className={styles.copy}>
-      {isCopied ? "Copied!" : "Copy"}
+      <span>{isCopied ? 'Copied!' : 'Copy'}</span>
     </button>
   );
 };

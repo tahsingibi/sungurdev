@@ -25,9 +25,9 @@ export default function MDXContainer({ post }: any) {
     const Component = useMDXComponent(body.code);
 
     return (
-        <>
-            <h2>{title}</h2>
+        <div className="container">
+            <h1>{title}</h1>
             <Component components={components} />
-        </>
+        </div>
     )
 }
