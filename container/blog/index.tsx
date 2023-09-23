@@ -1,20 +1,16 @@
-"use client"
 import { Post } from "@/.contentlayer/generated"
 import { format } from "date-fns"
-import Link from "next/link";
 import { blogPosts as posts } from "@/utils/getPost";
 import SidepageWrapper from "@/components/sidepage";
 import styles from './style.module.scss'
-import { clsx } from "@/utils";
-import isActivePage from "@/utils/isActivePage";
 import Links from "@/components/navbar/navlink";
 
-export default function Blog() {
+export default function Blog({ inPost }: { inPost: boolean }) {
 
   return (
-    <SidepageWrapper title="Blog">
+    <SidepageWrapper title="Blog" inPost={inPost}>
       {posts.map((post: Post) => (
-        <Links href={post.url} key={post.url} className={styles.link}>
+        <Links href={post.url} key={post.url} className={styles.link} scroll={false}>
           {post.title}
           <span> {format(new Date(post.date), 'MMMM dd, yyyy')}</span>
         </Links>

@@ -1,13 +1,15 @@
-"use client";
-import React, { ReactElement, ReactNode } from 'react';
+"use client"
+import React, { ReactNode, memo } from 'react';
 import Link from 'next/link';
 import isActivePage from '@/utils/isActivePage';
 
-export default function NavLink({ href, children, className, ...props }: { href: string, children: ReactNode, className: any }) {
+ function NavLink({ href, children, className, targetSegment, scroll, ...props }: { href: string, targetSegment?: null | string, scroll: boolean, children?: ReactNode, className?: any }) {
 
   return (
-    <Link href={href} key={href} data-active={isActivePage(href)} className={...className} {...props}>
+    <Link href={href} key={href} data-active={isActivePage(href, targetSegment)} className={...className} {...props} scroll={scroll}>
       {children}
     </Link>
   );
 }
+
+export default memo(NavLink)

@@ -10,7 +10,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
     return (
         <>
-            <Blog />
+            <Blog inPost />
             <MDXContainer post={post} />
         </>
     )

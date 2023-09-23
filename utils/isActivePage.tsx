@@ -1,13 +1,10 @@
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from 'next/navigation'
 
-export default function IsActivePage(href: string) {
-    const pathname = usePathname();
-    let isActive = false
-    if (pathname?.length > 0) {
-        const splittedPathname = pathname.split('/')
-        const currentPathname = splittedPathname[1] ?? ''
-        isActive = currentPathname === href.split('/')[1]
-    }
 
-    return isActive
+export default function IsActivePage(href: string, targetSegment?: string | null) {
+    const path = usePathname()
+    const segment = useSelectedLayoutSegment();
+
+    return path.startsWith(href) && segment == targetSegment
+
 }

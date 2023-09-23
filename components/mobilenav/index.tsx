@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import styles from "./style.module.scss"
 import { menu, close } from '@/utils';
+import { usePathname } from 'next/navigation';
 
-export default function MobileNav() {
+function MobileNav() {
 
+  const path = usePathname()
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isOpen, setIsOpen] = useState(false)
 
@@ -14,6 +16,8 @@ export default function MobileNav() {
     if (sidebar) sidebar.dataset.show = isOpen.toString();
 
   }, [isOpen])
+
+  useEffect(() => setIsOpen(false), [path])
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
@@ -42,3 +46,6 @@ export default function MobileNav() {
     </div >
   )
 }
+
+
+export default memo(MobileNav)

@@ -1,5 +1,5 @@
 .sidebar {
-  @apply fixed md:sticky top-0 bottom-0 left-0 w-[var(--sidebar-width)] min-h-screen max-h-screen p-4 pt-12 md:pt-4 flex flex-col gap-4 bg-slate-50 border-r-2 border-slate-100/75 -translate-x-[var(--sidebar-width)] md:translate-x-0 transition-all duration-700 z-10 flex-shrink-0 max-w-[var(--sidebar-width)]
+  @apply fixed md:sticky top-0 bottom-0 left-0 w-[var(--sidebar-width)] min-h-screen max-h-screen p-4 pt-12 md:pt-4 flex flex-col gap-4 bg-slate-50 border-r-2 border-slate-100/75 -translate-x-[var(--sidebar-width)] md:translate-x-0 transition-all duration-700 z-50 flex-shrink-0 max-w-[var(--sidebar-width)]
   
 
   before:fixed before:w-screen before:h-full before:bg-slate-50 before:content-[''] before:inset-0 before:-z-20 before:opacity-0 before:transition-all before:translate-x-[var(--sidebar-width)] before:duration-700 md:before:hidden before:pointer-events-none;

@@ -1,5 +1,5 @@
 .mobilenav {
-  @apply bg-slate-950 border-b-2 border-slate-900 md:hidden w-full top-0 left-0 py-1 px-3 fixed z-20 flex items-center gap-2 text-slate-300 font-medium;
+  @apply bg-slate-50 border-b-2 border-slate-100 md:hidden w-full top-0 left-0 py-1 px-3 fixed z-20 flex items-center gap-2  font-medium z-50;
 
   button{
     @apply p-1 rounded;
