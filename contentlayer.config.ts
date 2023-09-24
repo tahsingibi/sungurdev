@@ -1,4 +1,3 @@
-// contentlayer.config.ts
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
@@ -12,6 +11,8 @@ export const Post = defineDocumentType(() => ({
   fields: {
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
+    description: { type: 'string' },
+    category: { type: 'string' },
   },
   computedFields: {
     slug: {

@@ -1,3 +1,46 @@
-.main{
-    @apply bg-red-600
+.main {
+  @apply flex min-h-screen w-full max-w-full ;
+
+  [data-rehype-pretty-code-fragment] {
+    @apply grid rounded-t-lg rounded-b-lg my-4 relative border;
+
+    [data-rehype-pretty-code-title] {
+      @apply bg-slate-50 px-5 py-3  rounded-t-lg flex items-center border-b text-slate-600 text-sm font-medium;
+
+      &::before {
+        @apply content-[''] w-12 h-[15px] flex mr-4;
+        background: radial-gradient(
+          circle at 7px 7px,
+          rgba(black, 0.08) 7px,
+          transparent 7px,
+          transparent 7px
+        );
+        background-size: 17px 20px;
+      }
+    }
+
+    pre,
+    code {
+      @apply whitespace-pre-wrap break-words break-all my-0 font-['Fira_Code'] font-medium text-xs leading-loose bg-white box-border;
+      [data-highlighted-line] {
+        @apply bg-slate-100 -mx-5 px-5 w-[calc(100%+38px)];
+      }
+    }
+  }
+
+  pre {
+    counter-reset: section;
+    span[data-line] {
+      &::before {
+        counter-increment: section;
+        content: counters(section, '.') ' ';
+        width: 20px;
+        margin-right: 16px;
+        display: inline-block;
+        text-align: right;
+        opacity: 0.5;
+        box-sizing: border-box;
+      }
+    }
+  }
 }

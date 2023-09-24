@@ -1,2 +1,2 @@
 export * from './clsx'
-export * from './icons'
+export * from './Icons'
