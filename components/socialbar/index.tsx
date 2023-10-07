@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import styles from './style.module.scss';
-import { github, instagram, linkedin, twitter } from '@/utils';
+import { github, instagram, linkedin, twitter, mail } from '@/utils';
 import { ReactElement } from 'react';
 
 const _link = [
+  { path: 'mailto:mtahsinsungur@gmail.com', name: 'Email', icon: mail },
   { path: 'https://x.com/tahsingibi', name: 'Twitter', icon: twitter },
   { path: 'https://github.com/tahsingibi', name: 'Github', icon: github },
   {

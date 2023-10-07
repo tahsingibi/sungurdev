@@ -5,7 +5,8 @@
 
 body {
   --sidebar-width: 280px;
-  @apply bg-white text-mid text-slate-600 selection:bg-amber-50;
+  @apply bg-white text-mid font-normal text-slate-600 selection:bg-amber-50;
+
 }
 
 // DEBUG

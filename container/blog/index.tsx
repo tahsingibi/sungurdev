@@ -9,10 +9,11 @@ export default function Blog({ inPost }: { inPost: boolean }) {
 
   return (
     <SidepageWrapper title="Blog" inPost={inPost}>
+      {!posts.length && <p className={styles.notfound}>Henüz gönderi yayınlanmadı.</p>}
       {posts.map((post: Post) => (
         <Links href={post.url} key={post.url} className={styles.link} scroll={false}>
           {post.title}
-          <span> {formatDate(post.date)}</span>
+          <div className={styles.info}>{post.category && post.category + ' •'} {formatDate(post.date)}</div>
         </Links>
       ))
       }

@@ -1,5 +1,6 @@
+
 .main {
-  @apply flex min-h-screen w-full max-w-full ;
+  @apply flex min-h-screen w-full max-w-full;
 
   [data-rehype-pretty-code-fragment] {
     @apply grid rounded-t-lg rounded-b-lg my-4 relative border;

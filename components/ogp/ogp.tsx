@@ -1,7 +1,6 @@
-import React from 'react'
+export default function OpenGraph({ title, category }: { title?: string, category?: string }) {
 
-
-export default function OpenGraph() {
+    const _category = category ? `▪ ${category}` : 'by @tahsingibi'
 
     return (
         <div
@@ -24,8 +23,9 @@ export default function OpenGraph() {
         >
             <div></div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 'auto', gap: 20 }}>
-                <div style={{ fontSize: 52, textAlign: 'center' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
-                <div style={{ opacity: 0.5, fontSize: 30 }}>▪ Frontend Tech</div>
+                <div style={{ fontSize: 52, textAlign: 'center' }}>{title}</div>
+                <div style={{ fontSize: 30, textAlign: 'center', opacity: 0.5 }}>{_category}</div>
+
             </div>
             <div style={{ display: 'flex', marginTop: 'auto', fontSize: 20, background: 'black', color: 'white', padding: '8px 32px', borderRadius: 9999 }}>
                 <div style={{ fontWeight: 900 }}>sungur</div>

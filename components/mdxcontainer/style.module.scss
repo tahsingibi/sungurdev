@@ -1,3 +1,8 @@
 .copy {
   @apply absolute right-2.5 top-2 text-xs border border-slate-200 px-2 py-1 rounded-lg text-slate-500 font-mono bg-white shadow-sm transition-all duration-1000 overflow-hidden block;
 }
+
+
+.info {
+  @apply text-sm opacity-75 mb-8;
+}

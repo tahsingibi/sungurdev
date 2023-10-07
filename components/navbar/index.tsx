@@ -5,6 +5,7 @@ import Links from './navlink';
 const _page = [
   { href: '/', icon: home, name: 'Anasayfa', targetSegment: null },
   { href: '/blog', icon: quote, name: 'Blog', targetSegment: 'blog' },
+  { href: '/tools', icon: quote, name: 'Araçlar', targetSegment: 'tools' },
 ];
 
 export default function Navbar() {

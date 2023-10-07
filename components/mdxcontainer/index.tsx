@@ -2,6 +2,7 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import Codeblock from '../codeblock';
 import { CopyButton } from "./copybutton";
 import formatDate from "@/utils/formatdate";
+import styles from './style.module.scss'
 
 export const Pre = ({ children, raw, ...props }: any) => {
     const lang = props["data-language"] || "shell";
@@ -27,9 +28,8 @@ export default function MDXContainer({ post }: any) {
 
     return (
         <div className="container">
-            <h1>{title}</h1>
-            <p>{formatDate(date)}</p>
-            <p>{category}</p>
+            <h1 className={styles.title}>{title}</h1>
+            <div className={styles.info}>{category && category + ' •'} {formatDate(date)}</div>
             <Component components={components} />
         </div>
     )
