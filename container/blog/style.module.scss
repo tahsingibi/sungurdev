@@ -1,15 +1,12 @@
 .link {
-  @apply p-2 rounded-lg grid gap-0.5 w-full hover:bg-slate-100;
+  @apply pb-6  grid gap-0.5 w-full  no-underline;
   text-wrap: balance;
 
-  .info {
-    @apply text-slate-400 font-light w-full;
+  & + & {
+    @apply border-t border-t-zinc-900 py-6;
   }
 
-  &[data-active='true'] {
-    @apply bg-white shadow-sm font-medium w-full;
+  .info {
+    @apply text-zinc-400 font-light w-full;
   }
-}
-.notfound{
-  @apply  p-2
 }

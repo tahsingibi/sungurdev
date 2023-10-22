@@ -3,14 +3,12 @@ import styles from './style.module.scss'
 
 export default function Placeholder() {
     return (
-        <div className='container'>
-            <div className={styles.placeholder}>
-                <div className={styles.big}></div>
-                <div />
-                <div />
-                <div />
-                <div />
-            </div>
+        <div className={styles.placeholder}>
+            <div className={styles.big}></div>
+            <div />
+            <div />
+            <div />
+            <div />
         </div>
     )
 }

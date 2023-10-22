@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import MainLayout from '@/layout/MainLayout'
 import '@/styles/globals.scss'
+import MainLayout from '@/layout/main'
 
 export const metadata: Metadata = {
   title: 'Tahsin Sungur',

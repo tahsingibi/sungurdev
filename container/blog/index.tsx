@@ -1,15 +1,15 @@
 import { Post } from "@/.contentlayer/generated"
 import { blogPosts as posts } from "@/utils/getPost";
-import SidepageWrapper from "@/components/sidepage";
 import styles from './style.module.scss'
-import Links from "@/components/navbar/navlink";
+import Links from "@/components/links";
 import formatDate from "@/utils/formatdate";
 
-export default function Blog({ inPost }: { inPost: boolean }) {
+export default function Blog() {
 
   return (
-    <SidepageWrapper title="Blog" inPost={inPost}>
-      {!posts.length && <p className={styles.notfound}>Henüz gönderi yayınlanmadı.</p>}
+    <>
+      <h1>Write</h1>
+      {!posts.length && <p>Henüz gönderi yayınlanmadı.</p>}
       {posts.map((post: Post) => (
         <Links href={post.url} key={post.url} className={styles.link} scroll={false}>
           {post.title}
@@ -17,6 +17,6 @@ export default function Blog({ inPost }: { inPost: boolean }) {
         </Links>
       ))
       }
-    </SidepageWrapper >
+    </ >
   )
 }

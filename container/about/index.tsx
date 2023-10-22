@@ -5,8 +5,9 @@ const _content = {
 
 export default function Home() {
   return (
-    <div className="container">
+    <>
       <h2>{_content.heading}</h2>
       <p dangerouslySetInnerHTML={{ __html: _content.desc }} />
-    </div>)
+    </>
+  )
 }

@@ -1,6 +1,5 @@
 const home = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-house-fill" viewBox="0 0 16 16" > <path d="M8.707 1.5a1 1 0 00-1.414 0L.646 8.146a.5.5 0 00.708.708L8 2.207l6.646 6.647a.5.5 0 00.708-.708L13 5.793V2.5a.5.5 0 00-.5-.5h-1a.5.5 0 00-.5.5v1.293L8.707 1.5z"></path> <path d="M8 3.293l6 6V13.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 012 13.5V9.293l6-6z"></path> </svg>
 
-
 const sunglasses = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-sunglasses" viewBox="0 0 16 16" > <path d="M3 5a2 2 0 00-2 2v.5H.5a.5.5 0 000 1H1V9a2 2 0 002 2h1a3 3 0 003-3 1 1 0 112 0 3 3 0 003 3h1a2 2 0 002-2v-.5h.5a.5.5 0 000-1H15V7a2 2 0 00-2-2h-2a2 2 0 00-1.888 1.338A1.99 1.99 0 008 6a1.99 1.99 0 00-1.112.338A2 2 0 005 5H3zm0 1h.941c.264 0 .348.356.112.474l-.457.228a2 2 0 00-.894.894l-.228.457C2.356 8.289 2 8.205 2 7.94V7a1 1 0 011-1z"></path> </svg>
 
 const quote = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-quote" viewBox="0 0 16 16" > <path d="M12 12a1 1 0 001-1V8.558a1 1 0 00-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 00-1.085.992 4.92 4.92 0 00-.62 1.458A7.712 7.712 0 009 7.558V11a1 1 0 001 1h2zm-6 0a1 1 0 001-1V8.558a1 1 0 00-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 00-1.085.992 4.92 4.92 0 00-.62 1.458A7.712 7.712 0 003 7.558V11a1 1 0 001 1h2z"></path> </svg>
@@ -33,6 +32,10 @@ const close = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fil
 
 const mail = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4" /><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" /></svg>
 
+const copy = <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 15 15" > <path fill="currentColor" fillRule="evenodd" d="M5 2V1h5v1H5zm-.25-2A.75.75 0 004 .75V1h-.5A1.5 1.5 0 002 2.5v10A1.5 1.5 0 003.5 14H7v-1H3.5a.5.5 0 01-.5-.5v-10a.5.5 0 01.5-.5H4v.25c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75V2h.5a.5.5 0 01.5.5V7h1V2.5A1.5 1.5 0 0011.5 1H11V.75a.75.75 0 00-.75-.75h-5.5zM9 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm1.5.5a.5.5 0 100-1 .5.5 0 000 1zm2.5-.5a.5.5 0 11-1 0 .5.5 0 011 0zm1.5.5a.5.5 0 100-1 .5.5 0 000 1zm.5 1.5a.5.5 0 11-1 0 .5.5 0 011 0zm-.5 2.5a.5.5 0 100-1 .5.5 0 000 1zm0 2a.5.5 0 100-1 .5.5 0 000 1zm-6-4a.5.5 0 100-1 .5.5 0 000 1zm.5 1.5a.5.5 0 11-1 0 .5.5 0 011 0zM8.5 15a.5.5 0 100-1 .5.5 0 000 1zm2.5-.5a.5.5 0 11-1 0 .5.5 0 011 0zm1.5.5a.5.5 0 100-1 .5.5 0 000 1z" clipRule="evenodd" /> </svg>
+
+const check = <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 15 15" > <path fill="currentColor" fillRule="evenodd" d="M11.467 3.727c.289.189.37.576.181.865l-4.25 6.5a.625.625 0 01-.944.12l-2.75-2.5a.625.625 0 01.841-.925l2.208 2.007 3.849-5.886a.625.625 0 01.865-.181z" clipRule="evenodd" /> </svg>
+
 export {
-    sng, home, sunglasses, quote, braces, loader, twitter, instagram, github, linkedin, arrowTR, arrowL, menu, close, mail
+    sng, home, sunglasses, quote, braces, loader, twitter, instagram, github, linkedin, arrowTR, arrowL, menu, close, mail, copy, check
 }

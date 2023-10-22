@@ -2,6 +2,7 @@
 import { useState } from "react";
 import styles from './style.module.scss'
 import copyClipboard from "@/utils/copyClipboard";
+import { copy as copyIcon, check } from "@/utils";
 
 export const CopyButton = ({ text }: { text: string }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -20,7 +21,7 @@ export const CopyButton = ({ text }: { text: string }) => {
       disabled={isCopied}
       onClick={copy}
       className={styles.copy}>
-      <span>{isCopied ? 'Copied!' : 'Copy'}</span>
+      <span>{isCopied ? check : copyIcon}</span>
     </button>
   );
 };

@@ -1,0 +1,64 @@
+.container {
+  @apply max-w-xl w-full mx-auto p-4 
+    prose
+    prose-p:text-zinc-400
+
+    prose-strong:text-zinc-200 prose-strong:font-medium
+
+    prose-headings:text-zinc-200 prose-headings:font-normal
+
+    prose-a:text-zinc-300 hover:prose-a:text-zinc-100 prose-a:underline-offset-8
+    
+    prose-ul:text-zinc-400 prose-pre:bg-zinc-900;
+
+  img {
+    @apply rounded-lg;
+  }
+
+  [data-rehype-pretty-code-fragment] {
+    @apply grid rounded-t-lg rounded-b-lg my-4 relative border border-zinc-800 bg-zinc-950;
+
+    [data-rehype-pretty-code-title] {
+      @apply px-5 py-3  rounded-t-lg flex items-center border-b border-zinc-800 text-sm font-medium text-zinc-400;
+
+      &::before {
+        @apply content-[''] w-12 h-[15px] flex mr-4;
+        background: radial-gradient(
+          circle at 7px 7px,
+          rgba(white, 0.1) 7px,
+          transparent 7px,
+          transparent 7px
+        );
+        background-size: 17px 20px;
+      }
+    }
+
+    pre,
+    pre > code {
+      @apply whitespace-pre-wrap break-words break-all my-0 font-['Fira_Code'] font-medium text-xs leading-loose  box-border bg-zinc-950;
+      [data-highlighted-line] {
+        @apply -mx-5 px-5 w-[calc(100%+34px)] bg-zinc-900;
+      }
+    }
+  }
+
+  pre {
+    counter-reset: section;
+    span[data-line] {
+      &::before {
+        counter-increment: section;
+        content: counters(section, '.') ' ';
+        width: 20px;
+        margin-right: 16px;
+        display: inline-block;
+        text-align: right;
+        opacity: 0.5;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  code {
+    @apply text-zinc-400 font-medium bg-zinc-900 rounded-lg;
+  }
+}

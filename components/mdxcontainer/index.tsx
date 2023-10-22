@@ -27,10 +27,10 @@ export default function MDXContainer({ post }: any) {
     const Component = useMDXComponent(body.code);
 
     return (
-        <div className="container">
+        <>
             <h1 className={styles.title}>{title}</h1>
-            <div className={styles.info}>{category && category + ' •'} {formatDate(date)}</div>
+            <span className={styles.info}>{formatDate(date)} {category && '– ' + category} </span>
             <Component components={components} />
-        </div>
+        </>
     )
 }
