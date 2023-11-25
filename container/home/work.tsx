@@ -18,7 +18,7 @@ const content = {
             image: "",
             name: "Freelance",
             desc: "Frontend Developer",
-            right: "2010 - 2022",
+            right: "2017 - 2022",
             path: "/works#freelance"
         },
     ]
