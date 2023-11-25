@@ -1,4 +1,4 @@
-import { Icons } from '@/utils'
+import { BSIcons } from '@/utils'
 import styles from './style.module.scss'
 import Link from 'next/link'
 
@@ -12,7 +12,7 @@ export default function SocialSection({ socials }: Readonly<{ socials: Array<Lin
 
     return (
         <div className={styles.socials}>
-            {socials?.map((social) => <Link href={social.path} key={social.id} target='blank'><Icons icon={social.icon} /></Link>)}
+            {socials?.map((social) => <Link href={social.path} key={social.id} target='blank'><BSIcons icon={social.icon} /></Link>)}
         </div>
     )
 }

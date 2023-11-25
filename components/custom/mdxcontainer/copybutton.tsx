@@ -2,7 +2,7 @@
 import { useState } from "react";
 import styles from './style.module.scss'
 import { copyClipboard } from "@/utils";
-import { Icons } from "@/utils";
+import { BSIcons } from "@/utils";
 
 export const CopyButton = ({ text }: { text: string }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -23,7 +23,7 @@ export const CopyButton = ({ text }: { text: string }) => {
       disabled={isCopied}
       onClick={copy}
       className={styles.copy}>
-      <span><Icons icon={icon} /></span>
+      <span><BSIcons icon={icon} /></span>
     </button>
   );
 };

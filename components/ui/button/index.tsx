@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react'
 import styles from './style.module.scss'
-import { Icons, clsx } from '@/utils'
+import { BSIcons, clsx } from '@/utils'
 
 type ButtonType = {
     text?: string,
@@ -13,7 +13,7 @@ export default function Button({ text, icon, theme, onClick, ...props }: Readonl
 
     return (
         <button {...props} className={clsx([styles.button, !text && icon ? styles.onlyIcon : '', styles[`theme_${theme}`]])} onClick={onClick}>
-            {icon && <Icons icon={icon} />}
+            {icon && <BSIcons icon={icon} />}
             {text}
         </button>
     )
