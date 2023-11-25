@@ -42,6 +42,7 @@ const content = {
                 id: randomUUID(),
                 name: `Admin Dashboard`,
                 desc: "React, TypeScript",
+                path: "",
                 right: "2022"
             },
         ]
