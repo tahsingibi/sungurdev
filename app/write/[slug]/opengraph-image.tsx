@@ -1,7 +1,6 @@
-import { ImageResponse } from 'next/server'
-import OpenGraph from '@/components/ogp/ogp'
-import getPost from '@/utils/getPost'
-
+import { ImageResponse } from 'next/og'
+import OpenGraph from '@/components/ui/ogp/ogp'
+import { getPost } from '@/utils'
 
 export const runtime = 'edge'
 

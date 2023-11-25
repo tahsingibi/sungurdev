@@ -1,4 +1,4 @@
-export default function OpenGraph({ title, category }: { title?: string, category?: string }) {
+export default function OpenGraph({ title, category }: Readonly<{ title?: string, category?: string }>) {
 
     const _category = category ? `▪ ${category}` : 'by @tahsingibi'
 

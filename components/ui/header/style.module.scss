@@ -1,0 +1,12 @@
+.header {
+  @apply flex gap-4 py-4 sticky top-0  z-50 bg-gradient-to-r from-zinc-950 via-transparent to-zinc-950 backdrop-blur-md shadow-2xl shadow-zinc-950 mb-4;
+
+  a {
+    @apply no-underline text-zinc-400 font-light relative
+    after:absolute after:w-full after:h-2 after:bg-zinc-800 after:bottom-1 after:left-0 after:-z-10 after:opacity-0 after:-translate-x-2;
+
+    &[data-active='true'] {
+      @apply text-zinc-300 after:opacity-100 after:transition-all after:translate-x-0;
+    }
+  }
+}

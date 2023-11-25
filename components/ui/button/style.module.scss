@@ -1,0 +1,9 @@
+.button {
+  @apply text-zinc-400 rounded px-3 py-1 flex gap-3 items-center justify-center
+  transition-all duration-100 hover:bg-zinc-900/60
+  active:translate-y-0.5;
+
+  &.onlyIcon {
+    @apply aspect-square;
+  }
+}

@@ -1,12 +1,12 @@
 .link {
-  @apply pb-6  grid gap-0.5 w-full  no-underline;
+  @apply grid gap-0.5 no-underline;
   text-wrap: balance;
 
-  & + & {
-    @apply border-t border-t-zinc-900 py-6;
-  }
-
   .info {
-    @apply text-zinc-400 font-light w-full;
+    @apply text-zinc-400 font-light;
   }
+}
+
+.list {
+  @apply grid gap-8;
 }

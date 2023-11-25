@@ -1,0 +1,26 @@
+.item {
+  @apply flex items-center gap-4 no-underline relative
+    before:absolute before:w-[calc(100%+1.5rem)] before:h-[calc(100%+1.5rem)] before:bg-zinc-500/5 before:-z-10 before:-inset-3 before:rounded-lg before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-150 active:translate-y-0.5 transition-all;
+
+  .image {
+    @apply relative aspect-square w-12 h-12 p-2 m-0 bg-black box-border rounded-full;
+
+    span {
+      @apply w-full h-full flex items-center justify-center text-2xl text-zinc-400;
+    }
+  }
+  .content {
+    @apply w-full;
+    h5,
+    p {
+      @apply m-0;
+    }
+
+    p {
+      @apply flex justify-between flex-col sm:flex-row;
+      span {
+        @apply font-light text-sm text-zinc-500;
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Codeblock from '../codeblock';
 import { CopyButton } from "./copybutton";
-import formatDate from "@/utils/formatdate";
+import { formatDate } from "@/utils";
 import styles from './style.module.scss'
 
 export const Pre = ({ children, raw, ...props }: any) => {

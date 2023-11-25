@@ -1,20 +1,16 @@
 import { notFound } from "next/navigation";
-import MDXContainer from "@/components/mdxcontainer";
-import getPost from "@/utils/getPost";
+import MDXContainer from "@/components/custom/mdxcontainer";
+import { getPost } from "@/utils";
 
 export const generateMetadata = ({ params }: { params: { slug: string } }) => {
     const post = getPost(params.slug)
     return { title: post?.title + ' – Tahsin Sungur' }
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPost({ params }: Readonly<{ params: { slug: string } }>) {
     const post = getPost(params.slug)
 
     if (!post) return notFound()
 
-    return (
-        <>
-            <MDXContainer post={post} />
-        </>
-    )
+    return <MDXContainer post={post} />
 }

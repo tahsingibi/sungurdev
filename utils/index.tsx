@@ -1,2 +1,6 @@
 export * from './clsx'
-export * from './Icons'
+export * from './icons'
+export * from './getPost'
+export * from './isActivePage'
+export * from './formatdate'
+export * from './copyClipboard'

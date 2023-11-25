@@ -1,7 +1,7 @@
 .placeholder {
   @apply grid gap-4;
   div {
-    @apply block w-full h-5 rounded-lg animate-pulse;
+    @apply block w-full bg-white/5 h-5 rounded-md animate-pulse;
 
     &:after {
       animation: placeholder 4s infinite linear;

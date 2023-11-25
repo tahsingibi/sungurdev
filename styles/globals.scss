@@ -3,8 +3,19 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap');
 
+html {
+  scrollbar-gutter: stable;
+}
 body {
-  @apply bg-zinc-950 text-mid font-normal text-white w-full selection:bg-white/10;
+  @apply bg-zinc-950 text-mid font-normal text-white w-full selection:bg-white/10 scroll-pt-40;
+
+  b {
+    @apply font-normal text-zinc-200;
+  }
+
+  hr {
+    @apply opacity-10;
+  }
 }
 
 // DEBUG

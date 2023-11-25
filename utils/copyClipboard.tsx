@@ -1,3 +1,3 @@
-export default async function copyClipboard(val: any) {
+export async function copyClipboard(val: any) {
     await navigator?.clipboard?.writeText(val);
 }

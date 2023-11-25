@@ -6,8 +6,9 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <Links href='/' scroll={false}>home</Links>
-            <Links href='/tools' scroll={false}>tools</Links>
-            <Links href='/write' scroll={false}>write</Links>
+            <Links href='/works' scroll={false}>works</Links>
+            {/* <Links href='/tools' scroll={false}>tools</Links> */}
+            {/* <Links href='/write' scroll={false}>write</Links> */}
         </header>
     )
 }
