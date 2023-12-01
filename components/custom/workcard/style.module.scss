@@ -1,6 +1,19 @@
+a.item {
+  @apply active:translate-y-0.5;
+
+  h5 {
+    @apply after:content-['↗'] after:ml-2 after:opacity-0 after:transition-all after:scale-0 after:origin-left;
+  }
+
+  &:hover {
+    h5 {
+      @apply after:opacity-100 after:transition-all after:duration-150 after:scale-100 after:origin-left;
+    }
+  }
+}
 .item {
   @apply flex items-center gap-4 no-underline relative
-    before:absolute before:w-[calc(100%+1.5rem)] before:h-[calc(100%+1.5rem)] before:bg-zinc-500/5 before:-z-10 before:-inset-3 before:rounded-lg before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-150 active:translate-y-0.5 transition-all;
+    before:absolute before:w-[calc(100%+1.5rem)] before:h-[calc(100%+1.5rem)] before:bg-zinc-500/5 before:-z-10 before:-inset-3 before:rounded-lg before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-150  transition-all;
 
   .image {
     @apply relative aspect-square w-12 h-12 p-2 m-0 bg-black box-border rounded-full;
@@ -19,7 +32,7 @@
     p {
       @apply flex justify-between flex-col sm:flex-row;
       span {
-        @apply font-light text-sm text-zinc-500;
+        @apply text-sm text-zinc-500;
       }
     }
   }

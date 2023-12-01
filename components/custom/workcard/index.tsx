@@ -7,7 +7,7 @@ type WorkCardType = {
     image?: string,
     path: string,
     name: string,
-    desc?: string,
+    title?: string,
     right?: string
 }
 
@@ -20,7 +20,7 @@ function GenerateAvatar({ image, text }: Readonly<{ image?: string, text: string
         </figure>)
 }
 
-function WithLink({ image, path, name, desc, right }: WorkCardType) {
+function WithLink({ image, path, name, title, right }: Readonly<WorkCardType>) {
 
     const target = path?.startsWith('http') ? '_blank' : '_self'
 
@@ -30,7 +30,7 @@ function WithLink({ image, path, name, desc, right }: WorkCardType) {
             <div className={styles.content}>
                 <h5>{name}</h5>
                 <p>
-                    <span>{desc}</span>
+                    <span>{title}</span>
                     <span>{right}</span>
                 </p>
             </div>
@@ -38,14 +38,14 @@ function WithLink({ image, path, name, desc, right }: WorkCardType) {
     );
 }
 
-function WithDiv({ image, name, desc, right }: WorkCardType) {
+function WithDiv({ image, name, title, right }: Readonly<WorkCardType>) {
     return (
         <div className={styles.item}>
             <GenerateAvatar image={image} text={name} />
             <div className={styles.content}>
                 <h5>{name}</h5>
                 <p>
-                    <span>{desc}</span>
+                    <span>{title}</span>
                     <span>{right}</span>
                 </p>
             </div>
@@ -53,7 +53,7 @@ function WithDiv({ image, name, desc, right }: WorkCardType) {
     )
 }
 
-export default function WorkCard(props: WorkCardType) {
+export default function WorkCard(props: Readonly<WorkCardType>) {
     const Element = props.path ? WithLink : WithDiv;
 
     return <Element {...props} />

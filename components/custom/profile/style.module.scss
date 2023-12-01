@@ -17,7 +17,7 @@
   }
 
   .opentowork {
-    @apply absolute right-0 bg-green-500 w-3 h-3 rounded-full
+    @apply absolute right-3 bg-green-500 w-3 h-3 rounded-full
     before:absolute before:block before:w-3 before:h-3 before:bg-green-600 before:-z-10 before:inset-0 before:scale-x-105 before:rounded-full before:animate-ping
     
     after:absolute after:block after:text-sm after:content-[attr(data-content)] after:whitespace-nowrap after:bg-zinc-900 after:px-2 after:py-1 after:rounded after:origin-right after:scale-0 hover:after:scale-100 after:right-full after:-translate-x-4 after:-top-1/2 after:transition-all after:duration-75;

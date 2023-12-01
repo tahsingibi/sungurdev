@@ -11,6 +11,10 @@
       transition-all duration-100 hover:bg-zinc-900/60
       active:translate-y-0.5 aspect-square;
     }
+
+    .resume{
+      @apply aspect-auto no-underline;
+    }
   }
 }
 
@@ -42,7 +46,7 @@
         p {
           @apply flex justify-between flex-col sm:flex-row;
           span {
-            @apply font-light text-sm text-zinc-500;
+            @apply text-sm text-zinc-500;
           }
         }
       }

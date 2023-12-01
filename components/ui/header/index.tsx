@@ -1,14 +1,13 @@
 import React from 'react'
 import Links from '../links'
 import styles from './style.module.scss'
+import db from '@/db.json'
 
 export default function Header() {
+    const { nav } = db;
     return (
         <header className={styles.header}>
-            <Links href='/' scroll={false}>home</Links>
-            <Links href='/works' scroll={false}>works</Links>
-            {/* <Links href='/tools' scroll={false}>tools</Links> */}
-            {/* <Links href='/write' scroll={false}>write</Links> */}
+            {nav.map(page => <Links href={page.path} scroll={false} key={page.id}>{page.name}</Links>)}
         </header>
     )
 }

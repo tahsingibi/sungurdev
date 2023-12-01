@@ -1,6 +1,6 @@
 import React from 'react';
-import Blog from '@/container/blog';
+import WriteContainer from '@/container/write';
 
 export default function BlogPage() {
-  return <Blog />;
+  return <WriteContainer />;
 }

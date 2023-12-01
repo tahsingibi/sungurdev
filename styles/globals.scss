@@ -8,7 +8,11 @@ html {
   scrollbar-gutter: stable;
 }
 body {
-  @apply bg-zinc-950 text-mid font-normal text-white w-full selection:bg-white/10 scroll-pt-40;
+  @apply bg-zinc-950 text-mid font-normal text-white w-full selection:bg-white/10 scroll-smooth;
+
+  * {
+    @apply transition-all hover:transition-all;
+  }
 
   b {
     @apply font-normal text-zinc-200;

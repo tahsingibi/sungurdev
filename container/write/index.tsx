@@ -6,15 +6,17 @@ import { formatDate } from "@/utils";
 
 const content = {
   title: "write",
+  description: "blog posts and short notes",
   notfound: "not yet published."
 }
 
-export default function Blog() {
+export default function WriteContainer() {
 
   return (
     <>
       <h1>{content.title}</h1>
-      <p className="description">Kullandığım ekipmanlar ve yazılımlar. Yenileri geldikçe güncelleyeceğim</p>
+      <p className="description">{content.description}</p>
+      <hr />
       {!posts.length && <p>{content.notfound}</p>}
       <div className={styles.list}>
         {posts.map((post: Post) => (
