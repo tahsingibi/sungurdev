@@ -11,12 +11,11 @@ type WorkCardType = {
     right?: string
 }
 
-
 function GenerateAvatar({ image, text }: Readonly<{ image?: string, text: string }>) {
     return (
         <figure className={styles.image}>
             {image && <Image src={image} alt={text} width={100} height={100} />}
-            {!image && <span>{text[0]}</span>}
+            {!image && <span>{text.slice(0, 2)}</span>}
         </figure>)
 }
 

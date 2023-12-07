@@ -17,12 +17,12 @@
       "path": "https://www.linkedin.com/in/tahsin-sungur/"
     },
     { "id": 2, "icon": "twitter-x", "path": "https://x.com/tahsingibi" },
-    { "id": 3, "icon": "envelope", "path": "mailto:mtahsinsungur@gmail.com" }
+    { "id": 3, "icon": "envelope", "path": "mailto:mtahsinsungur+sungurdev@gmail.com" }
   ],
   "works": [
     {
       "id": 1,
-      "image": "https://cdn.mallconomy.com/images/landing-v3/tv/mallconomy.svg",
+      "image": "/img/work/mallconomy.png",
       "name": "Mallconomy",
       "title": "Frontend Developer",
       "right": "10/2022 - 11/2023",
@@ -32,6 +32,7 @@
         {
           "id": "M001",
           "name": "Own a piece of Web3 Commerce's future",
+          "image": "/img/work/mallconomy.png",
           "path": "https://mint.mallconomy.com/",
           "title": "mint.mallconomy.com – Next.js, TypeScript",
           "right": "2023"
@@ -39,6 +40,7 @@
         {
           "id": "M002",
           "name": "Malls of the Metaverse On Any Device",
+          "image": "/img/work/mallconomy.png",
           "path": "https://mallconomy.com/",
           "title": "mallconomy.com – HTML/SCSS/JS",
           "right": "2023"
@@ -46,6 +48,7 @@
         {
           "id": "M003",
           "name": "MallStar App - Mallconomy",
+          "image": "/img/work/mallconomy.png",
           "path": "https://app.mallconomy.com/",
           "title": "app.mallconomy.com – Next.js",
           "right": "2023"
@@ -53,6 +56,7 @@
         {
           "id": "M004",
           "name": "Hype&Buzz - Web3 Growth Partner",
+          "image": "/img/work/mallconomy.hypeandbuzz.svg",
           "path": "https://hypeand.buzz/",
           "title": "hypeand.buzz – Next.js",
           "right": "2023"
@@ -68,7 +72,7 @@
     },
     {
       "id": 0,
-      "image": "",
+      "image": "/img/sungurdev.png",
       "name": "Freelance",
       "title": "Frontend Developer",
       "right": "2018 - 2022",
@@ -78,6 +82,7 @@
         {
           "id": "F001",
           "name": "sungur.dev | Developer Portfolio",
+          "image": "/img/sungurdev.png",
           "path": "https://sungur.dev/",
           "title": "Next.js - TypeScript",
           "right": "2023"
@@ -98,6 +103,7 @@
         },
         {
           "id": "F004",
+          "image": "/img/work/freelance.tahsinbeycom.png",
           "name": "tahsinbey.com blog page",
           "path": "https://tahsinbey.com/",
           "title": "TailwindCSS - WordPress",
