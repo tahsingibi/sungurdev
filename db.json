@@ -25,7 +25,7 @@
       "image": "/img/work/mallconomy.png",
       "name": "Mallconomy",
       "title": "Frontend Developer",
-      "right": "10/2022 - 11/2023",
+      "right": "10/2022 - 12/2023",
       "path": "/works#Mallconomy",
       "description": "<p>Mallconomy is building the metaverse's most fun shopping mall on Polygon specifically for the creators, brands and workers, with immersive dynamics, exclusive partnerships and the endless possibilities of a robust GameFi economy.</p><ul><li>I developed a product where users can log in with their social media accounts or web3 wallets, complete marketing tasks, earn points, and convert these points into rewards.</li><li>I transformed this bounty application, which had 1.2 million users and high traffic, into a SaaS model. Working on this project, I improved my skills in state management and architectural design.</li><li>Developed an admin panel to oversee user actions and tasks.</li><li>I developed a web application using React, Typescript, and Ethers.js where users can perform minting and claiming operations for MallCard NFTs within the Mallconomy Metaverse on the Polygon network. In this app, I enabled them to view their referral rewards and the Mallconomy points earned through their NFTs.</li><li>I have developed a sales application for our client's web3 token.</li></ul>",
       "projects": [
