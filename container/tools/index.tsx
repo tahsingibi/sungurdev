@@ -3,21 +3,21 @@ import React from 'react'
 export default function Tools() {
     return (
         <>
-            <h1>Araçlar</h1>
-            <p className="description">Kullandığım ekipmanlar ve yazılımlar. Yenileri geldikçe güncelleyeceğim</p>
+            <h1>tools</h1>
+            <p className="description">equipment and software I use. I&apos;ll update as new ones arrive.</p>
 
-            <h3>Ekipmanlar</h3>
+            <h3>stack</h3>
             <ul>
-                <li>Apple Macbook Pro M2 2022</li>
-                <li>Apple iPhone 11 - <i>evet, hala</i></li>
+                <li>Apple Macbook Pro M2 - 2022</li>
+                <li>Apple iPhone 11 - <i>yes, still...</i></li>
                 <li>Monster Abra A5 V16.6.6</li>
                 <li>Logitech MX Keys</li>
                 <li>Microsoft Bluetooth Ergonomic Mouse</li>
-                <li>Beats EP Kulaklık</li>
-                <li>MSI 27 OPTIX G273QF Gaming Monitör</li>
+                <li>Beats EP headphones</li>
+                <li>MSI 27 OPTIX G273QF Gaming Monitor</li>
             </ul>
 
-            <h3>Uygulamalar</h3>
+            <h3>app</h3>
             <ul>
                 <li>Brave Browser</li>
                 <li>Arc Browser</li>
