@@ -20,7 +20,7 @@ export default function Works() {
                         <div dangerouslySetInnerHTML={{ __html: work.description }} />
 
                         <div className='grid gap-8 my-8'>
-                            {work.projects.map(project => <WorkCard {...project} key={project.id} />)}
+                            {work?.projects?.map(project => <WorkCard {...project} key={project.id} />)}
                         </div>
                     </div>)}
             </div>

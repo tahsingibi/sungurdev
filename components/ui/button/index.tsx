@@ -1,5 +1,4 @@
 import React, { MouseEventHandler } from 'react'
-import styles from './style.module.scss'
 import { BSIcons, clsx } from '@/utils'
 
 type ButtonType = {
@@ -9,10 +8,9 @@ type ButtonType = {
     onClick?: MouseEventHandler<HTMLButtonElement>,
 }
 
-export default function Button({ text, icon, theme, onClick, ...props }: Readonly<ButtonType>) {
-
+export default function Button({ text, icon, onClick, ...props }: Readonly<ButtonType>) {
     return (
-        <button {...props} className={clsx([styles.button, !text && icon ? styles.onlyIcon : '', styles[`theme_${theme}`]])} onClick={onClick}>
+        <button {...props} className={`text-zinc-400 rounded px-3 py-1 flex gap-3 items-center justify-center transition-all duration-100 hover:bg-red-900/60 active:translate-y-0.5 ${!text && icon ? "aspect-square" : ''}`} onClick={onClick}>
             {icon && <BSIcons icon={icon} />}
             {text}
         </button>
