@@ -1,6 +1,5 @@
 import { Post } from "@/.contentlayer/generated"
 import { blogPosts as posts } from "@/utils/getPost";
-import styles from './style.module.scss'
 import Links from "@/components/ui/links";
 import { formatDate } from "@/utils";
 
@@ -18,11 +17,11 @@ export default function WriteContainer() {
       <p className="description">{content.description}</p>
       <hr />
       {!posts.length && <p>{content.notfound}</p>}
-      <div className={styles.list}>
+      <div className="grid gap-8">
         {posts.map((post: Post) => (
-          <Links href={post.url} key={post.url} className={styles.link} scroll={false}>
+          <Links href={post.url} key={post.url} className="grid gap-0.5 no-underline" scroll={false}>
             {post.title}
-            <div className={styles.info}>{post.category && post.category + ' •'} {formatDate(post.date)}</div>
+            <div className="text-zinc-400 font-normal">{post.category && post.category + ' •'} {formatDate(post.date)}</div>
           </Links>
         ))
         }

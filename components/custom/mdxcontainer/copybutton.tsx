@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import styles from './style.module.scss'
 import { copyClipboard } from "@/utils";
 import { BSIcons } from "@/utils";
 
@@ -11,9 +10,7 @@ export const CopyButton = ({ text }: { text: string }) => {
     await copyClipboard(text);
     setIsCopied(true);
 
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   const icon = isCopied ? "clipboard-check-fill" : "clipboard";
@@ -22,8 +19,8 @@ export const CopyButton = ({ text }: { text: string }) => {
     <button
       disabled={isCopied}
       onClick={copy}
-      className={styles.copy}>
-      <span><BSIcons icon={icon} /></span>
+      className="absolute right-2.5 top-2.5 aspect-square w-6 h-6 border rounded-lg transition-all duration-1000  block bg-zinc-900 border-zinc-800 text-zinc-400">
+      <span><BSIcons icon={icon} className="translate-y-4" /></span>
     </button>
   );
 };

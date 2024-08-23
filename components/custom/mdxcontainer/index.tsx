@@ -28,8 +28,8 @@ export default function MDXContainer({ post }: any) {
 
     return (
         <>
-            <h1 className={styles.title}>{title}</h1>
-            <span className={styles.info}>{formatDate(date)} {category && '– ' + category} </span>
+            <h1 className="mb-4">{title}</h1>
+            <span className="text-sm text-zinc-500 mb-8">{formatDate(date)} {category && '– ' + category} </span>
             <Component components={components} />
         </>
     )
