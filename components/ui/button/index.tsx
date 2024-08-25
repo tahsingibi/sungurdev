@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react'
-import { BSIcons, clsx } from '@/utils'
+import { BSIcons, } from '@/utils'
 
 type ButtonType = {
     text?: string,

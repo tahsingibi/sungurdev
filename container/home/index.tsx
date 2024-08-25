@@ -5,7 +5,7 @@ import db from '@/db.json'
 
 export default function Home() {
 
-  const about = db.about.replace("{lastwork}", db.works[0].name).replace("{lastworklink}", db.works[0].path)
+  const about = db.about.replaceAll("{lastwork}", db.works[0].name).replaceAll("{lastworklink}", db.works[0].path)
 
   return (
     <div className="py-4 grid gap-4">

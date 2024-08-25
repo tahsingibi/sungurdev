@@ -1,4 +1,3 @@
-export * from './clsx'
 export * from './bsIcons'
 export * from './getPost'
 export * from './isActivePage'
