@@ -10,15 +10,27 @@
     { "id": 1, "name": "works", "path": "/works" }
   ],
   "socials": [
-    { "id": 0, "icon": "github", "path": "https://github.com/tahsingibi" },
+    {
+      "id": 0,
+      "name": "github",
+      "icon": "github",
+      "path": "https://github.com/tahsingibi"
+    },
     {
       "id": 1,
       "icon": "linkedin",
+      "name": "linkedin",
       "path": "https://www.linkedin.com/in/tahsin-sungur/"
     },
-    { "id": 2, "icon": "twitter-x", "path": "https://x.com/tahsingibi" },
+    {
+      "id": 2,
+      "name": "x",
+      "icon": "twitter-x",
+      "path": "https://x.com/tahsingibi"
+    },
     {
       "id": 3,
+      "name": "mail",
       "icon": "envelope",
       "path": "mailto:mtahsinsungur+sungurdev@gmail.com"
     }
