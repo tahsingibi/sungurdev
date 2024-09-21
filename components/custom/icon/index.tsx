@@ -1,5 +1,6 @@
+
 import React from 'react'
 
-export function BSIcons({ icon }: any) {
+export function Icon({ icon }: any) {
     return <i className={`bi bi-${icon}`} />
 }
