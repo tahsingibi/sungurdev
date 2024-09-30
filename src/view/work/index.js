@@ -1,8 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import db from '@/db';
 import { Icon } from '@/src/components/icon';
+import Avatar from '@/src/components/avatar';
 
 export default function ExperienceView() {
   const { heading, description } = db.pages.works;
@@ -38,11 +38,16 @@ export default function ExperienceView() {
                   return (
                     <Link
                       key={id}
-                      className="flex items-center gap-4 active:translate-y-px transition-all relative before:transition-all before:absolute before:-z-10 before:left-1/2 before:top-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:size-full hover:before:bg-zinc-900/50 before:scale-y-125 before:scale-x-[1.025] before:rounded-lg group"
+                      className="flex items-center gap-4 active:translate-y-px transition-all relative before:transition-all before:absolute before:-z-10 before:left-1/2 before:top-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:size-full hover:before:bg-zinc-900/50 before:scale-y-125 before:scale-x-[1.025] before:rounded-lg group "
                       href={path}
                       target="_blank"
                     >
-                      <Avatar image={image} text={name} icon={icon} />
+                      <Avatar
+                        image={image}
+                        text={name}
+                        icon={icon}
+                        name={work.name}
+                      />
                       <p className="flex flex-col gap-1 text-pretty pr-12">
                         <span className="line-clamp-1">{name}</span>
                         <span className="text-sm opacity-60">
@@ -64,25 +69,5 @@ export default function ExperienceView() {
         ))}
       </div>
     </>
-  );
-}
-
-function Avatar({ image, text, icon }) {
-  return (
-    <figure className="relative size-12 bg-zinc-800/60 rounded-lg shrink-0 flex items-center justify-center has-[img]:bg-transparent">
-      {image && (
-        <Image
-          src={image}
-          fill
-          className="object-cover select-none pointer-events-none"
-        />
-      )}
-      {icon && <Icon icon={icon} className="text-xl" />}
-      {!image && !icon && (
-        <span className="select-none pointer-events-none">
-          {text?.slice(0, 2)}
-        </span>
-      )}
-    </figure>
   );
 }

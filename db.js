@@ -277,7 +277,7 @@ const db = {
   ],
   pages: {
     works: {
-      heading: 'works',
+      heading: 'experiences',
       description: 'summary of my background as a frontend developer.',
     },
   },

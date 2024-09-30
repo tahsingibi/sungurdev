@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={fontVariables}>
         <Header />
-        <div className="absolute w-full h-96 inset-0 top-0 z-[-9999] max-w-screen-sm bg-red-50 left-1/2 -translate-x-1/2 bg-gradient-to-br from-amber-950 via-zinc-950 to-zinc-950 blur-3xl opacity-30 pointer-events-none select-none" />
+        <div className="absolute w-full h-96 inset-0 top-0 z-[-9999] max-w-screen-sm bg-red-50 left-1/2 -translate-x-1/2 bg-gradient-to-br from-amber-600 via-zinc-950 to-zinc-950 blur-3xl opacity-30 pointer-events-none select-none" />
         <main className="container flex flex-col gap-12 my-10 relative z-10">
           {children}
         </main>
