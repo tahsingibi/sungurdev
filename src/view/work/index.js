@@ -18,7 +18,7 @@ export default function ExperienceView() {
           <div
             id={work.name}
             key={work.id}
-            className="flex flex-col gap-2 border-b border-zinc-800 pb-8 mb-8 last:pb-0 last:mb-0"
+            className="flex flex-col gap-2 border-b border-zinc-800 pb-8 mb-8 last:pb-0 last:mb-0 last:border-none"
           >
             <div className="flex flex-col gap-0">
               <h2 className="text-2xl leading-loose font-medium">
@@ -31,14 +31,14 @@ export default function ExperienceView() {
               dangerouslySetInnerHTML={{ __html: work.description }}
             />
 
-            <div className="grid gap-8 my-8 empty:hidden">
+            <div className="grid gap-1 my-8 empty:hidden">
               {work?.projects?.map(
-                ({ id, name, image, live, repo, title, year, tech, icon }) => {
+                ({ id, name, image, live, repo, year, tech, icon }) => {
                   const path = live || repo || '#';
                   return (
                     <Link
                       key={id}
-                      className="flex items-center gap-4 active:translate-y-px transition-all relative before:transition-all before:absolute before:-z-10 before:left-1/2 before:top-1/2 before:-translate-y-1/2 before:-translate-x-1/2 before:size-full hover:before:bg-zinc-900/50 before:scale-y-125 before:scale-x-[1.025] before:rounded-lg group "
+                      className="flex items-center gap-4 active:translate-y-px transition-all relative group p-4 hover:bg-zinc-900/40 "
                       href={path}
                       target="_blank"
                     >

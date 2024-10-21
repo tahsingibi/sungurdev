@@ -14,37 +14,43 @@ export default function Work() {
   return (
     <div className="grid gap-8">
       <Heading id="works">works</Heading>
-      <div className="grid  gap-2">
+      <div className="grid gap-1">
         {work.map(({ id, name, explain, repo, live, icon = 'code' }) => (
           <div
             key={id}
-            className="flex hover:bg-zinc-900/40 gap-6 p-4 rounded-lg group transition-all overflow-hidden relative"
+            className="flex max-sm:flex-col max-sm:gap-4 sm:justify-between hover:bg-zinc-900/40 p-4 rounded-lg group transition-all overflow-hidden relative"
           >
-            <Icon icon={icon} className="text-3xl" />
-            <div className="grid mt-auto gap-4  transition-all duration-300 pr-8">
-              <div className="grid gap-1">
-                <h6 className="font-medium text-lg">{name}</h6>
-                <p className="text-sm text-zinc-400">{explain}</p>
-              </div>
-              <div className="transition-all duration-500 flex gap-2 [&>a]:font-mono [&>a:active]:translate-y-px [&>a]:uppercase text-xs [&>a:hover]:opacity-60">
-                {repo && (
-                  <Link href={repo} target="_blank">
-                    Github
+            <div className="flex sm:justify-between gap-6 overflow-hidden relative">
+              <Icon icon={icon} className="text-3xl" />
+              <div className="grid mt-auto gap-4  transition-all duration-300 pr-8">
+                <div className="grid ">
+                  <Link
+                    href={live || repo || '#'}
+                    className="font-medium text-lg"
+                    target="_blank"
+                  >
+                    {name}
+                    <Icon
+                      icon="arrow-up-short"
+                      className="text-2xl inline-block rotate-45 -translate-y-0.5 translate-x-3 leading-none opacity-0 group-hover:opacity-100 transition-all duration-150 size-0"
+                    />
                   </Link>
-                )}
-                {live && (
-                  <Link href={live} target="_blank">
-                    live
-                  </Link>
-                )}
+                  <p className="text-sm opacity-60">{explain}</p>
+                </div>
               </div>
             </div>
-            <div className="absolute size-96 -bottom-40 right-0 translate-x-[125%] group-hover:translate-x-[75%] bg-gradient-to-br from-white/5 rounded-full -z-[1] transition-all duration-500 opacity-70" />
-            <div className="absolute size-96 -bottom-40 right-0 translate-x-[125%] group-hover:translate-x-[75%] bg-white/5 rounded-full scale-110 -z-[2] transition-all duration-150 opacity-70" />
-            <Icon
-              icon="arrow-right"
-              className="absolute bottom-2 right-8 text-2xl translate-x-96 group-hover:translate-x-0 transition-all duration-500 "
-            />
+            <div className="transition-all duration-500 flex gap-2 [&>a]:font-mono [&>a:active]:translate-y-px [&>a]:uppercase text-xs [&>a:hover]:opacity-60 sm:ml-auto sm:mt-auto max-sm:w-full max-sm:pl-14">
+              {repo && (
+                <Link href={repo} target="_blank">
+                  Github
+                </Link>
+              )}
+              {live && (
+                <Link href={live} target="_blank">
+                  live
+                </Link>
+              )}
+            </div>
           </div>
         ))}
       </div>
