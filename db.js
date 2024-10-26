@@ -8,7 +8,8 @@ import {
 } from './src/assets/img';
 
 const db = {
-  name: 'tahsin sungur',
+  name: 'Tahsin Sungur',
+  slug: 'tahsingibi',
   title: 'frontend developer',
   jobSeeking: true,
   resume: '/doc/TahsinSUNGUR_08_2024.pdf',
@@ -16,8 +17,10 @@ const db = {
     "i'm a <span class='mark'>frontend developer</span> based in Izmir, and currently working at <a href={lastworklink}>{lastwork}</a>, where I code interfaces and design animations for our individual and corporate clients, prioritizing user experience.",
   image: profile,
   nav: [
-    { id: 0, name: 'home', path: '/' },
-    { id: 1, name: 'experience', path: '/works' },
+    { id: 0, name: 'home', path: '/', icon: 'house' },
+    { id: 1, name: 'about', path: '/about', icon: 'person-fill' },
+    { id: 2, name: 'experience', path: '/works', icon: 'code-slash' },
+    { id: 3, name: 'write', path: '#/write', icon: 'feather2' },
   ],
   social: [
     {

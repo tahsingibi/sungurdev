@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: 'var(--font-inter)',
+        geist: 'var(--geist)',
         mono: 'var(--geist-mono)',
       },
     },
@@ -19,7 +20,7 @@ module.exports = {
     plugin(function ({ addComponents }) {
       addComponents({
         '.container': {
-          maxWidth: '576px',
+          maxWidth: '912px',
           padding: '0px 16px',
           marginLeft: 'auto',
           marginRight: 'auto',

@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import { fontVariables as geistVariables } from '../assets/fonts/geist';
+import Shine from '../components/shine';
+import Sidebar from '../components/sidebar';
 
 export const metadata = {
   title: 'Create Next App',
@@ -28,11 +30,14 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={fontVariables}>
-        <Header />
-        <div className="absolute w-full h-96 inset-0 top-0 z-[-9999] max-w-screen-sm bg-red-50 left-1/2 -translate-x-1/2 bg-gradient-to-br from-amber-600 via-zinc-950 to-zinc-950 blur-3xl opacity-30 pointer-events-none select-none" />
-        <main className="container flex flex-col gap-12 my-10 relative z-10">
-          {children}
-        </main>
+        {/* <Header /> */}
+        {/* <Shine /> */}
+        <section className="grid grid-cols-12 container gap-12 py-10">
+          <Sidebar />
+          <main className="flex flex-col gap-12 relative z-10 col-span-8">
+            {children}
+          </main>
+        </section>
         <Footer />
       </body>
     </html>

@@ -1,15 +1,15 @@
 import React from 'react';
-import ProfileCard from './profile-card';
 import About from './about';
 import Social from './social';
 import Experience from './experience';
 import Work from './work';
+import Hello from './hello';
 
 export default function HomeView() {
   return (
     <>
       <div className="grid gap-8">
-        <ProfileCard />
+        <Hello />
         <About />
         <Social />
       </div>
