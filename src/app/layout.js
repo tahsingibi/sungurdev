@@ -32,9 +32,9 @@ export default function RootLayout({ children }) {
       <body className={fontVariables}>
         {/* <Header /> */}
         {/* <Shine /> */}
-        <section className="grid grid-cols-12 container gap-12 py-10">
+        <section className="grid sm:grid-cols-12 container gap-12 py-10 max-sm:pt-28">
           <Sidebar />
-          <main className="flex flex-col gap-12 relative z-10 col-span-8">
+          <main className="flex flex-col gap-12 relative z-10 sm:col-span-8">
             {children}
           </main>
         </section>
