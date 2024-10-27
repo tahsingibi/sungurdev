@@ -1,29 +1,27 @@
 'use client';
 import React, { useRef, useState } from 'react';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/tokyo-night-dark.css'; // veya istediğiniz başka bir stil
+import 'highlight.js/styles/tokyo-night-dark.css';
+import { Icon } from '@/src/components/icon';
 
 export default function Code(props) {
   const [copied, setCopied] = useState(false);
   const codeRef = useRef(null);
 
-  // Extract the language from the className
   const className = props.className || '';
   const matches = className.match(/language-(?<lang>.*)/);
   const language = matches?.groups?.lang || '';
 
-  // Handle copy functionality
   const handleCopy = () => {
     if (codeRef.current) {
       const codeText = codeRef.current.innerText;
       navigator.clipboard.writeText(codeText).then(() => {
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+        setTimeout(() => setCopied(false), 2000);
       });
     }
   };
 
-  // Syntax highlighting without useEffect
   const highlightedCode = hljs.highlightAuto(props.children, [language]).value;
 
   return (
@@ -37,10 +35,16 @@ export default function Code(props) {
         </div>
         <button
           type="button"
-          className="text-gray-300 hover:text-white"
+          className="text-gray-300 hover:text-white group size-7 bg-zinc-900 flex items-center justify-center overflow-hidden rounded-lg relative"
           onClick={handleCopy}
+          data-copied={copied}
         >
-          {copied ? 'Copied!' : 'Copy'}
+          <span className="group-data-[copied='true']:translate-y-full group-data-[copied='true']:scale-0 transition-all duration-150 ease-[cubic-bezier(0.4,_0,_0.8,_1)]">
+            <Icon icon="clipboard" />
+          </span>
+          <span className="absolute -translate-y-full scale-0 transition-all group-data-[copied='true']:scale-100 group-data-[copied='true']:translate-y-0 duration-150 ease-[cubic-bezier(0.4,_0,_0.8,_1)]">
+            <Icon icon="clipboard-check-fill" />
+          </span>
         </button>
       </div>
       <pre className="p-4 rounded-b-lg overflow-x-auto bg-zinc-950 m-0 !max-h-96 !overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-zinc-900 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-zinc-800 [&::-webkit-scrollbar-thumb]:rounded-full ">

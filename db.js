@@ -18,9 +18,8 @@ const db = {
   image: profile,
   nav: [
     { id: 0, name: 'home', path: '/', icon: 'house' },
-    { id: 1, name: 'about', path: '/about', icon: 'person-fill' },
-    { id: 2, name: 'experience', path: '/works', icon: 'code-slash' },
-    { id: 3, name: 'write', path: '/write', icon: 'feather2' },
+    { id: 1, name: 'experience', path: '/works', icon: 'code-slash' },
+    { id: 2, name: 'write', path: '/write', icon: 'feather2' },
   ],
   social: [
     {

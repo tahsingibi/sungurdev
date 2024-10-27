@@ -3,6 +3,7 @@ import YouTube from './youtube';
 import Code from './code';
 import InlineCode from './inline-code';
 import Pre from './pre';
+import Tweet from './tweet';
 
 export function useMDXComponents(components) {
   return {
@@ -16,6 +17,7 @@ export function useMDXComponents(components) {
       }
       return <InlineCode>{children}</InlineCode>;
     },
+    Tweet: Tweet,
     h1: (props) => <h1 className="text-4xl font-black pb-4" {...props} />,
     h2: (props) => <h2 className="text-3xl font-bold pb-4" {...props} />,
     h3: (props) => <h3 className="text-2xl font-semibold pb-4 " {...props} />,

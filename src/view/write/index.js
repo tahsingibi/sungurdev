@@ -3,15 +3,13 @@ import posts from '@/src/lib/get-posts';
 import db from '@/db';
 
 export default async function WriteView() {
-  const { write } = db.pages;
+  const { heading, description, error } = db.pages.write;
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4">
-        <h2 className="text-3xl text-wrap font-medium text-white capitalize">
-          {write.heading}
-        </h2>
-        <p className="text-zinc-500">{write.description}</p>
+      <div className="flex flex-col leading-loose gap-2">
+        <h2 className="text-4xl text-white">{heading}</h2>
+        <p>{description}</p>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -27,7 +25,7 @@ export default async function WriteView() {
             </Link>
           ))
         ) : (
-          <span>{write.error}</span>
+          <span>{error}</span>
         )}
       </div>
     </div>
