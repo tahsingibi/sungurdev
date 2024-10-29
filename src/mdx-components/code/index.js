@@ -1,16 +1,23 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import { Icon } from '@/src/components/icon';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/tokyo-night-dark.css';
-import { Icon } from '@/src/components/icon';
+import { useRef, useState } from 'react';
 
 export default function Code(props) {
   const [copied, setCopied] = useState(false);
   const codeRef = useRef(null);
 
   const className = props.className || '';
-  const matches = className.match(/language-(?<lang>.*)/);
+
+  // `language-<dil>/filename=<dosya_adi>` formatını eşleştirmek için regex
+  const matches = className.match(
+    /language-(?<lang>[^/]+)(?:\/filename=(?<fileName>.+))?/
+  );
+
+  // language ve fileName ayrıştırma
   const language = matches?.groups?.lang || '';
+  const fileName = matches?.groups?.fileName || '';
 
   const handleCopy = () => {
     if (codeRef.current) {
@@ -31,7 +38,9 @@ export default function Code(props) {
           <span className="rounded-full size-4 inline-flex bg-zinc-800" />
           <span className="rounded-full size-4 inline-flex bg-zinc-800" />
           <span className="rounded-full size-4 inline-flex bg-zinc-800" />
-          <span className="text-gray-300 ml-2 font-sans">{language}</span>
+          <span className="text-gray-300 ml-2 font-sans">
+            {fileName || language} {/* Dosya adı veya dil */}
+          </span>
         </div>
         <button
           type="button"
@@ -50,7 +59,7 @@ export default function Code(props) {
       <pre className="p-4 rounded-b-lg overflow-x-auto bg-zinc-950 m-0 !max-h-96 !overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-zinc-900 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-zinc-800 [&::-webkit-scrollbar-thumb]:rounded-full ">
         <code
           ref={codeRef}
-          className={`language-${language} text-xs  font-light slashed-zero whitespace-pre-wrap leading-relaxed `}
+          className={`language-${language} text-xs font-light slashed-zero whitespace-pre-wrap leading-relaxed `}
           dangerouslySetInnerHTML={{ __html: highlightedCode }}
         />
       </pre>

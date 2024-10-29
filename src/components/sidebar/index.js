@@ -1,7 +1,6 @@
-import React from 'react';
-import Avatar from '../avatar';
 import db from '@/db';
 import Link from '../active-link';
+import Avatar from '../avatar';
 import { Icon } from '../icon';
 
 export default function Sidebar() {
@@ -10,7 +9,7 @@ export default function Sidebar() {
     <div className="sm:col-span-4 flex  sm:flex-col gap-6 fixed w-full  inset-0 max-sm:p-4 sm:sticky top-0 sm:top-10 h-fit max-sm:flex-wrap z-50 max-sm:bg-zinc-950 max-sm:max-h-20 max-sm:has-[input:checked]:max-h-screen transition-all duration-300 ease-[cubic-bezier(1,_0.1,_1.9,_1.5)]">
       <input type="checkbox" className="sr-only peer" id="menu" />
       <div className="flex sm:flex-col gap-3 max-sm:w-fit relative z-10 sm:pl-3">
-        <Link href="/">
+        <Link href="/" className="w-fit">
           <Avatar
             image="/img/profile.jpeg"
             className="size-12 sm:size-16 sm:!rounded-2xl overflow-hidden"

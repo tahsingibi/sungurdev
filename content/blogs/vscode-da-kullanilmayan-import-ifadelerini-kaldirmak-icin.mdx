@@ -1,0 +1,18 @@
+export const metadata = {
+  title: `VSCode'da kullanılmayan import ifadelerini kaldırmak`,
+  publishDate: '2024-10-29',
+  description: `VSCode'da kullanılmayan import ifadelerini kaldırmak için settings.json örneği.`,
+  category: 'Note',
+};
+
+VSCode'da kullanılmayan import ifadelerini kaldırmak için `.vscode/settings.json` dosyanıza eklemeniz gereken kod;
+
+```javascript/filename=.vscode/settings.json
+{
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
+}
+```
+
+<Source link={['https://x.com/ZaferAyan/status/1740307807579045967']} />

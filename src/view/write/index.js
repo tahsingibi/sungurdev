@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import posts from '@/src/lib/get-posts';
 import db from '@/db';
+import posts from '@/src/lib/get-posts';
+import Link from 'next/link';
 
 export default async function WriteView() {
   const { heading, description, error } = db.pages.write;
@@ -21,7 +21,9 @@ export default async function WriteView() {
               key={post.slug}
             >
               <span className="text-xl">{post.metadata.title}</span>
-              <span className="text-zinc-600">{post.metadata.date}</span>
+              <span className="text-zinc-600">
+                in {post?.metadata?.category}, {post.metadata.date}
+              </span>
             </Link>
           ))
         ) : (

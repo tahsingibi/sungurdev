@@ -1,15 +1,16 @@
-import React from 'react';
-import YouTube from './youtube';
 import Code from './code';
 import InlineCode from './inline-code';
 import Pre from './pre';
+import Source from './source';
 import Tweet from './tweet';
+import YouTube from './youtube';
 
 export function useMDXComponents(components) {
   return {
     ...components,
     YouTube,
     pre: Pre,
+    Source,
     code: (props) => {
       const { className, children } = props;
       if (className) {
