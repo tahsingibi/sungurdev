@@ -1,10 +1,9 @@
-import React from 'react';
 import db from '@/db';
-import Link from 'next/link';
 import { Icon } from '@/src/components/icon';
+import Link from 'next/link';
 
 export default function Social() {
-  const { social, resume, jobSeeking } = db;
+  const { social, resume, hiring } = db;
   return (
     <div className="flex items-center gap-1 flex-wrap  [&>a]:shrink-0 [&>a]:bg-zinc-900/65 [&>a]:grid [&>a]:place-items-center [&>a]:transition-all [&>a]:rounded [&>a:hover]:bg-zinc-900/50 [&>a:active]:translate-y-px ">
       {social.map(({ id, icon, path }) => (
@@ -12,7 +11,7 @@ export default function Social() {
           <Icon icon={icon} className="translate-y-px" />
         </Link>
       ))}
-      {jobSeeking && resume && (
+      {hiring && resume && (
         <Link
           href={resume}
           target="_blank"
