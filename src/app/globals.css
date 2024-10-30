@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply scroll-smooth scroll-p-20 [scrollbar-gutter:stable_both-edges];
+}
+
+body {
+  @apply font-sans antialiased bg-zinc-950 text-zinc-300;
+}
+
+a {
+  @apply transition-all hover:transition-all;
+}
