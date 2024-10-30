@@ -1,18 +1,19 @@
 import {
-  profile,
   hypeandbuzz,
-  sungurdev,
-  tahsinbeycom,
-  mallconomy,
   hypeople,
+  mallconomy,
+  profile,
+  sungurdev,
 } from './src/assets/img';
 
 const db = {
   name: 'Tahsin Sungur',
   slug: 'tahsingibi',
-  title: 'frontend developer',
-  jobSeeking: true,
+  title: 'Frontend Developer',
+  keywords: ['tahsin', 'sungur', 'frontend', 'developer', 'izmir', 'react'],
+  hiring: true,
   resume: '/doc/TahsinSUNGUR_08_2024.pdf',
+  url: 'https://sungur.dev',
   about:
     "i'm a <span class='mark'>frontend developer</span> based in Izmir, and currently working at <a href={lastworklink}>{lastwork}</a>, where I code interfaces and design animations for our individual and corporate clients, prioritizing user experience.",
   image: profile,

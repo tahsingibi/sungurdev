@@ -1,6 +1,6 @@
+import { format } from 'date-fns';
 import fs from 'node:fs';
 import path from 'node:path';
-import { format } from 'date-fns';
 
 async function getAllPosts() {
   const dir = path.join(process.cwd(), 'content', 'blogs');
@@ -57,16 +57,20 @@ export async function getPost({ slug }) {
     }
 
     const { metadata } = await import(`@/content/blogs/${slug}.mdx`);
-    const formattedDate = format(
-      new Date(metadata?.publishDate),
-      'MMMM dd, yyyy'
-    );
-    return {
-      slug,
-      metadata: { ...metadata, date: formattedDate },
-    };
+    if (metadata) {
+      const formattedDate = format(
+        new Date(metadata?.publishDate),
+        'MMMM dd, yyyy'
+      );
+      return {
+        slug,
+        metadata: { ...metadata, date: formattedDate },
+      };
+    }
+
+    return {};
   } catch (error) {
     console.error('Error fetching post:', error);
-    throw new Error(`Unable to fetch the post for slug: ${slug}`);
+    // throw new Error(`Unable to fetch the post for slug: ${slug}`);
   }
 }
