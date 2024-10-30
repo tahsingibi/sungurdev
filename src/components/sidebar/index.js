@@ -9,26 +9,28 @@ export default function Sidebar() {
     <div className="sm:col-span-4 flex  sm:flex-col gap-6 fixed w-full  inset-0 max-sm:p-4 sm:sticky top-0 sm:top-10 h-fit max-sm:flex-wrap z-50 max-sm:bg-zinc-950 max-sm:max-h-20 max-sm:has-[input:checked]:max-h-screen transition-all duration-300 ease-[cubic-bezier(1,_0.1,_1.9,_1.5)]">
       <input type="checkbox" className="sr-only peer" id="menu" />
       <div className="flex sm:flex-col gap-3 max-sm:w-fit relative z-10 sm:pl-3">
-        <Link href="/" className="w-fit relative">
+        <Link href="/" className="w-fit " data-hiring={hiring}>
           <Avatar
             image="/img/profile.jpeg"
             className="size-12 sm:size-16 sm:!rounded-2xl overflow-hidden"
           />
-          {hiring && (
-            <span className="absolute bottom-0 right-0 -translate-y-2 translate-x-4">
-              <span
-                className="absolute right-3 bg-green-500 size-3 rounded-full before:absolute before:block before:size-3 before:bg-green-600 before:-z-10 before:inset-0 before:scale-x-105 before:rounded-full before:animate-ping  
-    after:absolute after:block after:text-sm after:content-[attr(data-content)] after:whitespace-nowrap after:bg-zinc-900 after:px-2 after:py-1 after:rounded after:origin-left after:scale-0 hover:after:scale-100 after:left-full after:translate-x-2 after:-top-1/2 after:transition-all after:duration-75"
-                data-content="Open to work"
-              ></span>
-            </span>
-          )}
         </Link>
-        <div className="flex flex-col max-sm:hidden">
+        <div className="flex flex-col">
           <h2 className="text-lg sm:text-2xl font-semibold lowercase">
             {name}
           </h2>
-          <span className="text-zinc-500">@{slug}</span>
+          <span className="text-zinc-500 inline-flex items-center relative">
+            @{slug}
+            {hiring && (
+              <span className="relative">
+                <span
+                  className="absolute -right-4 top-1/2 -translate-y-1/2 bg-green-500 size-2 rounded-full before:absolute before:block before:size-2 before:bg-green-600 before:-z-10 before:inset-0 before:scale-x-105 before:rounded-full before:animate-ping  
+    after:absolute after:block after:text-xs after:content-[attr(data-content)] after:whitespace-nowrap after:bg-green-700/20 after:border after:border-green-700/20 after:text-green-600 after:px-1 after:py-0.5 after:rounded after:origin-left after:scale-0 hover:after:scale-100 after:left-full after:translate-x-2 after:-top-1/2  after:-translate-y-1 after:transition-all after:duration-75"
+                  data-content="Open to work"
+                ></span>
+              </span>
+            )}
+          </span>
         </div>
       </div>
 

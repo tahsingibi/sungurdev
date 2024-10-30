@@ -1,6 +1,7 @@
 import { getPost } from '@/src/lib/get-posts';
 import dynamic from 'next/dynamic';
 import NotFound from '../../not-found';
+import BackButton from './back-button';
 
 export default async function WriteDetailView({ params, ...props }) {
   const { slug } = params;
@@ -11,6 +12,7 @@ export default async function WriteDetailView({ params, ...props }) {
     return (
       <div className="w-full flex flex-col gap-12 !max-w-full">
         <div className="flex flex-col gap-2 border-b border-zinc-900 pb-12">
+          <BackButton />
           <h3 className="text-4xl font-medium">{title}</h3>
           <p className="text-zinc-600">
             <span className="inline-flex gap-2 items-center">
