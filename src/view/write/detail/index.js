@@ -7,14 +7,19 @@ export default async function WriteDetailView({ params, ...props }) {
   const post = await getPost(params);
   if (post) {
     const MDXContent = dynamic(() => import(`@/content/blogs/${slug}.mdx`));
-
+    const { category, date, title } = post.metadata;
     return (
       <div className="w-full flex flex-col gap-12 !max-w-full">
-        <div className="flex flex-col gap-2">
-          <h3 className="text-4xl font-medium">{post.metadata.title}</h3>
+        <div className="flex flex-col gap-2 border-b border-zinc-900 pb-12">
+          <h3 className="text-4xl font-medium">{title}</h3>
           <p className="text-zinc-600">
-            <span>
-              in {post.metadata.category} - {post.metadata.date}
+            <span className="inline-flex gap-2 items-center">
+              {category && (
+                <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded">
+                  {category}
+                </span>
+              )}
+              {date}
             </span>
           </p>
         </div>

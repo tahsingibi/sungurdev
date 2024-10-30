@@ -14,18 +14,27 @@ export default async function WriteView() {
 
       <div className="flex flex-col gap-2">
         {posts.length ? (
-          posts.map((post) => (
-            <Link
-              className="flex flex-col  p-4 hover:bg-zinc-900/25 rounded-lg active:translate-y-px transition-all"
-              href={`/write/${post.slug}`}
-              key={post.slug}
-            >
-              <span className="text-xl">{post.metadata.title}</span>
-              <span className="text-zinc-600">
-                in {post?.metadata?.category}, {post.metadata.date}
-              </span>
-            </Link>
-          ))
+          posts.map((post) => {
+            const { title, category, date } = post.metadata;
+            return (
+              <section
+                className="flex flex-col gap-1 p-4 hover:bg-zinc-900/25 rounded-lg"
+                key={post.slug}
+              >
+                <Link href={`/write/${post.slug}`} className="text-xl w-fit">
+                  {title}
+                </Link>
+                <span className="text-zinc-600 inline-flex gap-2 items-center">
+                  {category && (
+                    <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded">
+                      {category}
+                    </span>
+                  )}
+                  {date && <span>{date}</span>}{' '}
+                </span>
+              </section>
+            );
+          })
         ) : (
           <span>{error}</span>
         )}
