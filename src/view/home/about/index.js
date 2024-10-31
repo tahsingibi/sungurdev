@@ -9,8 +9,8 @@ export default function About() {
     .replaceAll('{lastworklink}', db.experience[0].path);
 
   return (
-    <aside className="flex flex-col gap-8">
-      <section className="flex gap-3 w-full  relative z-10">
+    <aside className="flex flex-col gap-4">
+      <section className="flex gap-3 w-full relative z-10">
         <Avatar
           image="/img/profile.jpeg"
           className="size-12 sm:size-16 sm:!rounded-2xl overflow-hidden"
@@ -35,9 +35,6 @@ export default function About() {
         )}
       </section>
       <div className="flex flex-col gap-4">
-        <div className="text-3xl text-wrap lowercase">
-          hi, i&apos;m <span className="font-medium text-white">{db.name}</span>
-        </div>
         <div
           dangerouslySetInnerHTML={{ __html: about }}
           className="text-zinc-400 [&>.mark]:text-white [&>.mark]:font-medium [&>a]:text-white [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:decoration-wavy leading-loose"

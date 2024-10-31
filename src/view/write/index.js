@@ -9,7 +9,7 @@ export default async function WriteView() {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col leading-loose gap-2 border-b border-zinc-900 pb-12">
         <h2 className="text-4xl text-white">{heading}</h2>
-        <p>{description}</p>
+        <p className="text-zinc-500">{description}</p>
       </div>
 
       <div className="flex flex-col gap-2">
