@@ -9,16 +9,14 @@ export default function About() {
     .replaceAll('{lastworklink}', db.experience[0].path);
 
   return (
-    <aside className="flex flex-col gap-4">
-      <section className="flex gap-3 w-full relative z-10">
+    <aside className="flex flex-col gap-8">
+      <section className="flex items-center gap-4 w-full relative z-10">
         <Avatar
           image="/img/profile.jpeg"
-          className="size-12 sm:size-16 sm:!rounded-2xl overflow-hidden"
+          className="size-010 overflow-hidden"
         />
         <div className="flex flex-col">
-          <h2 className="text-lg sm:text-2xl font-semibold lowercase">
-            {name}
-          </h2>
+          <h2 className="text-lg sm:text-xl lowercase">{name}</h2>
           <span className="text-zinc-500 inline-flex items-center relative">
             @{slug}
           </span>
@@ -34,10 +32,10 @@ export default function About() {
           </span>
         )}
       </section>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <div
           dangerouslySetInnerHTML={{ __html: about }}
-          className="text-zinc-400 [&>.mark]:text-white [&>.mark]:font-medium [&>a]:text-white [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:decoration-wavy leading-loose"
+          className="text-zinc-400 [&>.mark]:font-semibold  [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-zinc-300 leading-loose"
         />
         <Social />
       </div>

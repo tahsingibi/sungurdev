@@ -58,7 +58,7 @@ module.exports = {
     plugin(function ({ addComponents }) {
       addComponents({
         '.container': {
-          maxWidth: '560px',
+          maxWidth: '490px',
           padding: '0px 16px',
           marginLeft: 'auto',
           marginRight: 'auto',

@@ -1,8 +1,8 @@
-import React from 'react';
 import db from '@/db';
+import Avatar from '@/src/components/avatar';
+import { Icon } from '@/src/components/icon';
 import Link from 'next/link';
 import Heading from '../block-heading';
-import { Icon } from '@/src/components/icon';
 
 export default function Work() {
   const { experience } = db;
@@ -12,7 +12,7 @@ export default function Work() {
     .projects.slice(0, 6);
 
   return (
-    <div className="grid gap-8">
+    <div className="grid gap-2">
       <Heading id="works">works</Heading>
       <div className="grid gap-1">
         {work.map(({ id, name, explain, repo, live, icon = 'code' }) => (
@@ -21,12 +21,15 @@ export default function Work() {
             className="flex max-sm:flex-col max-sm:gap-4 sm:justify-between hover:bg-zinc-900/40 p-4 rounded-lg group transition-all overflow-hidden relative"
           >
             <div className="flex sm:justify-between gap-6 overflow-hidden relative">
-              <Icon icon={icon} className="text-3xl" />
-              <div className="grid mt-auto gap-4  transition-all duration-300 pr-8">
+              <Avatar
+                icon={icon}
+                className="text-xl !bg-transparent translate-y-1 size-8"
+              />
+              <div className="grid mt-auto gap-4 transition-all duration-300 pr-8">
                 <div className="grid ">
                   <Link
                     href={live || repo || '#'}
-                    className="font-medium text-lg"
+                    className="font-medium"
                     target="_blank"
                   >
                     {name}
@@ -35,7 +38,7 @@ export default function Work() {
                       className="text-2xl inline-block rotate-45 -translate-y-0.5 translate-x-3 leading-none opacity-0 group-hover:opacity-100 transition-all duration-150 size-0"
                     />
                   </Link>
-                  <p className="text-sm opacity-60">{explain}</p>
+                  <p className="text-sm text-zinc-500">{explain}</p>
                 </div>
               </div>
             </div>

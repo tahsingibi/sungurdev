@@ -13,8 +13,8 @@ export default async function WriteDetailView({ params, ...props }) {
       <div className="w-full flex flex-col gap-12 !max-w-full">
         <div className="flex flex-col gap-2 border-b border-zinc-900 pb-12">
           <BackButton />
-          <h3 className="text-4xl font-medium">{title}</h3>
-          <p className="text-zinc-600">
+          <h3 className="text-2xl font-medium">{title}</h3>
+          <p className="text-zinc-600 text-sm">
             <span className="inline-flex gap-2 items-center">
               {category && (
                 <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded">
@@ -25,7 +25,7 @@ export default async function WriteDetailView({ params, ...props }) {
             </span>
           </p>
         </div>
-        <article className="prose max-w-full grow">
+        <article className="prose max-w-full grow prose-p:text-base">
           <MDXContent />
         </article>
       </div>

@@ -24,7 +24,7 @@ export default async function WriteView() {
                 <Link href={`/write/${post.slug}`} className="text-xl w-fit">
                   {title}
                 </Link>
-                <span className="text-zinc-600 inline-flex gap-2 items-center">
+                <span className="text-zinc-600 inline-flex gap-2 items-center text-sm">
                   {category && (
                     <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded">
                       {category}
