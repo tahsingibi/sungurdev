@@ -11,11 +11,22 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
+const inter = localFont({
+  src: './InterVariable.woff2',
+  variable: '--inter',
+  weight: '100 900',
+});
+
 const fonts = {
   geistSans,
   geistMono,
+  inter,
 };
 
-const fontVariables = [geistSans.variable, geistMono.variable].join(' ');
+const fontVariables = [
+  geistSans.variable,
+  geistMono.variable,
+  inter.variable,
+].join(' ');
 
-export { geistSans, geistMono, fonts, fontVariables };
+export { fontVariables, fonts, geistMono, geistSans, inter };

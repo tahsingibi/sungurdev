@@ -1,6 +1,6 @@
-import { fontVariables } from '../assets/fonts/geist';
+import { fontVariables } from '../assets/fonts';
 import Footer from '../components/footer';
-import Sidebar from '../components/sidebar';
+import Header from '../components/header';
 import { layoutMetadata } from '../metadata';
 import './globals.css';
 
@@ -16,13 +16,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={fontVariables}>
-        <section className="grid sm:grid-cols-12 container gap-12 py-10 max-sm:pt-28">
-          <Sidebar />
-          <main className="flex flex-col gap-12 relative z-10 sm:col-span-8">
-            {children}
-          </main>
+        <section className="container flex flex-col gap-12 relative z-10">
+          <Header />
+          <main className="flex flex-col gap-12">{children}</main>
+          <Footer />
         </section>
-        <Footer />
       </body>
     </html>
   );

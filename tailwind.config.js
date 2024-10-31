@@ -49,7 +49,7 @@ module.exports = {
         },
       }),
       fontFamily: {
-        sans: 'var(--geist)',
+        sans: 'var(--inter)',
         mono: 'var(--geist-mono)',
       },
     },
@@ -58,7 +58,7 @@ module.exports = {
     plugin(function ({ addComponents }) {
       addComponents({
         '.container': {
-          maxWidth: '912px',
+          maxWidth: '560px',
           padding: '0px 16px',
           marginLeft: 'auto',
           marginRight: 'auto',

@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply font-sans antialiased bg-zinc-950 text-zinc-300;
+  @apply font-sans antialiased bg-zinc-950 text-zinc-300 ![font-feature-settings:'liga',_'calt',_'cv06',_'cv11',_'cv05',_'ss01'];
 }
 
 a {

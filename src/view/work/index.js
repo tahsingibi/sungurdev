@@ -1,15 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
 import db from '@/db';
-import { Icon } from '@/src/components/icon';
 import Avatar from '@/src/components/avatar';
+import { Icon } from '@/src/components/icon';
+import Link from 'next/link';
 
 export default function ExperienceView() {
   const { heading, description } = db.pages.works;
   const { experience } = db;
   return (
     <>
-      <div className="flex flex-col leading-loose gap-2">
+      <div className="flex flex-col leading-loose gap-2 border-b border-zinc-900 pb-12">
         <h2 className="text-4xl text-white">{heading}</h2>
         <p>{description}</p>
       </div>

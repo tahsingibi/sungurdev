@@ -39,7 +39,7 @@ export default function Code(props) {
           <span className="rounded-full size-4 inline-flex bg-zinc-800" />
           <span className="rounded-full size-4 inline-flex bg-zinc-800" />
           <span className="text-gray-300 ml-2 font-sans">
-            {fileName || language} {/* Dosya adı veya dil */}
+            {fileName || language}
           </span>
         </div>
         <button
