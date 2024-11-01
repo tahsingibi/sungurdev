@@ -165,7 +165,6 @@ const db = {
           name: 'Bountyhub',
           explain: 'Storybook for Bountyhub application.',
           tech: 'React, Storybook',
-          repo: 'https://github.com/tahsingibi/bountyhub',
           live: 'https://bountyhub-storybook.vercel.app/',
           year: 2023,
         },
