@@ -1,10 +1,4 @@
-import {
-  hypeandbuzz,
-  hypeople,
-  mallconomy,
-  profile,
-  sungurdev,
-} from './src/assets/img';
+import { hypeandbuzz, hypeople, mallconomy, profile } from './src/assets/img';
 
 const db = {
   name: 'Tahsin Sungur',
@@ -105,6 +99,7 @@ const db = {
           id: 'M005',
           name: 'Admin Dashboard',
           live: '',
+          icon: 'kanban',
           year: '2022',
           tech: 'React, TypeScript',
         },
@@ -112,7 +107,7 @@ const db = {
     },
     {
       id: 0,
-      image: sungurdev,
+      icon: 'braces',
       name: 'Freelance',
       title: 'Frontend Developer',
       year: '2016 - 2022',

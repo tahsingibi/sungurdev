@@ -10,7 +10,7 @@ export default function Header() {
           <Link
             key={id}
             href={path}
-            className="flex items-center gap-2  text-zinc-500 data-[disabled='true']:text-zinc-700 data-[disabled='true']:pointer-events-none data-[active='true']:text-white  underline-offset-4 data-[active='true']:underline"
+            className="flex items-center gap-2  text-zinc-500 data-[disabled='true']:text-zinc-700 data-[disabled='true']:pointer-events-none data-[active='true']:text-white underline-offset-4 data-[active='true']:underline work-link w-fit relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-0 after:bg-current after:transition-all after:duration-500 after:ease-hover hover:after:right-auto hover:after:left-0 hover:after:w-full"
             data-disabled={path.startsWith('#')}
           >
             {name}

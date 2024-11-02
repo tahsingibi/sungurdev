@@ -10,11 +10,15 @@ export default function BackButton() {
       href="#"
       onClick={() => router.back()}
       passHref
-      className="rounded-full p-2 bg-zinc-900 size-10 aspect-square grid place-items-center mb-2 group"
+      className="rounded-full p-2 bg-zinc-900 size-10 aspect-square grid place-items-center mb-2 group relative overflow-hidden"
     >
       <Icon
         icon="arrow-left-short"
-        className="text-lg group-hover:-translate-x-1 transition-all duration-300 ease-linear  aspect-square flex"
+        className="text-lg group-hover:-translate-x-8 transition-all duration-500  aspect-square flex scale-100 group-hover:scale-0 ease-[cubic-bezier(0.65,_0,_0.35,_1.5)]"
+      />
+      <Icon
+        icon="arrow-left-short"
+        className="text-lg  transition-all duration-500  aspect-square flex absolute left-1/2 top-1/2 -translate-y-1/2 scale-0 translate-x-full group-hover:scale-100 group-hover:-translate-x-1/2 ease-[cubic-bezier(0.65,_0,_0.35,_1.5)]"
       />
     </Link>
   );

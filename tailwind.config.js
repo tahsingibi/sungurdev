@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionTimingFunction: {
+        hover: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
@@ -51,6 +54,14 @@ module.exports = {
       fontFamily: {
         sans: 'var(--inter)',
         mono: 'var(--geist-mono)',
+      },
+      animation: {
+        shine: 'shine 0.85s ease-in-out',
+      },
+      keyframes: {
+        shine: {
+          '100%': { left: '125%' },
+        },
       },
     },
   },

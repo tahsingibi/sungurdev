@@ -46,6 +46,7 @@ export default function ExperienceView() {
                         text={name}
                         icon={icon}
                         name={work.name}
+                        className="size-8 !bg-transparent"
                       />
                       <p className="flex flex-col gap-1 text-pretty pr-12">
                         <span className="line-clamp-1">{name}</span>
@@ -55,10 +56,13 @@ export default function ExperienceView() {
                           {tech}
                         </span>
                       </p>
-                      <Icon
-                        icon="arrow-right-short"
-                        className="absolute scale-125 top-1/2 right-4 -translate-y-1/2 text-2xl leading-none inline-flex opacity-0 group-hover:opacity-100 transition-all duration-150"
-                      />
+
+                      <span className="absolute right-0 top-1/2 -translate-y-1/2 scale-0 group-hover:scale-100 inline-block group-hover:opacity-100 transition-all duration-150 ease-hover">
+                        <Icon
+                          icon="arrow-up-short"
+                          className="text-2xl inline-block rotate-90 -translate-y-0.5 scale-0 group-hover:scale-125 group-hover:-translate-x-2 leading-none size-0 "
+                        />
+                      </span>
                     </Link>
                   );
                 }

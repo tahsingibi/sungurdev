@@ -23,7 +23,7 @@ export default function Work() {
             <div className="flex sm:justify-between gap-6 overflow-hidden relative">
               <Avatar
                 icon={icon}
-                className="text-xl !bg-transparent translate-y-1 size-8"
+                className="text-xl !bg-transparent translate-y-1 size-8 !bg-transparent"
               />
               <div className="grid mt-auto gap-4 transition-all duration-300 pr-8">
                 <div className="grid ">
@@ -33,18 +33,24 @@ export default function Work() {
                     target="_blank"
                   >
                     {name}
-                    <Icon
-                      icon="arrow-up-short"
-                      className="text-2xl inline-block rotate-45 -translate-y-0.5 translate-x-3 leading-none opacity-0 group-hover:opacity-100 transition-all duration-150 size-0"
-                    />
+                    <span className="scale-0 group-hover:scale-100 inline-block group-hover:opacity-100 transition-all duration-150 ease-hover">
+                      <Icon
+                        icon="arrow-up-short"
+                        className="text-2xl inline-block rotate-45 -translate-y-0.5 translate-x-3 leading-none size-0 "
+                      />
+                    </span>
                   </Link>
                   <p className="text-sm text-zinc-500">{explain}</p>
                 </div>
               </div>
             </div>
-            <div className="transition-all duration-500 flex gap-2 [&>a]:font-mono [&>a:active]:translate-y-px [&>a]:uppercase text-xs [&>a:hover]:opacity-60 sm:ml-auto sm:mt-auto max-sm:w-full max-sm:pl-14">
+            <div className="transition-all duration-500 flex gap-2 [&>a]:font-mono [&>a:active]:translate-y-px [&>a]:uppercase text-xs sm:ml-auto sm:mt-auto max-sm:w-full max-sm:pl-14">
               {repo && (
-                <Link href={repo} target="_blank">
+                <Link
+                  href={repo}
+                  target="_blank"
+                  className="relative inline text-gray-200 hover:text-white"
+                >
                   Github
                 </Link>
               )}

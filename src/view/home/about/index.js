@@ -26,7 +26,7 @@ export default function About() {
           <span className="absolute right-0 top-1/2 -translate-y-1/2">
             <span
               className="absolute right-0 top-1/2 -translate-y-1/2 bg-green-500 size-3 rounded-full before:absolute before:block before:size-3 before:bg-green-600 before:-z-10 before:inset-0 before:scale-x-105 before:rounded-full before:animate-ping  
-    after:absolute after:block after:text-sm after:content-[attr(data-content)] after:whitespace-nowrap after:bg-green-700/20 after:border after:border-green-700/20 after:text-green-600 after:px-2 after:py-1 after:rounded after:origin-right after:scale-0 hover:after:scale-100 after:right-5  after:-translate-y-2.5 after:transition-all  after:duration-75"
+    after:absolute after:ease-hover after:duration-500 after:block after:text-sm after:content-[attr(data-content)] after:whitespace-nowrap after:bg-green-700/20 after:border after:border-green-700/20 after:text-green-600 after:px-2 after:py-1 after:rounded after:origin-right after:scale-0 hover:after:scale-100 after:right-5  after:-translate-y-2.5 after:transition-all"
               data-content="Open to work"
             ></span>
           </span>
@@ -35,7 +35,7 @@ export default function About() {
       <div className="flex flex-col gap-8">
         <div
           dangerouslySetInnerHTML={{ __html: about }}
-          className="text-zinc-400 [&>.mark]:font-semibold  [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-zinc-300 leading-loose"
+          className="text-zinc-400 [&>.mark]:font-semibold [&>a]:underline-offset-4 [&>a:hover]:text-zinc-300 leading-loose [&>a]:w-fit [&>a]:relative [&>a]:after:content-[''] [&>a]:after:absolute [&>a]:after:-bottom-1 [&>a]:after:right-0 [&>a]:after:h-[2px] [&>a]:after:w-0 [&>a]:after:bg-current [&>a]:after:transition-all [&>a]:after:duration-500 [&>a]:after:ease-hover [&>a:hover:after]:right-auto [&>a:hover:after]:left-0 [&>a:hover:after]:w-full"
         />
         <Social />
       </div>
