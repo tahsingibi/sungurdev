@@ -21,6 +21,13 @@ export default function OpenGraph({
         padding: '60px',
       }}
     >
+      <h2
+        style={{ fontSize: '80px', marginTop: 'auto', marginBottom: '-20px' }}
+      >
+        {title}
+      </h2>
+      <h5 style={{ fontSize: '32px', marginBottom: 'auto' }}>{subtitle}</h5>
+
       <p
         style={{
           fontSize: '20px',
@@ -32,14 +39,6 @@ export default function OpenGraph({
       >
         sungur.dev
       </p>
-      <h2
-        style={{ fontSize: '80px', marginTop: 'auto', marginBottom: '-40px' }}
-      >
-        {title}
-      </h2>
-      <h5 style={{ fontSize: '48px', marginBottom: 'auto', opacity: 0.5 }}>
-        {subtitle}
-      </h5>
     </div>
   );
 }

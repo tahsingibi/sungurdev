@@ -8,6 +8,7 @@ const db = {
   hiring: true,
   resume: '/doc/TahsinSUNGUR_08_2024.pdf',
   url: 'https://sungur.dev',
+  // url: 'http://localhost:3000',
   about:
     "i'm a <span class='mark'>frontend developer</span> based in Izmir, and currently working at <a href={lastworklink}>{lastwork}</a>, where I code interfaces and design animations for our individual and corporate clients, prioritizing user experience.",
   image: profile,
