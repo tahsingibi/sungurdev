@@ -48,10 +48,8 @@ export default function Code(props) {
           onClick={handleCopy}
           data-copied={copied}
         >
-          <span className="group-data-[copied='true']:translate-y-full group-data-[copied='true']:scale-0 transition-all duration-150 ease-[cubic-bezier(0.4,_0,_0.8,_1)]">
-            <Icon icon="clipboard" />
-          </span>
-          <span className="absolute -translate-y-full scale-0 transition-all group-data-[copied='true']:scale-100 group-data-[copied='true']:translate-y-0 duration-150 ease-[cubic-bezier(0.4,_0,_0.8,_1)]">
+          <Icon icon="clipboard" />
+          <span className="absolute scale-0 transition-all group-data-[copied='true']:scale-105 duration-500 ease-hover">
             <Icon icon="clipboard-check-fill" />
           </span>
         </button>
