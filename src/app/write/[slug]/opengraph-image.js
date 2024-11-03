@@ -1,4 +1,5 @@
 import OpenGraph, { fontURL } from '@/src/components/opengraph';
+import { defaultPath } from '@/src/metadata';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
@@ -11,12 +12,23 @@ export const size = {
 
 export const contentType = 'image/png';
 
-export default async function Image({ params }) {
+export default async function Image(props) {
   const font = fetch(new URL(fontURL, import.meta.url)).then((res) =>
     res.arrayBuffer()
   );
 
-  return new ImageResponse(<OpenGraph />, {
+  const request = await fetch(
+    `${defaultPath}/api/posts?slug=${props.params.slug}`
+  );
+
+  const data = await request.json();
+
+  let ogData = {
+    title: data?.title,
+    subtitle: data?.subtitle,
+  };
+
+  return new ImageResponse(<OpenGraph {...ogData} />, {
     ...size,
     fonts: [
       {

@@ -6,9 +6,11 @@ export const fontURL = `${defaultPath}/doc/font/dm.otf`;
 export default function OpenGraph({ title, subtitle }) {
   const { name: defaultTitle, title: defaultSubtitle, url } = db;
 
-  const _title = title || defaultTitle;
-  const _subtitle = subtitle || defaultSubtitle;
-  const _url = url.split('//')[1];
+  let data = {
+    title: title || defaultTitle,
+    subtitle: subtitle || defaultSubtitle,
+    url: url.split('//')[1],
+  };
 
   return (
     <div
@@ -37,9 +39,13 @@ export default function OpenGraph({ title, subtitle }) {
           letterSpacing: '-4px',
         }}
       >
-        {_title}
+        {data.title}
       </h2>
-      <h5 style={{ fontSize: '32px', marginBottom: 'auto' }}>{_subtitle}</h5>
+      <h5 style={{ fontSize: '32px', marginBottom: 'auto' }}>
+        {title && 'in '}
+        {data.subtitle}
+        {subtitle && ' - by ' + defaultTitle}
+      </h5>
 
       <p
         style={{
@@ -51,7 +57,7 @@ export default function OpenGraph({ title, subtitle }) {
           marginLeft: 4,
         }}
       >
-        {_url}
+        {data.url}
       </p>
     </div>
   );
