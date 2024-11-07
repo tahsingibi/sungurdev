@@ -49,9 +49,10 @@ export default function Code(props) {
           data-copied={copied}
         >
           <Icon icon="clipboard" />
-          <span className="absolute scale-0 transition-all group-data-[copied='true']:scale-105 duration-500 ease-hover">
-            <Icon icon="clipboard-check-fill" />
-          </span>
+          <Icon
+            icon="clipboard-check-fill"
+            className="absolute opacity-0 transition-all group-data-[copied='true']:opacity-100 ease-linear"
+          />
         </button>
       </div>
       <pre className="p-4 rounded-b-lg overflow-x-auto bg-zinc-950 m-0 !max-h-96 !overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-zinc-900 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-zinc-800 [&::-webkit-scrollbar-thumb]:rounded-full ">

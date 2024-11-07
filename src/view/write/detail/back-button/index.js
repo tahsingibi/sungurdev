@@ -10,7 +10,7 @@ export default function BackButton() {
       href="#"
       onClick={() => router.back()}
       passHref
-      className="rounded-full p-2 bg-zinc-900 size-10 aspect-square grid place-items-center mb-2 group relative overflow-hidden"
+      className="rounded-full p-2 bg-zinc-900 size-10 aspect-square grid place-items-center mb-2 group relative overflow-hidden active:scale-90 duration-500 ease-hover"
     >
       <Icon
         icon="arrow-left-short"
