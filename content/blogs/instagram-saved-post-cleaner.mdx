@@ -1,0 +1,124 @@
+export const metadata = {
+  title: `Instagram Saved Posts Cleaner`,
+  publishDate: '2025-06-21',
+  description: `Instagram'da Kaydedilen Gönderileri Toplu Olarak Kaldırma`,
+  category: 'Note',
+};
+
+Instagramda kaydedilen gönderilerinizi toplu olarak kaldırır.
+
+İşlem bitiminde, hata esnasında veya işlemi durdurduğunuzda kaldırdığı postların linklerini, açıklamalarını ve usernamelerini json formatında verir.
+
+[Instagram kaydedilen gönderiler](https://www.instagram.com/username/saved/all-posts/) adresine gidip `F12` ile devtools/console açarak aşağıdaki adımları uygulayabilirsiniz.
+
+Önce flag oluşturuyoruz.
+
+```javascript
+window.__unsaveStop = false;
+```
+
+Sonra fonksiyonu tanımlıyoruz.
+
+```javascript/filename=instagram-unsave-all.js
+async function instagramUnsaveAll() {
+  console.log("🚀 Kaydedilen gönderileri kaldırma başlatıldı...");
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  let totalUnsaved = 0;
+  const removedPosts = [];
+
+  const findRemoveButton = async () => {
+    for (let i = 0; i < 15; i++) {
+      const svg = document.querySelector('svg[aria-label="Kaldır"]');
+      if (svg) {
+        const button = svg.closest("button") || svg.closest('[role="button"]');
+        if (button) return button;
+      }
+      await delay(300);
+    }
+    return null;
+  };
+
+  const clickNextButton = async () => {
+    const nextButton = Array.from(document.querySelectorAll("svg"))
+      .find((svg) => svg.getAttribute("aria-label") === "İleri")
+      ?.closest("button");
+
+    if (nextButton) {
+      nextButton.click();
+      return true;
+    }
+    return false;
+  };
+
+  const closeModal = () => {
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27 }));
+  };
+
+  try {
+    const firstPost = document.querySelector("a[href*='/p/']");
+    if (!firstPost) {
+      console.log("❌ Hiç gönderi bulunamadı.");
+      return [];
+    }
+
+    firstPost.click();
+    await delay(1500);
+
+    let retries = 0;
+    const maxRetries = 10;
+
+    while (retries < maxRetries) {
+      if (window.__unsaveStop) {
+        console.warn("🛑 Kullanıcı işlemi durdurdu.");
+        break;
+      }
+
+      const removeBtn = await findRemoveButton();
+
+      if (removeBtn) {
+        const usernameEl = document.querySelector('div._a9zr h2 a[href^="/"]');
+        const captionEl = document.querySelector('div._a9zr h1');
+        const username = usernameEl?.textContent?.trim() || "Bilinmiyor";
+        const caption = captionEl?.textContent?.trim() || "";
+        const postUrl = window.location.href;
+
+        removeBtn.click();
+        totalUnsaved++;
+        removedPosts.push({ url: postUrl, username, caption });
+
+        console.log(`✅ ${totalUnsaved}. gönderi kaldırıldı`);
+        await delay(1000);
+
+        const nextClicked = await clickNextButton();
+        if (!nextClicked) {
+          console.log("✅ Son gönderiye ulaşıldı.");
+          break;
+        }
+
+        await delay(1500);
+        retries = 0;
+      } else {
+        retries++;
+        console.warn(`⚠️ 'Kaldır' butonu bulunamadı, deneme ${retries}/${maxRetries}`);
+        await delay(1500);
+      }
+    }
+
+    closeModal();
+    console.log(`🎉 İşlem tamamlandı! Toplam ${totalUnsaved} gönderi kaldırıldı.`);
+    console.log(JSON.stringify(removedPosts, null, 2));
+    return removedPosts;
+  } catch (err) {
+    console.error("❌ Hata:", err.message);
+    closeModal();
+    console.log("📝 Kaldırılanlar:");
+    console.log(JSON.stringify(removedPosts, null, 2));
+    return removedPosts;
+  }
+}
+```
+
+Başlatmak için; `instagramUnsaveAll()`
+
+Durdurmak için: `window.__unsaveStop = false;`
