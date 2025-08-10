@@ -20,7 +20,7 @@ export default function Experience() {
             <Avatar
               image={image}
               icon={icon}
-              className="size-8 object-contain !bg-transparent"
+              className="size-8 object-contain bg-transparent!"
               text={title}
             />
             <div className="flex flex-col grow">

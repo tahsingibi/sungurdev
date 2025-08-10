@@ -2,7 +2,8 @@ import { getPost } from '@/src/lib/get-posts';
 import WriteDetailView from '@/src/view/write/detail';
 
 export async function generateMetadata({ params }) {
-  const post = await getPost(params);
+  const { slug } = await params;
+  const post = await getPost({ slug });
 
   if (post)
     return {

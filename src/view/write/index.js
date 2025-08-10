@@ -26,7 +26,7 @@ export default async function WriteView() {
                 </Link>
                 <span className="text-zinc-600 inline-flex gap-2 items-center text-sm">
                   {category && (
-                    <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded">
+                    <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded-sm">
                       {category}
                     </span>
                   )}

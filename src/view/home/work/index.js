@@ -23,7 +23,7 @@ export default function Work() {
             <div className="flex sm:justify-between gap-6 overflow-hidden relative">
               <Avatar
                 icon={icon}
-                className="text-xl !bg-transparent translate-y-1 size-8"
+                className="text-xl bg-transparent! translate-y-1 size-8"
               />
               <div className="grid mt-auto gap-4 transition-all duration-300 pr-8">
                 <div className="grid ">

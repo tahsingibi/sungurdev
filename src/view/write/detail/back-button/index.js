@@ -14,11 +14,11 @@ export default function BackButton() {
     >
       <Icon
         icon="arrow-left-short"
-        className="text-lg group-hover:-translate-x-8 transition-all duration-500  aspect-square flex scale-100 group-hover:scale-0 ease-[cubic-bezier(0.65,_0,_0.35,_1.5)]"
+        className="text-lg group-hover:-translate-x-8 transition-all duration-500  aspect-square flex scale-100 group-hover:scale-0 ease-[cubic-bezier(0.65,0,0.35,1.5)]"
       />
       <Icon
         icon="arrow-left-short"
-        className="text-lg  transition-all duration-500  aspect-square flex absolute left-1/2 top-1/2 -translate-y-1/2 scale-0 translate-x-full group-hover:scale-100 group-hover:-translate-x-1/2 ease-[cubic-bezier(0.65,_0,_0.35,_1.5)]"
+        className="text-lg  transition-all duration-500  aspect-square flex absolute left-1/2 top-1/2 -translate-y-1/2 scale-0 translate-x-full group-hover:scale-100 group-hover:-translate-x-1/2 ease-[cubic-bezier(0.65,0,0.35,1.5)]"
       />
     </Link>
   );

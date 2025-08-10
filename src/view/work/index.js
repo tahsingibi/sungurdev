@@ -46,7 +46,7 @@ export default function ExperienceView() {
                         text={name}
                         icon={icon}
                         name={work.name}
-                        className="size-8 !bg-transparent"
+                        className="size-8 bg-transparent!"
                       />
                       <p className="flex flex-col gap-1 text-pretty pr-12">
                         <span className="line-clamp-1">{name}</span>
