@@ -49,6 +49,8 @@ export default function Code(props) {
     jpg: 'jpg',
     js: 'javascript',
     javascript: 'javascript',
+    command:'terminal-fill',
+    bat:'terminal-fill',
     json: 'json',
     jsx: 'jsx',
     key: 'key',

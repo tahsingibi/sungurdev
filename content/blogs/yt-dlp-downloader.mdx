@@ -1,0 +1,237 @@
+export const metadata = {
+  title: `YouTube Downloader (yt-dlp & ffmpeg) - (macOS & windows)`,
+  publishDate: '2025-10-18',
+  description: `yt-dlp ve ffmpeg kurulumlarını kontrol eden, eksikse yönlendiren ve indirme işlemini kolaylaştıran macOS (zsh) ve Windows (.bat) betikleri. Ayrıca sistem gereksinimleri ve indirme linkleri.`,
+  category: 'Script',
+};
+
+YouTube, Instagram, Twitter, Tiktok ve <a href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md"target="_blank"rel="noopener noreferrer">yt-dlp paketinin desteklediği tüm video sitelerinden</a> istediğin içeriği MP3 (ses) veya MP4 (video) formatında içeriğin en yüksek kalitesine göre indirmeni sağlayan iki pratik betik.  
+
+Her iki betik de `yt-dlp` ve `ffmpeg` araçlarının sistemde kurulu olup olmadığını **otomatik kontrol eder**, eksikler varsa **kurulum talimatlarını ve indirme bağlantılarını** gösterir, her şey hazırsa **doğrudan indirmeye** geçer.
+
+Gerekli araçlar: 
+<a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noopener noreferrer">yt-dlp</a>, 
+<a href="https://www.ffmpeg.org/download.html" target="_blank" rel="noopener noreferrer">ffmpeg</a>
+
+Sistemine göre istediğin betiği belirtilen dosya ismiyle kaydedip çalıştırmaya başladığında, istediğin içeriği, betiğin bulunduğu dizine direkt olarak indirir.
+
+
+### macOS
+```bat/filename=youtube.command
+#!/bin/zsh
+# macOS - yt-dlp & ffmpeg kontrolü yapan YouTube indirici
+# Dosyayi çift tiklamak icin .command olarak kaydedip: chmod +x yt-indir.command
+
+clear
+echo "=================================================="
+echo "🎬 YouTube İndirici (yt-dlp) — macOS - @tahsingibi"
+echo "=================================================="
+echo
+
+# ----- Yardimci: bekletme -----
+pause() {
+  read -k 1 -s "?Devam etmek icin bir tusa basin..."
+  echo
+}
+
+# ----- Ön Koşullar: komut kontrol -----
+need_help=0
+
+if ! command -v yt-dlp >/dev/null 2>&1; then
+  echo "❌ yt-dlp bulunamadi."
+  echo
+  echo "  Kurulum Yollari:"
+  echo "  - Homebrew:   brew install yt-dlp"
+  echo "  - MacPorts:   sudo port install yt-dlp"
+  echo "  - Pipx (ops): pipx install yt-dlp"
+  echo "  - Manuel:     https://github.com/yt-dlp/yt-dlp/releases/latest"
+  echo
+  need_help=1
+fi
+
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  echo "❌ ffmpeg bulunamadi. (ses donusumu ve video birlestirme icin gerekli)"
+  echo
+  echo "  Kurulum Yollari:"
+  echo "  - Homebrew:   brew install ffmpeg"
+  echo "  - MacPorts:   sudo port install ffmpeg"
+  echo "  - Manuel:     https://www.gyan.dev/ffmpeg/builds/  veya"
+  echo "                https://github.com/BtbN/FFmpeg-Builds/releases"
+  echo
+  need_help=1
+fi
+
+if [[ $need_help -eq 1 ]]; then
+  echo -n "Indirme sayfalarini acayim mi? [e/H]: "
+  read open_choice
+  if [[ "$open_choice" == [eEyY] ]]; then
+    command -v open >/dev/null 2>&1 && {
+      [[ ! $(command -v yt-dlp) ]] && open "https://github.com/yt-dlp/yt-dlp/releases/latest"
+      [[ ! $(command -v ffmpeg) ]] && open "https://www.gyan.dev/ffmpeg/builds/"
+    }
+  fi
+  echo
+  echo "Lutfen gerekli araclari kurduktan sonra betigi yeniden calistirin."
+  pause
+  exit 1
+fi
+
+# ----- Indirme Akisi -----
+read "URL?Lutfen indirmek istediginiz video URL'sini girin: "
+if [[ -z "$URL" ]]; then
+  echo "❌ URL bos olamaz!"
+  pause
+  exit 1
+fi
+
+echo
+echo "Hangi formatta indirmek istersiniz?"
+echo "1) 🎵 MP3 (sadece ses)"
+echo "2) 🎥 MP4 (video)"
+read "FORMAT?Seciminiz (1 veya 2): "
+
+# Cikti dizini: betigin bulundugu klasor
+SCRIPT_DIR="$(cd -- "$(dirname "$0")" && pwd)"
+
+case "$FORMAT" in
+  1)
+    echo "🎧 MP3 olarak indiriliyor..."
+    yt-dlp -x --audio-format mp3 -o "${SCRIPT_DIR}/%(title)s.%(ext)s" "$URL"
+    ;;
+  2)
+    echo "🎞️ MP4 olarak indiriliyor..."
+    yt-dlp -S "ext:mp4:m4a" -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/best" \
+      -o "${SCRIPT_DIR}/%(title)s.%(ext)s" "$URL"
+    ;;
+  *)
+    echo "❌ Gecersiz secim!"
+    pause
+    exit 1
+    ;;
+esac
+
+echo
+echo "✅ Indirme tamamlandi!"
+echo "📂 Klasor: $SCRIPT_DIR"
+echo
+pause
+```
+
+### Windows
+```bat/filename=youtube.bat
+@echo off
+setlocal ENABLEDELAYEDEXPANSION
+title 🎬 YouTube İndirici (yt-dlp)
+chcp 65001 >nul
+cls
+
+echo ============================================
+echo 🎬 YouTube İndirici (yt-dlp) @tahsingibi
+echo ============================================
+echo.
+
+:: -------- Ön Koşullar: PowerShell kontrolü --------
+where powershell >nul 2>&1
+if errorlevel 1 (
+  echo ❌ PowerShell bulunamadi. Windows 10/11'de varsayilan olarak gelir.
+  echo    Alternatif: https://aka.ms/PowerShell
+  echo.
+  pause
+  exit /b 1
+)
+
+:: -------- Ön Koşullar: yt-dlp ve ffmpeg kontrolü --------
+set "NEED_HELP="
+
+where yt-dlp >nul 2>&1
+if errorlevel 1 where yt-dlp.exe >nul 2>&1
+if errorlevel 1 (
+  echo ❌ yt-dlp bulunamadi.
+  echo.
+  echo   Kurulum Yollari:
+  echo   - winget:      winget install -e --id yt-dlp.yt-dlp
+  echo   - chocolatey:  choco install yt-dlp
+  echo   - scoop:       scoop install yt-dlp
+  echo   - Manuel:      https://github.com/yt-dlp/yt-dlp/releases/latest
+  echo.
+  set "NEED_HELP=1"
+)
+
+where ffmpeg >nul 2>&1
+if errorlevel 1 (
+  echo ❌ ffmpeg bulunamadi. (ses donusumu ve video birlestirme icin gerekli)
+  echo.
+  echo   Kurulum Yollari:
+  echo   - winget:      winget install -e --id Gyan.FFmpeg
+  echo   - chocolatey:  choco install ffmpeg
+  echo   - scoop:       scoop install ffmpeg
+  echo   - Manuel:      https://www.gyan.dev/ffmpeg/builds/
+  echo                 veya https://github.com/BtbN/FFmpeg-Builds/releases
+  echo.
+  set "NEED_HELP=1"
+)
+
+if defined NEED_HELP (
+  call :maybeOpenPages
+  echo.
+  echo Yukaridaki araclari kurduktan sonra bu betigi tekrar calistirin.
+  pause
+  exit /b 1
+)
+
+:: -------- Indirme Akisi --------
+set /p URL=Lutfen indirmek istediginiz video URL'sini girin: 
+if "%URL%"=="" (
+    echo.
+    echo ❌ URL bos olamaz!
+    pause
+    exit /b
+)
+
+echo.
+echo Hangi formatta indirmek istersiniz?
+echo 1^) 🎵 MP3 (sadece ses)
+echo 2^) 🎥 MP4 (video)
+set /p FORMAT=Seciminiz (1 veya 2): 
+
+set "SCRIPT_DIR=%~dp0"
+
+if "%FORMAT%"=="1" (
+    echo.
+    echo 🎧 MP3 olarak indiriliyor...
+    powershell -NoLogo -Command ^
+      yt-dlp -x --audio-format mp3 -o "\"%SCRIPT_DIR%/%%(title)s.%%(ext)s\"" "%URL%"
+    goto done
+)
+
+if "%FORMAT%"=="2" (
+    echo.
+    echo 🎞️ MP4 olarak indiriliyor...
+    powershell -NoLogo -Command ^
+      yt-dlp -S "ext:mp4:m4a" -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/best" ^
+      -o "\"%SCRIPT_DIR%/%%(title)s.%%(ext)s\"" "%URL%"
+    goto done
+)
+
+echo.
+echo ❌ Gecersiz secim!
+pause
+exit /b 1
+
+:done
+echo.
+echo ✅ Indirme tamamlandi!
+echo 📂 Klasor: %SCRIPT_DIR%
+echo.
+pause
+exit /b 0
+
+:maybeOpenPages
+echo Indirme sayfalarini acmak ister misiniz? [E/H]
+set /p OPEN=Secim: 
+if /I "%OPEN%"=="E" (
+  start "" "https://github.com/yt-dlp/yt-dlp/releases/latest"
+  start "" "https://www.gyan.dev/ffmpeg/builds/"
+)
+exit /b
+```

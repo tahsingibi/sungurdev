@@ -1,8 +1,16 @@
-import createMDX from '@next/mdx';
+import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  env: {
+    STAGE:
+      process.env.NODE_ENV === "production"
+        ? "production"
+        : process.env.NODE_ENV === "test"
+        ? "test"
+        : "development",
+  },
 };
 
 const withMDX = createMDX();
