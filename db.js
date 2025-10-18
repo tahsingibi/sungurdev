@@ -1,7 +1,7 @@
 import { hypeandbuzz, hypeople, mallconomy, pratikargo, profile } from "./src/assets/img";
 
-const devUrl = "http://localhost:3000";
-const prodUrl = "https://sungur.dev";
+const devUrl = "http://localhost:3000/";
+const prodUrl = "https://sungur.dev/";
 
 const url = process.env.STAGE === "production" ? prodUrl : devUrl;
 
