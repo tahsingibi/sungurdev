@@ -89,7 +89,7 @@ export default function Code(props) {
   };
 
   return (
-    <div className="border border-zinc-800 rounded-lg overflow-hidden max-w-full !w-full !bg-zinc-900">
+    <div className="border border-zinc-800 rounded-lg overflow-hidden max-w-full w-full! bg-zinc-900!">
       <div className="flex justify-between bg-transparent p-2 border-b border-zinc-800">
         <div className="flex items-center gap-1 justify-center">
           <span className="text-gray-300 ml-2 font-sans">
@@ -113,7 +113,7 @@ export default function Code(props) {
           />
         </button>
       </div>
-      <pre className="p-4 rounded-b-lg overflow-x-auto bg-zinc-950 !m-0 max-h-96! overflow-y-auto! [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-zinc-900 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-zinc-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <pre className="p-4 rounded-b-lg overflow-x-auto bg-zinc-950 m-0! max-h-96! overflow-y-auto! [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-zinc-900 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-zinc-800 [&::-webkit-scrollbar-thumb]:rounded-full">
         <code
           ref={codeRef}
           className={`language-${language} text-xs font-light slashed-zero whitespace-pre-wrap leading-relaxed `}
