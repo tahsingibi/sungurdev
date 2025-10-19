@@ -17,10 +17,15 @@ Sistemine göre istediğin betiği belirtilen dosya ismiyle kaydedip çalıştı
 
 
 ### macOS
+
+macOS sisteminde `youtube.command` dosyasını oluşturduktan sonra çift tıkla çalıştırabilmen için `chmod +x youtube.command` komutunu çalıştırman gerekiyor.
+
 ```bat/filename=youtube.command
 #!/bin/zsh
-# macOS - yt-dlp & ffmpeg kontrolü yapan YouTube indirici
-# Dosyayi çift tiklamak icin .command olarak kaydedip: chmod +x yt-indir.command
+# macOS - yt-dlp & ffmpeg kontrolü yapan YouTube indirici (döngülü)
+# Dosyayi çift tiklamak icin .command olarak kaydedip: chmod +x youtube.command
+
+set -euo pipefail
 
 clear
 echo "=================================================="
@@ -33,6 +38,14 @@ pause() {
   read -k 1 -s "?Devam etmek icin bir tusa basin..."
   echo
 }
+
+# ----- Ctrl-C yakalama -----
+cleanup() {
+  echo
+  echo "👋 Cikis yapiliyor..."
+  exit 0
+}
+trap cleanup INT
 
 # ----- Ön Koşullar: komut kontrol -----
 need_help=0
@@ -76,45 +89,67 @@ if [[ $need_help -eq 1 ]]; then
   exit 1
 fi
 
-# ----- Indirme Akisi -----
-read "URL?Lutfen indirmek istediginiz video URL'sini girin: "
-if [[ -z "$URL" ]]; then
-  echo "❌ URL bos olamaz!"
-  pause
-  exit 1
-fi
-
-echo
-echo "Hangi formatta indirmek istersiniz?"
-echo "1) 🎵 MP3 (sadece ses)"
-echo "2) 🎥 MP4 (video)"
-read "FORMAT?Seciminiz (1 veya 2): "
-
 # Cikti dizini: betigin bulundugu klasor
 SCRIPT_DIR="$(cd -- "$(dirname "$0")" && pwd)"
 
-case "$FORMAT" in
-  1)
-    echo "🎧 MP3 olarak indiriliyor..."
-    yt-dlp -x --audio-format mp3 -o "${SCRIPT_DIR}/%(title)s.%(ext)s" "$URL"
-    ;;
-  2)
-    echo "🎞️ MP4 olarak indiriliyor..."
-    yt-dlp -S "ext:mp4:m4a" -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/best" \
-      -o "${SCRIPT_DIR}/%(title)s.%(ext)s" "$URL"
-    ;;
-  *)
-    echo "❌ Gecersiz secim!"
-    pause
-    exit 1
-    ;;
-esac
+# ----- Indirme isini yapan fonksiyon -----
+download_once() {
+  local URL FORMAT
 
-echo
-echo "✅ Indirme tamamlandi!"
-echo "📂 Klasor: $SCRIPT_DIR"
-echo
-pause
+  echo
+  read "URL?Lutfen indirmek istediginiz video URL'sini girin: "
+  if [[ -z "${URL:-}" ]]; then
+    echo "❌ URL bos olamaz!"
+    return 1
+  fi
+
+  echo
+  echo "Hangi formatta indirmek istersiniz?"
+  echo "1) 🎵 MP3 (sadece ses)"
+  echo "2) 🎥 MP4 (video)"
+  read "FORMAT?Seciminiz (1 veya 2): "
+
+  case "$FORMAT" in
+    1)
+      echo "🎧 MP3 olarak indiriliyor..."
+      yt-dlp -x --audio-format mp3 -o "${SCRIPT_DIR}/%(title)s.%(ext)s" "$URL"
+      ;;
+    2)
+      echo "🎞️ MP4 olarak indiriliyor..."
+      yt-dlp -S "ext:mp4:m4a" -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/best" \
+        -o "${SCRIPT_DIR}/%(title)s.%(ext)s" "$URL"
+      ;;
+    *)
+      echo "❌ Gecersiz secim!"
+      return 1
+      ;;
+  esac
+
+  echo
+  echo "✅ Indirme tamamlandi!"
+  echo "📂 Klasor: $SCRIPT_DIR"
+  echo
+}
+
+# ----- Ana döngü: tekrar indir / cik -----
+while true; do
+  if ! download_once; then
+    echo
+    echo "Bir hata/iptal olustu (veya gecersiz secim)."
+  fi
+
+  # Menü
+  echo
+  echo "Ne yapmak istersiniz?"
+  echo "1) ➕ Yeni bir indirme"
+  echo "2) 🚪 Çıkış"
+  read "NEXT?Seciminiz (1 veya 2): "
+  case "$NEXT" in
+    1) clear; continue ;;
+    2) cleanup ;;
+    *) echo "❌ Gecersiz secim! Cikis yapiliyor..."; cleanup ;;
+  esac
+done
 ```
 
 ### Windows
