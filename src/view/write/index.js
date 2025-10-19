@@ -1,9 +1,10 @@
 import db from '@/db';
-import posts from '@/src/lib/get-posts';
+import { getPostsStore } from '@/src/lib/store/posts-store';
 import Link from 'next/link';
 
 export default async function WriteView() {
   const { heading, description, error } = db.pages.write;
+  const { all: posts } = await getPostsStore();
 
   return (
     <div className="flex flex-col gap-8">
@@ -18,25 +19,25 @@ export default async function WriteView() {
             const { title, category, date } = post.metadata;
             return (
               <section
-                className="flex flex-col gap-1 p-4 hover:bg-zinc-900/25 rounded-lg"
+                className="flex flex-col gap-1 rounded-lg p-4 transition-colors hover:bg-zinc-900/25"
                 key={post.slug}
               >
-                <Link href={`/write/${post.slug}`} className="text-xl w-fit">
+                <Link href={`/write/${post.slug}`} className="text-xl text-white w-fit">
                   {title}
                 </Link>
-                <span className="text-zinc-600 inline-flex gap-2 items-center text-sm">
+                <span className="inline-flex items-center gap-2 text-sm text-zinc-600">
                   {category && (
-                    <span className="text-zinc-600 px-2 text-xs py-px border border-zinc-800 w-fit rounded-sm">
+                    <span className="rounded-sm border border-zinc-800 px-2 py-px text-xs text-zinc-600">
                       {category}
                     </span>
                   )}
-                  {date && <span>{date}</span>}{' '}
+                  {date && <span>{date}</span>}
                 </span>
               </section>
             );
           })
         ) : (
-          <span>{error}</span>
+          <span className="text-sm text-zinc-500">{error}</span>
         )}
       </div>
     </div>

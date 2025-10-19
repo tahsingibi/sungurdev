@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
 import fs from 'node:fs';
 import path from 'node:path';
+import { cache } from 'react';
 
-async function getAllPosts() {
+function readAllPosts() {
   const dir = path.join(process.cwd(), 'content', 'blogs');
   const files = fs.readdirSync(dir);
 
@@ -11,66 +12,58 @@ async function getAllPosts() {
       (filename) => filename.endsWith('.mdx') && !filename.startsWith('.')
     )
     .map((filename) => {
-      const name = filename?.replace('.mdx', '');
+      const slug = filename.replace('.mdx', '');
+
       try {
         const { metadata } = require(`@/content/blogs/${filename}`);
-        const formattedDate = format(
-          new Date(metadata?.publishDate),
-          'MMMM dd, yyyy'
-        );
+
+        const publishDate = metadata?.publishDate;
+        const formattedDate = publishDate
+          ? format(new Date(publishDate), 'MMMM dd, yyyy')
+          : undefined;
 
         return {
-          slug: name,
-          metadata: { ...metadata, date: formattedDate } || {
-            title: 'Untitled',
-            publishDate: '1970-01-01',
+          slug,
+          metadata: {
+            title: metadata?.title ?? 'Untitled',
+            publishDate: publishDate ?? '1970-01-01',
+            description: metadata?.description ?? '',
+            category: metadata?.category ?? '',
+            date: formattedDate,
           },
         };
       } catch (error) {
         console.error(`Error loading metadata for file ${filename}:`, error);
         return {
-          slug: name,
-          metadata: { title: 'Untitled', publishDate: '1970-01-01' },
+          slug,
+          metadata: {
+            title: 'Untitled',
+            publishDate: '1970-01-01',
+            description: '',
+            category: '',
+            date: undefined,
+          },
         };
       }
-    });
-
-  // Sort posts by publishDate in descending order
-  posts.sort(
-    (a, b) =>
-      new Date(b.metadata.publishDate).getTime() -
-      new Date(a.metadata.publishDate).getTime()
-  );
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.metadata.publishDate).getTime() -
+        new Date(a.metadata.publishDate).getTime()
+    );
 
   return posts;
 }
 
-const posts = await getAllPosts();
+export const getPosts = cache(async () => readAllPosts());
 
-export default posts;
+export default getPosts;
 
-export async function getPost({ slug }) {
-  try {
-    const mdxPath = path.join('content', 'blogs', `${slug}.mdx`);
-    if (!fs.existsSync(mdxPath)) {
-      throw new Error(`MDX file for slug ${slug} does not exist`);
-    }
+export const getPost = cache(async (slug) => {
+  const posts = await getPosts();
+  return posts.find((post) => post.slug === slug);
+});
 
-    const { metadata } = await import(`@/content/blogs/${slug}.mdx`);
-    if (metadata) {
-      const formattedDate = format(
-        new Date(metadata?.publishDate),
-        'MMMM dd, yyyy'
-      );
-      return {
-        slug,
-        metadata: { ...metadata, date: formattedDate },
-      };
-    }
-
-    return {};
-  } catch (error) {
-    console.error('Error fetching post:', error);
-    // throw new Error(`Unable to fetch the post for slug: ${slug}`);
-  }
+export async function getPostBySlug({ slug }) {
+  return getPost(slug);
 }

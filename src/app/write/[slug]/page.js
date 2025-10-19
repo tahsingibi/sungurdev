@@ -1,9 +1,10 @@
-import { getPost } from '@/src/lib/get-posts';
+import { getPostsStore } from '@/src/lib/store/posts-store';
 import WriteDetailView from '@/src/view/write/detail';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = await getPost({ slug });
+  const { findBySlug } = await getPostsStore();
+  const post = findBySlug(slug);
 
   if (post)
     return {

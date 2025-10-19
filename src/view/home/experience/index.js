@@ -1,15 +1,18 @@
-import db from '@/db';
-import Link from '@/src/components/active-link';
-import Avatar from '@/src/components/avatar';
-import { Icon } from '@/src/components/icon';
-import Heading from '../block-heading';
+import db from "@/db";
+import Link from "@/src/components/active-link";
+import Avatar from "@/src/components/avatar";
+import { Icon } from "@/src/components/icon";
+import Heading from "../block-heading";
 
 export default function Experience() {
   const { experience } = db;
 
   return (
     <div className="grid gap-2">
-      <Heading id="experiences">experiences</Heading>
+      <Heading id="experiences">
+        experiences
+        <Heading.Link href="/works">view detail</Heading.Link>
+      </Heading>
       <div className="grid gap-1">
         {experience.map(({ id, image, name, title, year, path, icon }) => (
           <Link

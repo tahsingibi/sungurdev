@@ -1,21 +1,26 @@
-import db from '@/db';
-import Avatar from '@/src/components/avatar';
-import { Icon } from '@/src/components/icon';
-import Link from 'next/link';
-import Heading from '../block-heading';
+import db from "@/db";
+import Avatar from "@/src/components/avatar";
+import { Icon } from "@/src/components/icon";
+import Link from "next/link";
+import Heading from "../block-heading";
 
 export default function Work() {
   const { experience } = db;
 
   const work = experience
-    .find((exp) => exp.name === 'Freelance')
-    .projects.slice(0, 6);
+    .find((exp) => exp.name === "Freelance")
+    .projects.slice(0, 3);
 
   return (
     <div className="grid gap-2">
-      <Heading id="works">works</Heading>
+      <Heading id="works">
+        works{" "}
+        <Heading.Link href="/works">
+          see all
+        </Heading.Link>
+      </Heading>
       <div className="grid gap-1">
-        {work.map(({ id, name, explain, repo, live, icon = 'code' }) => (
+        {work.map(({ id, name, explain, repo, live, icon = "code" }) => (
           <div
             key={id}
             className="flex max-sm:flex-col max-sm:gap-4 sm:justify-between hover:bg-zinc-900/40 p-4 rounded-lg group transition-all overflow-hidden relative"
@@ -28,7 +33,7 @@ export default function Work() {
               <div className="grid mt-auto gap-4 transition-all duration-300 pr-8">
                 <div className="grid ">
                   <Link
-                    href={live || repo || '#'}
+                    href={live || repo || "#"}
                     className="font-medium"
                     target="_blank"
                   >

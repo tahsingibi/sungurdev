@@ -1,11 +1,12 @@
-import { getPost } from '@/src/lib/get-posts';
+import { getPostsStore } from '@/src/lib/store/posts-store';
 import dynamic from 'next/dynamic';
 import NotFound from '../../not-found';
 import BackButton from './back-button';
 
 export default async function WriteDetailView({ params, ...props }) {
   const { slug } = await params;
-  const post = await getPost({ slug });
+  const { findBySlug } = await getPostsStore();
+  const post = findBySlug(slug);
   if (post) {
     const MDXContent = dynamic(() => import(`@/content/blogs/${slug}.mdx`));
     const { category, date, title } = post.metadata;

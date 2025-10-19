@@ -1,5 +1,6 @@
 import About from './about';
 import Experience from './experience';
+import LatestPosts from './latest-posts';
 import Work from './work';
 
 export default function HomeView() {
@@ -7,6 +8,7 @@ export default function HomeView() {
     <>
       <About />
       <Experience />
+      <LatestPosts />
       <Work />
     </>
   );
