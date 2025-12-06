@@ -1,4 +1,4 @@
-import db from '@/db';
+import db from '@/src/settings';
 import Link from '../active-link';
 
 export default function Header() {

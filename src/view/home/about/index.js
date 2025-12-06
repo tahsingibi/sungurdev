@@ -1,12 +1,12 @@
-import db from '@/db';
 import Avatar from '@/src/components/avatar';
+import settings from '@/src/settings';
 import Social from '../social';
 
 export default function About() {
-  const { name, slug, hiring, about: _about } = db;
+  const { name, slug, hiring, about: _about } = settings;
   const about = _about
-    .replaceAll('{lastwork}', db.experience[0].name)
-    .replaceAll('{lastworklink}', db.experience[0].path);
+    .replaceAll('{lastwork}', settings.experience[0].name)
+    .replaceAll('{lastworklink}', settings.experience[0].path);
 
   return (
     <aside className="flex flex-col gap-8">

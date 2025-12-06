@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={fontVariables}>
-        <section className="container flex flex-col gap-12 relative z-10">
+        <section className="container flex flex-col gap-12 relative z-10 border-x border-dashed border-white/5">
           <Header />
           <main className="flex flex-col gap-12">{children}</main>
           <Footer />

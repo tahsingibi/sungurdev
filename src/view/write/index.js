@@ -1,5 +1,5 @@
-import db from '@/db';
 import { getPostsStore } from '@/src/lib/store/posts-store';
+import db from '@/src/settings';
 import Link from 'next/link';
 
 export default async function WriteView() {

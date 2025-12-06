@@ -1,11 +1,9 @@
-import { hypeandbuzz, hypeople, mallconomy, pratikargo, profile } from "./src/assets/img";
-
 const devUrl = "http://localhost:3000/";
 const prodUrl = "https://sungur.dev/";
 
 const url = process.env.STAGE === "production" ? prodUrl : devUrl;
 
-const db = {
+const settings = {
   name: "Tahsin Sungur",
   slug: "tahsingibi",
   title: "Frontend Developer",
@@ -15,7 +13,7 @@ const db = {
   url,
   about:
     "i'm a <span class='mark'>frontend developer</span> based in Izmir, and currently working at <a href={lastworklink}>{lastwork}</a>, where I develop end-to-end web applications tailored to the needs of both individual and corporate clients. ",
-  image: profile,
+  image: "/img/profile.jpeg",
   nav: [
     { id: 0, name: "home", path: "/", icon: "house" },
     { id: 1, name: "experience", path: "/works", icon: "code-slash" },
@@ -50,7 +48,7 @@ const db = {
   experience: [
     {
       id: 2,
-      image: hypeople,
+      image: "/img/work/hypeople.svg",
       name: "HYPEOPLE",
       title: "Frontend Developer",
       year: "03/2024 - Present",
@@ -61,7 +59,7 @@ const db = {
         {
           id: "HY001",
           name: "Pratikargo - Affordable and Reliable International Shipping Solutions",
-          image: pratikargo,
+          image: "/img/work/pratikargo.svg",
           live: "https://pratikargo.vercel.app/",
           tech: "Next.js, Supabase",
           year: "2025",
@@ -70,7 +68,7 @@ const db = {
     },
     {
       id: 1,
-      image: mallconomy,
+      image: "/img/work/mallconomy.png",
       name: "Mallconomy",
       title: "Frontend Developer",
       year: "10/2022 - 01/2024",
@@ -81,7 +79,7 @@ const db = {
         {
           id: "M001",
           name: "Own a piece of Web3 Commerce's future",
-          image: mallconomy,
+          image: "/img/work/mallconomy.png",
           live: "https://mint.mallconomy.com/",
           tech: "Next.js, TypeScript",
           year: "2023",
@@ -89,7 +87,7 @@ const db = {
         {
           id: "M002",
           name: "Malls of the Metaverse On Any Device",
-          image: mallconomy,
+          image: "/img/work/mallconomy.png",
           live: "https://mallconomy.com/",
           tech: "HTML, CSS, JavaScript",
           year: "2023",
@@ -97,7 +95,7 @@ const db = {
         {
           id: "M003",
           name: "MallStar App - Mallconomy",
-          image: mallconomy,
+          image: "/img/work/mallconomy.png",
           live: "https://app.mallconomy.com/",
           tech: "Next.js",
           year: "2023",
@@ -105,7 +103,7 @@ const db = {
         {
           id: "M004",
           name: "Hype&Buzz - Web3 Growth Partner",
-          image: hypeandbuzz,
+          image: "/img/work/hypeandbuzz.svg",
           live: "https://hypeand.buzz/",
           year: "2023",
           tech: "Next.js",
@@ -300,4 +298,4 @@ const db = {
   },
 };
 
-export default db;
+export default settings;

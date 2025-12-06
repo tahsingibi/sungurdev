@@ -1,11 +1,11 @@
-import db from '@/db';
+import settings from '@/src/settings';
 
-export const defaultPath = db.url;
-export const appName = `${db.name} - ${db.title}`;
-export const description = `${db.name} - ${db.title}`;
-export const keywords = db.keywords;
+export const defaultPath = settings.url;
+export const appName = `${settings.name} - ${settings.title}`;
+export const description = `${settings.name} - ${settings.title}`;
+export const keywords = settings.keywords;
 export const ogImages = [{ url: '#', width: 800, height: 600 }];
-export const authors = [{ name: db.name }];
+export const authors = [{ name: settings.name }];
 export const googleVerify = '';
 export const yandexVerify = '';
 export const yahooVerify = '';

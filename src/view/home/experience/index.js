@@ -1,7 +1,7 @@
-import db from "@/db";
 import Link from "@/src/components/active-link";
 import Avatar from "@/src/components/avatar";
 import { Icon } from "@/src/components/icon";
+import db from "@/src/settings";
 import Heading from "../block-heading";
 
 export default function Experience() {

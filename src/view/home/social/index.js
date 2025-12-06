@@ -1,5 +1,5 @@
-import db from '@/db';
 import { Icon } from '@/src/components/icon';
+import db from '@/src/settings';
 import Link from 'next/link';
 
 export default function Social() {

@@ -1,6 +1,6 @@
-import db from "@/db";
 import Avatar from "@/src/components/avatar";
 import { Icon } from "@/src/components/icon";
+import db from "@/src/settings";
 import Link from "next/link";
 import Heading from "../block-heading";
 

@@ -1,10 +1,10 @@
-import db from '@/db';
 import { defaultPath } from '@/src/metadata';
+import settings from '@/src/settings';
 
 export const fontURL = `${defaultPath}/doc/font/dm.otf`;
 
 export default function OpenGraph({ title, subtitle }) {
-  const { name: defaultTitle, title: defaultSubtitle, url } = db;
+  const { name: defaultTitle, title: defaultSubtitle, url } = settings;
 
   let data = {
     title: title || defaultTitle,
