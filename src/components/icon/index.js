@@ -1,3 +1,3 @@
 export function Icon({ icon, className = '', ...props }) {
-  return <i className={`bi bi-${icon} ${className}`} {...props} />;
+  return <i className={`ri-${icon} ${className}`} {...props} />;
 }

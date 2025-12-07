@@ -2,15 +2,18 @@
 
 @config '../../tailwind.config.js';
 
+:root {
+  --border-offset-color: rgb(255 255 255 / 0.06);
+  --border-offset-size: 24px;
+}
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -25,9 +28,63 @@ html {
 }
 
 body {
-  @apply font-sans antialiased bg-zinc-950 text-zinc-300 [font-feature-settings:'liga','calt','cv06','cv11','cv05','ss01']!;
+  @apply font-sans antialiased bg-zinc-950 text-zinc-300 slashed-zero;
+  font-feature-settings: 'liga', 'calt', 'cv06', 'cv11', 'cv05', 'ss01' !important;
 }
 
 a {
   @apply transition-all hover:transition-all;
+}
+
+
+.border-dashed-offset-y {
+  background-image: linear-gradient(to bottom,
+      var(--border-offset-color) 50%,
+      transparent 50%),
+    linear-gradient(to bottom, var(--border-offset-color) 50%, transparent 50%);
+  background-size: 1px var(--border-offset-size);
+  background-position:
+    left top,
+    right top;
+  background-repeat: repeat-y;
+}
+
+.border-dashed-offset-x {
+  background-image: linear-gradient(to right,
+      var(--border-offset-color) 50%,
+      transparent 50%),
+    linear-gradient(to right, var(--border-offset-color) 50%, transparent 50%);
+  background-size: var(--border-offset-size) 1px;
+  background-position:
+    left top,
+    left bottom;
+  background-repeat: repeat-x;
+}
+
+.border-dashed-offset-t {
+  background-image: linear-gradient(to right, var(--border-offset-color) 50%, transparent 50%);
+  background-size: var(--border-offset-size) 1px;
+  background-position: top;
+  background-repeat: repeat-x;
+}
+
+.border-dashed-offset-b {
+  background-image: linear-gradient(to right, var(--border-offset-color) 50%, transparent 50%);
+  background-size: var(--border-offset-size) 1px;
+  background-position: bottom;
+  background-repeat: repeat-x;
+}
+
+.border-dashed-offset-l {
+  background-image: linear-gradient(to bottom, var(--border-offset-color) 50%, transparent 50%);
+  background-size: 1px var(--border-offset-size);
+  background-position: left;
+  background-repeat: repeat-y;
+}
+
+.border-dashed-offset-r {
+  background-image: linear-gradient(to bottom, var(--border-offset-color) 50%, transparent 50%);
+  background-size: 1px var(--border-offset-size);
+  background-position: right;
+  background-repeat: repeat-y;
 }

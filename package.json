@@ -16,7 +16,8 @@
     "next": "^16.0.7",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "react-tweet": "^3.2.2"
+    "react-tweet": "^3.2.2",
+    "remixicon": "^4.7.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-import-attributes": "^7.27.1",

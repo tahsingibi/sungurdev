@@ -16,7 +16,7 @@ export default function About() {
           className="size-010 overflow-hidden"
         />
         <div className="flex flex-col">
-          <h2 className="text-lg sm:text-xl lowercase">{name}</h2>
+          <h2 className="text-lg sm:text-xl lowercase ">{name}</h2>
           <span className="text-zinc-500 inline-flex items-center relative">
             @{slug}
           </span>
@@ -35,7 +35,7 @@ export default function About() {
       <div className="flex flex-col gap-8">
         <div
           dangerouslySetInnerHTML={{ __html: about }}
-          className="text-zinc-400 [&>.mark]:font-semibold [&>a]:underline-offset-4 [&>a:hover]:text-zinc-300 leading-loose [&>a]:w-fit [&>a]:relative [&>a]:after:content-[''] [&>a]:after:absolute [&>a]:after:-bottom-1 [&>a]:after:right-0 [&>a]:after:h-[2px] [&>a]:after:w-0 [&>a]:after:bg-current [&>a]:after:transition-all [&>a]:after:duration-500 [&>a]:after:ease-hover [&>a:hover:after]:right-auto [&>a:hover:after]:left-0 [&>a:hover:after]:w-full"
+          className="text-zinc-400 [&>.mark]:font-semibold [&>a]:font-mono! [&>a]:underline-offset-4 [&>a:hover]:text-zinc-300 leading-loose [&>a]:w-fit [&>a]:relative [&>a]:after:content-[''] [&>a]:after:absolute [&>a]:after:-bottom-1 [&>a]:after:right-0 [&>a]:after:h-[2px] [&>a]:after:w-0 [&>a]:after:bg-current [&>a]:after:transition-all [&>a]:after:duration-500 [&>a]:after:ease-hover [&>a:hover:after]:right-auto [&>a:hover:after]:left-0 [&>a:hover:after]:w-full"
         />
         <Social />
       </div>

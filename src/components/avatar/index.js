@@ -23,7 +23,7 @@ export default function Avatar({
         />
       )}
       {icon && <Icon icon={icon} className="icon text-xl" />}
-      {!image && !icon && (
+      {!image && !icon && !!text && !!text?.length && (
         <span className="text select-none pointer-events-none">
           {text?.slice(0, 2)}
         </span>

@@ -13,12 +13,13 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image(props) {
+  const params = await props.params;
   const font = fetch(new URL(fontURL, import.meta.url)).then((res) =>
     res.arrayBuffer()
   );
 
   const request = await fetch(
-    `${defaultPath}/api/posts?slug=${props.params.slug}`
+    `${defaultPath}/api/posts?slug=${params.slug}`
   );
 
   const data = await request.json();

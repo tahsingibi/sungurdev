@@ -1,4 +1,4 @@
-import getPosts from '@/src/lib/get-posts';
+import getPosts from '@/src/lib/posts';
 import { cache } from 'react';
 
 export const getPostsStore = cache(async () => {

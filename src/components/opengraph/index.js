@@ -12,6 +12,8 @@ export default function OpenGraph({ title, subtitle }) {
     url: url.split('//')[1],
   };
 
+  const urlRender = data.url?.replace('http://', '').replace('https://', '')?.split('/');
+
   return (
     <div
       style={{
@@ -57,7 +59,7 @@ export default function OpenGraph({ title, subtitle }) {
           marginLeft: 4,
         }}
       >
-        {data.url}
+        {urlRender}
       </p>
     </div>
   );

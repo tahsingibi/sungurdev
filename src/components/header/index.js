@@ -1,8 +1,8 @@
-import db from '@/src/settings';
+import settings from '@/src/settings';
 import Link from '../active-link';
 
 export default function Header() {
-  const { nav } = db;
+  const { nav } = settings;
   return (
     <div className="flex flex-col gap-6 mt-8 w-full inset-0 ">
       <nav className="flex gap-4 w-full ">
