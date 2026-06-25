@@ -17,7 +17,8 @@ Sistemine göre istediğin betiği belirtilen dosya ismiyle kaydedip çalıştı
 
 macOS sisteminde `youtube.command` dosyasını oluşturduktan sonra çift tıkla çalıştırabilmen için `chmod +x youtube.command` komutunu çalıştırman gerekiyor.
 
-```#!/bin/zsh
+```bat/filename=youtube.command
+#!/bin/zsh
 # macOS - Özelleştirilmiş & Otomatik Güncellemeli YouTube İndirici
 # Dosyayi çift tiklamak icin .command olarak kaydedip: chmod +x youtube.command
 
@@ -187,7 +188,8 @@ done
 
 ### Windows
 
-```@echo off
+```bat/filename=youtube.bat
+@echo off
 setlocal ENABLEDELAYEDEXPANSION
 title 🎬 YouTube İndirici (yt-dlp) — @tahsingibi
 chcp 65001 >nul
