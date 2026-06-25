@@ -113,22 +113,22 @@ download_once() {
     echo -e "${BOLD}${BLUE}🔗 URL GİRİŞİ${RESET}"
     echo -n "Lütfen indirmek istediğiniz video linkini yapıştırın: "
     read URL
-
+    
     if [[ -z "${URL:-}" ]]; then
         echo -e "${RED}❌ Hata: URL boş bırakılamaz!${RESET}"
         return 1
     fi
-
+    
     echo
     echo -e "${BOLD}${CYAN}🛠️  FORMAT SEÇİMİ${RESET}"
     echo -e "  ${GREEN}[1]${RESET} 🎵  ${BOLD}MP3${RESET} (Yüksek Kalite Ses)"
-    echo -e "  ${GREEN}[2]${RESET} 🎥  ${BOLD}MP4${RESET} (1080p/En İyi Video)"
+    echo -e "  ${GREEN}[2]${RESET} 🎥  ${BOLD}MP4${RESET} (4K Destekli/En İyi Video)"
     echo
     echo -n "Seçiminiz (1 veya 2): "
     read FORMAT
-
+    
     echo -e "${CYAN}--------------------------------------------------${RESET}"
-
+    
     case "$FORMAT" in
         1)
             echo -e "${BOLD}${YELLOW}🎧 MP3 Ses dosyası indiriliyor, lütfen bekleyin...${RESET}"
@@ -142,14 +142,12 @@ download_once() {
                 "$URL"
             ;;
         2)
-            echo -e "${BOLD}${YELLOW}🎞️  MP4 Video indiriliyor ve optimize ediliyor...${RESET}"
+            echo -e "${BOLD}${YELLOW}🎞️  En yüksek kalitede video indiriliyor (4K/8K Destekli)...${RESET}"
             echo
             yt-dlp \
-                -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best" \
+                -f "bestvideo+bestaudio/best" \
                 --merge-output-format mp4 \
-                --recode-video mp4 \
                 --no-check-certificates \
-                --postprocessor-args "ffmpeg:-c:v libx264 -c:a aac -strict experimental -b:a 192k -movflags +faststart" \
                 -o "${SCRIPT_DIR}/%(title)s.%(ext)s" \
                 "$URL"
             ;;
@@ -158,7 +156,7 @@ download_once() {
             return 1
             ;;
     esac
-
+    
     echo
     echo -e "${BOLD}${GREEN}🎉 TEBRİKLER! İndirme başarıyla tamamlandı.${RESET}"
     echo -e "${BLUE}📂 Dosya Konumu:${RESET} ${BOLD}$SCRIPT_DIR${RESET}"
@@ -170,7 +168,7 @@ while true; do
     if ! download_once; then
         echo -e "${RED}⚠️  İşlem yarıda kesildi veya hata oluştu.${RESET}"
     fi
-
+    
     echo
     echo -e "${BOLD}❓ Ne yapmak istersiniz?${RESET}"
     echo -e "  ${BLUE}[1]${RESET} ➕ Başka bir video indir"
@@ -178,7 +176,7 @@ while true; do
     echo
     echo -n "Seçiminiz (1 veya 2): "
     read NEXT
-
+    
     case "$NEXT" in
         1) clear; echo -e "${BOLD}${CYAN}🔮 Yeni İndirme Başlatılıyor...${RESET}\n"; continue ;;
         2) cleanup ;;
