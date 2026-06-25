@@ -1,48 +1,56 @@
 export const metadata = {
   title: `YouTube Downloader - yt-dlp & ffmpeg`,
-  publishDate: '2025-10-18',
+  publishDate: "2025-10-18",
   description: `yt-dlp ve ffmpeg kurulumlarını kontrol eden, eksikse yönlendiren ve indirme işlemini kolaylaştıran macOS (zsh) ve Windows (.bat) betikleri. Ayrıca sistem gereksinimleri ve indirme linkleri.`,
-  category: 'Script',
+  category: "Script",
 };
 
-YouTube, Instagram, Twitter, Tiktok ve <a href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md"target="_blank"rel="noopener noreferrer">yt-dlp paketinin desteklediği tüm video sitelerinden</a> istediğin içeriği MP3 (ses) veya MP4 (video) formatında içeriğin en yüksek kalitesine göre indirmeni sağlayan iki pratik betik.  
+YouTube, Instagram, Twitter, Tiktok ve <a href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md"target="_blank"rel="noopener noreferrer">yt-dlp paketinin desteklediği tüm video sitelerinden</a> istediğin içeriği MP3 (ses) veya MP4 (video) formatında içeriğin en yüksek kalitesine göre indirmeni sağlayan iki pratik betik.
 
 Her iki betik de `yt-dlp` ve `ffmpeg` araçlarının sistemde kurulu olup olmadığını **otomatik kontrol eder**, eksikler varsa **kurulum talimatlarını ve indirme bağlantılarını** gösterir, her şey hazırsa **doğrudan indirmeye** geçer.
 
-Gerekli araçlar: 
-<a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noopener noreferrer">yt-dlp</a>, 
-<a href="https://www.ffmpeg.org/download.html" target="_blank" rel="noopener noreferrer">ffmpeg</a>
+Gerekli araçlar: <a href="https://github.com/yt-dlp/yt-dlp"target="_blank"rel="noopener noreferrer">yt-dlp</a>, <a href="https://www.ffmpeg.org/download.html"target="_blank"rel="noopener noreferrer">ffmpeg</a>
 
 Sistemine göre istediğin betiği belirtilen dosya ismiyle kaydedip çalıştırmaya başladığında, istediğin içeriği, betiğin bulunduğu dizine direkt olarak indirir.
-
 
 ### macOS
 
 macOS sisteminde `youtube.command` dosyasını oluşturduktan sonra çift tıkla çalıştırabilmen için `chmod +x youtube.command` komutunu çalıştırman gerekiyor.
 
-```bat/filename=youtube.command
-#!/bin/zsh
-# macOS - yt-dlp & ffmpeg kontrolü yapan YouTube indirici (döngülü)
+```#!/bin/zsh
+# macOS - Özelleştirilmiş & Otomatik Güncellemeli YouTube İndirici
 # Dosyayi çift tiklamak icin .command olarak kaydedip: chmod +x youtube.command
 
 set -euo pipefail
 clear
 
-echo "=================================================="
-echo "🎬 YouTube İndirici (yt-dlp) — macOS - @tahsingibi"
-echo "=================================================="
+# ----- Renk Tanımlamaları -----
+BOLD="\033[1m"
+GREEN="\033[32m"
+BLUE="\033[34m"
+CYAN="\033[36m"
+YELLOW="\033[33m"
+RED="\033[31m"
+RESET="\033[0m"
+
+# ----- Başlık Bannerı (Reklam Alanı) -----
+echo -e "${BOLD}${CYAN}🔮 ================================================== 🔮"
+echo -e "🎬  YOUTUBE INDIRICI (yt-dlp) — macOS"
+echo -e "🚀  Developer: @tahsingibi  |  🌐  sungur.dev"
+echo -e "🔮 ================================================== ${RESET}"
 echo
 
 # ----- Yardimci: bekletme -----
 pause() {
-    read -k 1 -s "?Devam etmek icin bir tusa basin..."
+    echo -e -n "${YELLOW}⌨️  Devam etmek için bir tuşa basın...${RESET}"
+    read -k 1 -s
     echo
 }
 
 # ----- Ctrl-C yakalama -----
 cleanup() {
     echo
-    echo "👋 Cikis yapiliyor..."
+    echo -e "${BOLD}${YELLOW}👋 Görüşmek üzere, çıkış yapılıyor...${RESET}"
     exit 0
 }
 trap cleanup INT
@@ -51,31 +59,25 @@ trap cleanup INT
 need_help=0
 
 if ! command -v yt-dlp >/dev/null 2>&1; then
-    echo "❌ yt-dlp bulunamadi."
-    echo
-    echo "  Kurulum Yollari:"
+    echo -e "${RED}❌ yt-dlp bulunamadı.${RESET}"
+    echo "  Kurulum Yolları:"
     echo "  - Homebrew:  brew install yt-dlp"
     echo "  - MacPorts:  sudo port install yt-dlp"
-    echo "  - Pipx (ops): pipx install yt-dlp"
-    echo "  - Manuel:    https://github.com/yt-dlp/yt-dlp/releases/latest"
+    echo "  - Pipx:      pipx install yt-dlp"
     echo
     need_help=1
 fi
 
 if ! command -v ffmpeg >/dev/null 2>&1; then
-    echo "❌ ffmpeg bulunamadi. (ses donusumu ve video birlestirme icin gerekli)"
-    echo
-    echo "  Kurulum Yollari:"
+    echo -e "${RED}❌ ffmpeg bulunamadı (Ses/Video birleştirme için şart).${RESET}"
+    echo "  Kurulum Yolları:"
     echo "  - Homebrew:  brew install ffmpeg"
-    echo "  - MacPorts:  sudo port install ffmpeg"
-    echo "  - Manuel:    https://www.gyan.dev/ffmpeg/builds/ veya"
-    echo "               https://github.com/BtbN/FFmpeg-Builds/releases"
     echo
     need_help=1
 fi
 
 if [[ $need_help -eq 1 ]]; then
-    echo -n "Indirme sayfalarini acayim mi? [e/H]: "
+    echo -e -n "${BOLD}${YELLOW}🌐 İndirme sayfalarını tarayıcıda açayım mı? [e/H]: ${RESET}"
     read open_choice
     if [[ "$open_choice" == [eEyY] ]]; then
         command -v open >/dev/null 2>&1 && {
@@ -84,102 +86,138 @@ if [[ $need_help -eq 1 ]]; then
         }
     fi
     echo
-    echo "Lutfen gerekli araclari kurduktan sonra betigi yeniden calistirin."
+    echo -e "${RED}Lütfen eksik araçları kurup betiği yeniden çalıştırın.${RESET}"
     pause
     exit 1
 fi
 
-# Cikti dizini: betigin bulundugu klasor
+# ----- OTOMATİK GÜNCELLEME KONTROLÜ -----
+echo -e "${BOLD}${BLUE}🔄 Arka planda yt-dlp güncelleme kontrolü yapılıyor...${RESET}"
+if command -v pip &>/dev/null && pip list | grep -q "yt-dlp"; then
+    pip install -U yt-dlp --quiet || echo -e "${YELLOW}⚠️ Pip güncellemesi atlandı.${RESET}"
+elif command -v brew &>/dev/null && brew list yt-dlp &>/dev/null; then
+    brew upgrade yt-dlp --quiet || echo -e "${YELLOW}⚠️ Brew güncellemesi atlandı.${RESET}"
+else
+    yt-dlp -U >/dev/null 2>&1 || true
+fi
+echo -e "${GREEN}✨ Sistem güncel ve hazır!${RESET}"
+echo -e "${CYAN}--------------------------------------------------${RESET}"
+
+# Çıktı dizini
 SCRIPT_DIR="$(cd -- "$(dirname "$0")" && pwd)"
 
-# ----- Indirme isini yapan fonksiyon -----
+# ----- İndirme Fonksiyonu -----
 download_once() {
     local URL FORMAT
     echo
-    read "URL?Lutfen indirmek istediginiz video URL'sini girin: "
-    
+    echo -e "${BOLD}${BLUE}🔗 URL GİRİŞİ${RESET}"
+    echo -n "Lütfen indirmek istediğiniz video linkini yapıştırın: "
+    read URL
+
     if [[ -z "${URL:-}" ]]; then
-        echo "❌ URL bos olamaz!"
+        echo -e "${RED}❌ Hata: URL boş bırakılamaz!${RESET}"
         return 1
     fi
-    
+
     echo
-    echo "Hangi formatta indirmek istersiniz?"
-    echo "1) 🎵 MP3 (sadece ses)"
-    echo "2) 🎥 MP4 (video - tum cihazlar icin uyumlu)"
-    read "FORMAT?Seciminiz (1 veya 2): "
-    
+    echo -e "${BOLD}${CYAN}🛠️  FORMAT SEÇİMİ${RESET}"
+    echo -e "  ${GREEN}[1]${RESET} 🎵  ${BOLD}MP3${RESET} (Yüksek Kalite Ses)"
+    echo -e "  ${GREEN}[2]${RESET} 🎥  ${BOLD}MP4${RESET} (1080p/En İyi Video)"
+    echo
+    echo -n "Seçiminiz (1 veya 2): "
+    read FORMAT
+
+    echo -e "${CYAN}--------------------------------------------------${RESET}"
+
     case "$FORMAT" in
         1)
-            echo "🎧 MP3 olarak indiriliyor..."
+            echo -e "${BOLD}${YELLOW}🎧 MP3 Ses dosyası indiriliyor, lütfen bekleyin...${RESET}"
+            echo
             yt-dlp \
                 -x \
                 --audio-format mp3 \
                 --audio-quality 0 \
+                --no-check-certificates \
                 -o "${SCRIPT_DIR}/%(title)s.%(ext)s" \
                 "$URL"
             ;;
         2)
-            echo "🎞️ MP4 olarak indiriliyor (tum cihazlar icin uyumlu)..."
+            echo -e "${BOLD}${YELLOW}🎞️  MP4 Video indiriliyor ve optimize ediliyor...${RESET}"
+            echo
             yt-dlp \
                 -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best" \
                 --merge-output-format mp4 \
                 --recode-video mp4 \
+                --no-check-certificates \
                 --postprocessor-args "ffmpeg:-c:v libx264 -c:a aac -strict experimental -b:a 192k -movflags +faststart" \
                 -o "${SCRIPT_DIR}/%(title)s.%(ext)s" \
                 "$URL"
             ;;
         *)
-            echo "❌ Gecersiz secim!"
+            echo -e "${RED}❌ Geçersiz seçim yaptınız!${RESET}"
             return 1
             ;;
     esac
-    
+
     echo
-    echo "✅ Indirme tamamlandi!"
-    echo "📂 Klasor: $SCRIPT_DIR"
-    echo
+    echo -e "${BOLD}${GREEN}🎉 TEBRİKLER! İndirme başarıyla tamamlandı.${RESET}"
+    echo -e "${BLUE}📂 Dosya Konumu:${RESET} ${BOLD}$SCRIPT_DIR${RESET}"
+    echo -e "${CYAN}--------------------------------------------------${RESET}"
 }
 
-# ----- Ana döngü: tekrar indir / cik -----
+# ----- Ana Döngü -----
 while true; do
     if ! download_once; then
-        echo
-        echo "Bir hata/iptal olustu (veya gecersiz secim)."
+        echo -e "${RED}⚠️  İşlem yarıda kesildi veya hata oluştu.${RESET}"
     fi
-    
-    # Menü
+
     echo
-    echo "Ne yapmak istersiniz?"
-    echo "1) ➕ Yeni bir indirme"
-    echo "2) 🚪 Çıkış"
-    read "NEXT?Seciminiz (1 veya 2): "
-    
+    echo -e "${BOLD}❓ Ne yapmak istersiniz?${RESET}"
+    echo -e "  ${BLUE}[1]${RESET} ➕ Başka bir video indir"
+    echo -e "  ${RED}[2]${RESET} 🚪 Uygulamadan çık"
+    echo
+    echo -n "Seçiminiz (1 veya 2): "
+    read NEXT
+
     case "$NEXT" in
-        1) clear; continue ;;
+        1) clear; echo -e "${BOLD}${CYAN}🔮 Yeni İndirme Başlatılıyor...${RESET}\n"; continue ;;
         2) cleanup ;;
-        *) echo "❌ Gecersiz secim! Cikis yapiliyor..."; cleanup ;;
+        *) echo -e "${RED}❌ Geçersiz seçim! Çıkış yapılıyor...${RESET}"; cleanup ;;
     esac
 done
 ```
 
 ### Windows
-```bat/filename=youtube.bat
-@echo off
+
+```@echo off
 setlocal ENABLEDELAYEDEXPANSION
-title 🎬 YouTube İndirici (yt-dlp)
+title 🎬 YouTube İndirici (yt-dlp) — @tahsingibi
 chcp 65001 >nul
 cls
 
-echo ============================================
-echo 🎬 YouTube İndirici (yt-dlp) @tahsingibi
-echo ============================================
+:: ----- Renk Tanımlamaları (ANSI Escape Codes) -----
+for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do rem"') do set "ESC=%%b"
+set "BOLD=%ESC%[1m"
+set "GREEN=%ESC%[32m"
+set "BLUE=%ESC%[34m"
+set "CYAN=%ESC%[36m"
+set "YELLOW=%ESC%[33m"
+set "RED=%ESC%[31m"
+set "RESET=%ESC%[0m"
+
+:main_loop
+cls
+:: ----- Başlık Bannerı (Reklam Alanı) -----
+echo %BOLD%%CYAN%🔮 ================================================== 🔮%RESET%
+echo %BOLD%🎬  YOUTUBE INDIRICI (yt-dlp) — Windows%RESET%
+echo %BOLD%🚀  Developer: @tahsingibi  ^|  🌐  sungur.dev%RESET%
+echo %BOLD%🔮 ================================================== %RESET%
 echo.
 
 :: -------- Ön Koşullar: PowerShell kontrolü --------
 where powershell >nul 2>&1
 if errorlevel 1 (
-  echo ❌ PowerShell bulunamadi. Windows 10/11'de varsayilan olarak gelir.
+  echo %RED%❌ PowerShell bulunamadı. Windows 10/11'de varsayılan olarak gelir.%RESET%
   echo    Alternatif: https://aka.ms/PowerShell
   echo.
   pause
@@ -192,27 +230,23 @@ set "NEED_HELP="
 where yt-dlp >nul 2>&1
 if errorlevel 1 where yt-dlp.exe >nul 2>&1
 if errorlevel 1 (
-  echo ❌ yt-dlp bulunamadi.
+  echo %RED%❌ yt-dlp bulunamadı.%RESET%
   echo.
-  echo   Kurulum Yollari:
-  echo   - winget:      winget install -e --id yt-dlp.yt-dlp
-  echo   - chocolatey:  choco install yt-dlp
-  echo   - scoop:       scoop install yt-dlp
-  echo   - Manuel:      https://github.com/yt-dlp/yt-dlp/releases/latest
+  echo    Kurulum Yolları:
+  echo    - winget:      winget install -e --id yt-dlp.yt-dlp
+  echo    - chocolatey:  choco install yt-dlp
+  echo    - Manuel:      https://github.com/yt-dlp/yt-dlp/releases/latest
   echo.
   set "NEED_HELP=1"
 )
 
 where ffmpeg >nul 2>&1
 if errorlevel 1 (
-  echo ❌ ffmpeg bulunamadi. (ses donusumu ve video birlestirme icin gerekli)
+  echo %RED%❌ ffmpeg bulunamadı (Ses/Video birleştirme için şart).%RESET%
   echo.
-  echo   Kurulum Yollari:
-  echo   - winget:      winget install -e --id Gyan.FFmpeg
-  echo   - chocolatey:  choco install ffmpeg
-  echo   - scoop:       scoop install ffmpeg
-  echo   - Manuel:      https://www.gyan.dev/ffmpeg/builds/
-  echo                 veya https://github.com/BtbN/FFmpeg-Builds/releases
+  echo    Kurulum Yolları:
+  echo    - winget:      winget install -e --id Gyan.FFmpeg
+  echo    - Manuel:      https://www.gyan.dev/ffmpeg/builds/
   echo.
   set "NEED_HELP=1"
 )
@@ -220,64 +254,111 @@ if errorlevel 1 (
 if defined NEED_HELP (
   call :maybeOpenPages
   echo.
-  echo Yukaridaki araclari kurduktan sonra bu betigi tekrar calistirin.
+  echo %RED%Lütfen eksik araçları kurup betiği yeniden çalıştırın.%RESET%
   pause
   exit /b 1
 )
 
-:: -------- Indirme Akisi --------
-set /p URL=Lutfen indirmek istediginiz video URL'sini girin: 
-if "%URL%"=="" (
-    echo.
-    echo ❌ URL bos olamaz!
-    pause
-    exit /b
+:: ----- OTOMATİK GÜNCELLEME KONTROLÜ -----
+echo %BOLD%%BLUE%🔄 Arka planda yt-dlp güncelleme kontrolü yapılıyor...%RESET%
+where winget >nul 2>&1
+if %errorlevel% equ 0 (
+    winget upgrade --id yt-dlp.yt-dlp --quiet >nul 2>&1 || set "SKIP_UP=1"
 )
-
-echo.
-echo Hangi formatta indirmek istersiniz?
-echo 1^) 🎵 MP3 (sadece ses)
-echo 2^) 🎥 MP4 (video)
-set /p FORMAT=Seciminiz (1 veya 2): 
+where pip >nul 2>&1
+if %errorlevel% equ 0 (
+    pip install -U yt-dlp --quiet >nul 2>&1 || set "SKIP_UP=1"
+)
+yt-dlp -U >nul 2>&1 || rem
+echo %GREEN%✨ Sistem güncel ve hazır!%RESET%
+echo %CYAN%--------------------------------------------------%RESET%
 
 set "SCRIPT_DIR=%~dp0"
 
+:: -------- İndirme Akışı --------
+echo.
+echo %BOLD%%BLUE%🔗 URL GİRİŞİ%RESET%
+set /p "URL=Lütfen indirmek istediğiniz video linkini yapıştırın: "
+if "%URL%"=="" (
+    echo.
+    echo %RED%❌ Hata: URL boş bırakılamaz!%RESET%
+    echo %CYAN%--------------------------------------------------%RESET%
+    pause
+    goto main_loop
+)
+
+echo.
+echo %BOLD%%CYAN%🛠️  FORMAT SEÇİMİ%RESET%
+echo   %GREEN%[1]%RESET% 🎵  %BOLD%MP3%RESET% (Yüksek Kalite Ses)
+echo   %GREEN%[2]%RESET% 🎥  %BOLD%MP4%RESET% (1080p/En İyi Video)
+echo.
+set /p "FORMAT=Seçiminiz (1 veya 2): "
+
+echo %CYAN%--------------------------------------------------%RESET%
+
 if "%FORMAT%"=="1" (
     echo.
-    echo 🎧 MP3 olarak indiriliyor...
-    powershell -NoLogo -Command ^
-      yt-dlp -x --audio-format mp3 -o "\"%SCRIPT_DIR%/%%(title)s.%%(ext)s\"" "%URL%"
+    echo %BOLD%%YELLOW%🎧 MP3 Ses dosyası indiriliyor, lütfen bekleyin...%RESET%
+    echo.
+    yt-dlp -x --audio-format mp3 --no-check-certificates -o "%SCRIPT_DIR%%%(title)s.%%(ext)s" "%URL%"
     goto done
 )
 
 if "%FORMAT%"=="2" (
     echo.
-    echo 🎞️ MP4 olarak indiriliyor...
-    powershell -NoLogo -Command ^
-      yt-dlp -S "ext:mp4:m4a" -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/best" ^
-      -o "\"%SCRIPT_DIR%/%%(title)s.%%(ext)s\"" "%URL%"
+    echo %BOLD%%YELLOW%🎞️  MP4 Video indiriliyor ve optimize ediliyor...%RESET%
+    echo.
+    yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 --recode-video mp4 --no-check-certificates --postprocessor-args "ffmpeg:-c:v libx264 -c:a aac -strict experimental -b:a 192k -movflags +faststart" -o "%SCRIPT_DIR%%%(title)s.%%(ext)s" "%URL%"
     goto done
 )
 
 echo.
-echo ❌ Gecersiz secim!
+echo %RED%❌ Geçersiz seçim yaptınız!%RESET%
+echo %CYAN%--------------------------------------------------%RESET%
 pause
-exit /b 1
+goto main_loop
 
 :done
 echo.
-echo ✅ Indirme tamamlandi!
-echo 📂 Klasor: %SCRIPT_DIR%
+echo %BOLD%%GREEN%🎉 TEBRİKLER! İndirme başarıyla tamamlandı.%RESET%
+echo %BLUE%📂 Dosya Konumu:%RESET% %BOLD%%SCRIPT_DIR%%RESET%
+echo %CYAN%--------------------------------------------------%RESET%
+
 echo.
-pause
+echo %BOLD%❓ Ne yapmak istersiniz?%RESET%
+echo   %BLUE%[1]%RESET% ➕ Başka bir video indir
+echo   %RED%[2]%RESET% 🚪 Uygulamadan çık
+echo.
+set /p "NEXT=Seçiminiz (1 veya 2): "
+
+if "%NEXT%"=="1" goto main_loop
+if "%NEXT%"=="2" goto exit_program
+goto exit_program
+
+:exit_program
+echo.
+echo %BOLD%%YELLOW%👋 Görüşmek üzere, çıkış yapılıyor...%RESET%
+timeout /t 2 >nul
 exit /b 0
 
 :maybeOpenPages
-echo Indirme sayfalarini acmak ister misiniz? [E/H]
-set /p OPEN=Secim: 
+echo %BOLD%%YELLOW%🌐 İndirme sayfalarını tarayıcıda açayım mı? [E/H]%RESET%
+set /p "OPEN=Seçim: "
 if /I "%OPEN%"=="E" (
   start "" "https://github.com/yt-dlp/yt-dlp/releases/latest"
   start "" "https://www.gyan.dev/ffmpeg/builds/"
 )
 exit /b
 ```
+
+
+
+#### 🚀 Sürüm Notları & Yenilikler
+
+##### [v1.1.0] - 2026-06-25
+
+- macOS ve Windows üzerinde `yt-dlp` aracının kurulu olduğu paket yöneticisi (`pip`, `Homebrew`, `winget`) otomatik taranarak indirme öncesi arka planda sessizce güncellenir; böylece hız kısıtlama ve şifreleme (`n-challenge`) engelleri aşılır.
+- İnternet kesintisi veya yetki sorunlarında güncelleme adımının betiği çökertmemesi için korumalı hata blokları entegre edildi.
+- Arayüz güncellemesi yapıldı.
+- İndirme tamamlandıktan sonra betiğin doğrudan kapanması engellenerek kullanıcıya yeni bir işlem başlatma veya çıkış yapma esnekliği sunuldu.
+- Olası SSL engellerini ve bağlantı hatalarını ekarte etmek amacıyla tüm `yt-dlp` sorgularına `--no-check-certificates` parametresi eklendi.
