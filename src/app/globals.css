@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@config '../../tailwind.config.js';
+@config '../../tailwind.config.ts';
 
 :root {
   --border-offset-color: rgb(255 255 255 / 0.06);
