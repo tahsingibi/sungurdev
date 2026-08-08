@@ -1,0 +1,34 @@
+export const metadata = {
+  title: `JavaScript click inside/outside tespiti`,
+  publishDate: '2024-10-29',
+  description: `JavaScript click inside/outside tespiti`,
+  category: 'Note',
+};
+
+Bir elementin içine/dışına tıklanma durumunu tespit eden javascript kodu;
+
+```html
+<div id="target">Click here</div>
+```
+
+```javascript
+const target = document.getElementById('target');
+
+document.addEventListener('click', (e) => {
+  if (e.composedPath().includes(target)) {
+    target.innerText = 'Click inside';
+  } else {
+    target.innerText = 'Click outside';
+    target.dispatchEvent(new CustomEvent('outside', target));
+  }
+});
+
+target.addEventListener('outside', () => console.log('outside tıkladı!'));
+```
+
+<Source
+  link={[
+    'https://x.com/tayfunerbilen/status/1486741229022990342',
+    'https://codepen.io/tayfunerbilen/pen/xxPGxKd',
+  ]}
+/>
