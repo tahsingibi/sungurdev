@@ -1,0 +1,57 @@
+"use client";
+
+import settings from "@/lib/settings";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+function isActivePath(itemPath: string, pathname: string) {
+  return itemPath === "/" ? pathname === "/" : pathname.startsWith(itemPath);
+}
+
+export default function Nav() {
+  const { nav: navItems } = settings;
+  const pathname = usePathname();
+  const linkRefs = useRef(new Map<number, HTMLAnchorElement>());
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
+
+  useEffect(() => {
+    const activeItem = navItems.find((item) => isActivePath(item.path, pathname));
+    const el = activeItem ? linkRefs.current.get(activeItem.id) : undefined;
+    setIndicator(el ? { left: el.offsetLeft, width: el.offsetWidth } : null);
+  }, [pathname, navItems]);
+
+  return (
+    <nav className="relative flex items-center gap-4">
+      {navItems.map((item) => {
+        const isActive = isActivePath(item.path, pathname);
+        return (
+          <Link
+            key={item.id}
+            href={item.path}
+            ref={(node) => {
+              if (node) linkRefs.current.set(item.id, node);
+              else linkRefs.current.delete(item.id);
+            }}
+            className={cn(
+              "inline-block font-mono text-xs font-medium uppercase text-muted-foreground transition-colors hover:text-foreground",
+              isActive && "text-foreground",
+            )}
+          >
+            {item.name}
+          </Link>
+        );
+      })}
+      {/* -bottom-4 mirrors Header's `mt-4` gap so this lines up with the
+          divider-screen rule underneath the header. */}
+      {indicator && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-7 h-px bg-foreground transition-[left,width] duration-300 ease-out"
+          style={{ left: indicator.left, width: indicator.width }}
+        />
+      )}
+    </nav>
+  );
+}
