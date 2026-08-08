@@ -10,6 +10,7 @@ export const authors = [{ name: settings.name, url: defaultPath }];
 export const googleVerify = '';
 export const yandexVerify = '';
 export const yahooVerify = '';
+export const rssAlternates = { 'application/rss+xml': '/rss.xml' };
 
 export const layoutMetadata: Metadata = {
   metadataBase: new URL(defaultPath),
@@ -21,6 +22,7 @@ export const layoutMetadata: Metadata = {
   keywords: keywords,
   alternates: {
     canonical: '/',
+    types: rssAlternates,
   },
   robots: {
     index: true,
@@ -59,7 +61,7 @@ export const pageMetadata: Record<'home' | 'write' | 'works', Metadata> = {
   write: {
     title: 'Write',
     description: 'Technical notes, snippets and practical development guides by Tahsin Sungur.',
-    alternates: { canonical: '/write' },
+    alternates: { canonical: '/write', types: rssAlternates },
     openGraph: {
       title: 'Write',
       description: 'Technical notes, snippets and practical development guides by Tahsin Sungur.',
@@ -69,7 +71,7 @@ export const pageMetadata: Record<'home' | 'write' | 'works', Metadata> = {
   works: {
     title: 'Experiences',
     description: 'Professional experience and selected frontend projects by Tahsin Sungur.',
-    alternates: { canonical: '/works' },
+    alternates: { canonical: '/works', types: rssAlternates },
     openGraph: {
       title: 'Experiences',
       description: 'Professional experience and selected frontend projects by Tahsin Sungur.',

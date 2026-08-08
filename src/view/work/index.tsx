@@ -1,5 +1,4 @@
 import Avatar from '@/src/components/avatar';
-import { Icon } from '@/src/components/icon';
 import db from '@/src/settings';
 import Link from 'next/link';
 import SectionSeparator from '@/src/components/section-separator';
@@ -11,22 +10,22 @@ export default function ExperienceView() {
   return (
     <div className="flex flex-col">
       <header className="flex flex-col gap-3 px-6 py-12 sm:px-10 sm:py-16">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">Career / Selected work</span>
-        <h1 className="text-4xl font-medium tracking-[-0.04em] text-white">{heading}</h1>
-        <p className="max-w-lg text-sm leading-6 text-zinc-400">{description}</p>
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Career / Selected work</span>
+        <h1 className="text-4xl font-medium tracking-[-0.04em] text-foreground">{heading}</h1>
+        <p className="max-w-lg text-sm leading-6 text-muted-foreground">{description}</p>
       </header>
       <SectionSeparator />
       {experience.map((work, index) => (
         <Fragment key={work.id}>
           <section id={work.name} className="flex flex-col gap-3 px-6 py-10 sm:px-10 sm:py-14">
             <div className="flex items-end justify-between gap-4">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-100">
+              <h2 className="text-2xl font-medium tracking-tight text-foreground">
                 {work.name}
               </h2>
-              <span className="font-mono text-[10px] text-zinc-400">{work.year}</span>
+              <span className="font-mono text-[10px] text-muted-foreground">{work.year}</span>
             </div>
             <div
-              className="prose prose-zinc max-w-full text-sm leading-7 text-zinc-400"
+              className="prose max-w-full text-sm leading-7 text-muted-foreground dark:prose-invert"
               dangerouslySetInnerHTML={{ __html: work.description }}
             />
 
@@ -37,7 +36,7 @@ export default function ExperienceView() {
                   return (
                     <Link
                       key={id}
-                      className="group relative flex items-center gap-4 p-4 transition-colors hover:bg-zinc-900/50 active:translate-y-px"
+                      className="group relative flex items-center gap-4 p-4 transition-colors hover:bg-accent/60 active:translate-y-px"
                       href={path}
                       target="_blank"
                     >
@@ -57,12 +56,6 @@ export default function ExperienceView() {
                         </span>
                       </p>
 
-                      <span className="absolute right-0 top-1/2 -translate-y-1/2 scale-0 group-hover:scale-100 inline-block group-hover:opacity-100 transition-all duration-150 ease-hover">
-                        <Icon
-                          icon="arrow-up-short"
-                          className="text-2xl inline-block rotate-90 -translate-y-0.5 scale-0 group-hover:scale-125 group-hover:-translate-x-2 leading-none size-0 "
-                        />
-                      </span>
                     </Link>
                   );
                 }

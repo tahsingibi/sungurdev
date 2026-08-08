@@ -1,30 +1,67 @@
 'use client';
 
 import { Icon } from '@/src/components/icon';
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { useEffect, useRef, useState } from 'react';
 
-export function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
+type CopyState = 'idle' | 'success' | 'error';
+
+interface CopyButtonProps {
+  text: string;
+  compact?: boolean;
+  className?: string;
+  onCopySuccess?: (text: string) => void;
+  onCopyError?: (error: Error) => void;
+}
+
+export function CopyButton({
+  text,
+  compact = false,
+  className,
+  onCopySuccess,
+  onCopyError,
+}: CopyButtonProps) {
+  const [state, setState] = useState<CopyState>('idle');
+  const timeoutRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
+
+  const updateState = (nextState: CopyState) => {
+    window.clearTimeout(timeoutRef.current);
+    setState(nextState);
+    timeoutRef.current = window.setTimeout(() => setState('idle'), 2000);
+  };
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
+      updateState('success');
+      onCopySuccess?.(text);
+    } catch (cause) {
+      const error = cause instanceof Error ? cause : new Error('Clipboard is unavailable');
+      updateState('error');
+      onCopyError?.(error);
     }
   };
+
+  const label = state === 'success' ? 'Copied' : state === 'error' ? 'Failed' : 'Copy';
+  const icon = state === 'success' ? 'check-line' : state === 'error' ? 'close-line' : 'file-copy-line';
 
   return (
     <button
       type="button"
-      className="group relative flex h-8 items-center gap-2 overflow-hidden border border-zinc-700 bg-zinc-950 px-2 font-mono text-[10px] text-zinc-400 hover:border-zinc-600 hover:text-white active:translate-y-px"
+      aria-label={`${label} code`}
+      className={cn(
+        'group relative flex h-7 items-center gap-2 overflow-hidden rounded-[6px] border border-[var(--code-border)] bg-[var(--code-background)] px-2 font-mono text-[10px] text-[var(--code-muted)] transition-colors hover:bg-[var(--code-border)]/35 hover:text-[var(--code-foreground)] active:translate-y-px',
+        state === 'error' && 'text-red-600 dark:text-red-300',
+        compact && 'size-7 justify-center border-0 px-0',
+        className,
+      )}
       onClick={handleCopy}
-      data-copied={copied}
+      data-state={state}
     >
-      <Icon icon={copied ? 'check-line' : 'file-copy-line'} />
-      <span>{copied ? 'Copied' : 'Copy'}</span>
+      <Icon key={state} icon={icon} className="animate-in zoom-in-75 duration-150" />
+      {!compact && <span aria-live="polite">{label}</span>}
     </button>
   );
 }

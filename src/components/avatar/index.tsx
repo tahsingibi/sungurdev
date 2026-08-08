@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Icon } from '../icon';
 import type { ComponentPropsWithoutRef } from 'react';
 import type { ImageProps } from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface AvatarProps extends ComponentPropsWithoutRef<'figure'> {
   image?: ImageProps['src'];
@@ -22,7 +23,10 @@ export default function Avatar({
 }: AvatarProps) {
   return (
     <figure
-      className={`relative size-12 bg-zinc-800/60 rounded-lg shrink-0 flex items-center justify-center has-[img]:bg-transparent ${className}`}
+      className={cn(
+        'relative flex size-12 shrink-0 items-center justify-center rounded-lg bg-muted has-[img]:bg-transparent',
+        className,
+      )}
       {...props}
     >
       {image && (

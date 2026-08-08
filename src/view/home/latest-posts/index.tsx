@@ -25,12 +25,12 @@ export default async function LatestPosts() {
             <li key={post?.slug}>
               <Link
                 href={`/write/${post?.slug}`}
-                className="group flex flex-col gap-2 p-4 transition-colors hover:bg-zinc-900/50"
+                className="group flex flex-col gap-2 p-4 transition-colors hover:bg-accent/60"
               >
-                <span className="w-fit text-zinc-300 transition-colors group-hover:text-white">{title}</span>
-                <span className="inline-flex items-center gap-2 font-mono text-[11px] text-zinc-400">
+                <span className="w-fit text-foreground transition-colors">{title}</span>
+                <span className="inline-flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
                   {category && (
-                    <span className="border border-zinc-800 px-2 py-px text-[10px] uppercase tracking-wider text-zinc-400">
+                    <span className="border border-border px-2 py-px text-[10px] uppercase tracking-wider text-muted-foreground">
                       {category}
                     </span>
                   )}

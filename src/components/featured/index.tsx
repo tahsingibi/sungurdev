@@ -18,8 +18,8 @@ export default function Featured(props: FeaturedBlock) {
   const caption = props.caption;
 
   return (
-    <figure className="m-0! w-full border-y border-zinc-800/80 bg-zinc-900/20 p-3 sm:p-5">
-      <div className="overflow-hidden bg-zinc-950 ring-1 ring-zinc-800/80">
+    <figure className="m-0! w-full border-y border-border bg-muted/25 p-3 sm:p-5">
+      <div className="overflow-hidden bg-background ring-1 ring-border">
         {props.type === 'image' && (
           <Image
             src={props.src}
@@ -56,7 +56,7 @@ export default function Featured(props: FeaturedBlock) {
         )}
       </div>
       {caption && (
-        <figcaption className="mt-3 px-1 font-mono text-[10px] leading-5 tracking-wide text-zinc-400">
+        <figcaption className="mt-3 px-1 font-mono text-[10px] leading-5 tracking-wide text-muted-foreground">
           {caption}
         </figcaption>
       )}

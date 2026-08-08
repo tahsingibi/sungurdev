@@ -5,9 +5,15 @@ import Link from 'next/link';
 export default function Social() {
   const { social, resume, hiring } = db;
   return (
-    <div className="flex flex-wrap items-center gap-1 text-zinc-400 [&>a]:grid [&>a]:shrink-0 [&>a]:place-items-center [&>a]:border [&>a]:border-transparent [&>a]:transition-all [&>a:hover]:border-zinc-800 [&>a:hover]:bg-zinc-900/50 [&>a:active]:translate-y-px">
+    <div className="flex min-h-11 overflow-x-auto border-y border-foreground/10 text-muted-foreground">
       {social.map(({ id, icon, name, path }) => (
-        <Link key={id} href={path} className="size-10" target="_blank" aria-label={name}>
+        <Link
+          key={id}
+          href={path}
+          className="grid w-11 shrink-0 place-items-center border-r border-foreground/10 transition-colors hover:bg-accent/70 hover:text-foreground active:translate-y-px"
+          target="_blank"
+          aria-label={name}
+        >
           <Icon icon={icon} />
         </Link>
       ))}
@@ -15,7 +21,7 @@ export default function Social() {
         <Link
           href={resume}
           target="_blank"
-          className="h-10 flex! items-center px-4 w-fit gap-4"
+          className="ml-auto flex! min-h-11 shrink-0 items-center gap-3 border-l border-foreground/10 px-4 font-mono text-[11px] transition-colors hover:bg-accent/70 hover:text-foreground"
         >
           Resume
           <Icon icon="download" />

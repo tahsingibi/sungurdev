@@ -1,7 +1,7 @@
-import { getPostsStore } from '@/src/lib/store/posts-store';
+import BlogActions from '@/src/components/blog-actions';
 import Featured from '@/src/components/featured';
 import SectionSeparator from '@/src/components/section-separator';
-import BlogActions from '@/src/components/blog-actions';
+import { getPostsStore } from '@/src/lib/store/posts-store';
 import settings from '@/src/settings';
 import NotFound from '../../not-found';
 import BackButton from './back-button';
@@ -44,7 +44,7 @@ export default async function WriteDetailView({ params }: WriteDetailViewProps) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
         />
         <header>
-          <div className="flex min-h-12 items-center justify-between gap-3 px-4 sm:px-6">
+          <div className="flex min-h-12 items-center justify-between gap-3 pl-4 sm:pl-6">
             <BackButton />
             <BlogActions
               title={title}
@@ -53,15 +53,15 @@ export default async function WriteDetailView({ params }: WriteDetailViewProps) 
               githubUrl={`https://github.com/tahsingibi/sungurdev/blob/main/content/blogs/${slug}.mdx`}
             />
           </div>
-          <div className="relative h-5 border-y border-zinc-800/80 before:absolute before:inset-0 before:bg-[repeating-linear-gradient(135deg,transparent_0,transparent_7px,rgb(63_63_70/0.28)_7px,rgb(63_63_70/0.28)_8px)]" />
+          <div className="relative h-5 border-y border-border before:absolute before:inset-0 before:bg-[repeating-linear-gradient(135deg,transparent_0,transparent_7px,var(--hatch-line)_7px,var(--hatch-line)_8px)]" />
           <div className="px-6 py-8 sm:px-10 sm:py-10">
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">Journal entry</p>
-            <h1 className="max-w-2xl text-3xl font-medium tracking-[-0.035em] text-zinc-100 sm:text-4xl">{title}</h1>
-            <p className="mt-5 max-w-2xl text-sm leading-6 text-zinc-400">{description}</p>
-            <p className="mt-5 font-mono text-xs text-zinc-400">
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Journal entry</p>
+            <h1 className="max-w-2xl text-3xl font-medium tracking-[-0.035em] text-foreground sm:text-4xl">{title}</h1>
+            <p className="mt-5 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p>
+            <p className="mt-5 font-mono text-xs text-muted-foreground">
             <span className="inline-flex gap-2 items-center">
               {category && (
-                <span className="w-fit border border-zinc-800 px-2 py-px text-[10px] uppercase tracking-wider text-zinc-400">
+                <span className="w-fit border border-border px-2 py-px text-[10px] uppercase tracking-wider text-muted-foreground">
                   {category}
                 </span>
               )}
@@ -71,7 +71,7 @@ export default async function WriteDetailView({ params }: WriteDetailViewProps) 
           </div>
         </header>
         {featured ? <Featured {...featured} /> : <SectionSeparator />}
-        <article className="prose prose-zinc max-w-full grow px-6 py-10 prose-p:text-base sm:px-10 sm:py-14">
+        <article className="max-w-full grow px-6 py-10 sm:px-10 sm:py-14">
           <MDXContent />
         </article>
         <SectionSeparator />

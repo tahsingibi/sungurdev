@@ -5,7 +5,7 @@ export default function BackButton() {
   return (
     <Link
       href="/write"
-      className="group flex h-8 items-center gap-2 font-mono text-xs text-zinc-400 hover:text-zinc-100"
+      className="group flex h-8 items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground"
     >
       <Icon icon="arrow-left-line" />
       Blog

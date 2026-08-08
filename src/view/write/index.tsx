@@ -10,9 +10,9 @@ export default async function WriteView() {
   return (
     <div className="flex flex-col">
       <header className="flex flex-col gap-3 px-6 py-12 sm:px-10 sm:py-16">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">Archive / Notes</span>
-        <h1 className="text-4xl font-medium tracking-[-0.04em] text-white">{heading}</h1>
-        <p className="max-w-lg text-sm leading-6 text-zinc-400">{description}</p>
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Archive / Notes</span>
+        <h1 className="text-4xl font-medium tracking-[-0.04em] text-foreground">{heading}</h1>
+        <p className="max-w-lg text-sm leading-6 text-muted-foreground">{description}</p>
       </header>
       <SectionSeparator />
 
@@ -22,15 +22,15 @@ export default async function WriteView() {
             const { title, category, date } = post.metadata;
             return (
               <section
-                className="group flex flex-col gap-2 p-4 transition-colors hover:bg-zinc-900/50"
+                className="group flex flex-col gap-2 p-4 transition-colors hover:bg-accent/60"
                 key={post.slug}
               >
-                <Link href={`/write/${post.slug}`} className="w-fit text-lg text-zinc-300 group-hover:text-white">
+                <Link href={`/write/${post.slug}`} className="w-fit text-lg text-foreground">
                   {title}
                 </Link>
-                <span className="inline-flex items-center gap-2 font-mono text-[11px] text-zinc-400">
+                <span className="inline-flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
                   {category && (
-                    <span className="border border-zinc-800 px-2 py-px text-[10px] uppercase tracking-wider text-zinc-400">
+                    <span className="border border-border px-2 py-px text-[10px] uppercase tracking-wider text-muted-foreground">
                       {category}
                     </span>
                   )}
@@ -40,7 +40,7 @@ export default async function WriteView() {
             );
           })
         ) : (
-          <span className="text-sm text-zinc-400">{error}</span>
+          <span className="text-sm text-muted-foreground">{error}</span>
         )}
       </div>
       <SectionSeparator />

@@ -1,5 +1,4 @@
 import Avatar from "@/src/components/avatar";
-import { Icon } from "@/src/components/icon";
 import db from "@/src/settings";
 import Link from "next/link";
 import Heading from "../block-heading";
@@ -22,7 +21,7 @@ export default function Work() {
         {work.map(({ id, name, explain, repo, live, icon = "code" }) => (
           <div
             key={id}
-            className="group relative flex overflow-hidden p-4 transition-colors hover:bg-zinc-900/50 max-sm:flex-col max-sm:gap-4 sm:justify-between"
+            className="group relative flex overflow-hidden p-4 transition-colors hover:bg-accent/60 max-sm:flex-col max-sm:gap-4 sm:justify-between"
           >
             <div className="flex sm:justify-between gap-6 overflow-hidden relative">
               <Avatar
@@ -37,14 +36,8 @@ export default function Work() {
                     target="_blank"
                   >
                     {name}
-                    <span className="scale-0 group-hover:scale-100 inline-block group-hover:opacity-100 transition-all duration-150 ease-hover">
-                      <Icon
-                        icon="arrow-up-short"
-                        className="text-2xl inline-block rotate-45 -translate-y-0.5 translate-x-3 leading-none size-0 "
-                      />
-                    </span>
                   </Link>
-                  <p className="text-sm text-zinc-400">{explain}</p>
+                  <p className="text-sm text-muted-foreground">{explain}</p>
                 </div>
               </div>
             </div>
@@ -53,7 +46,7 @@ export default function Work() {
                 <Link
                   href={repo}
                   target="_blank"
-                  className="relative inline text-gray-200 hover:text-white"
+                  className="relative inline text-foreground hover:underline"
                 >
                   Github
                 </Link>

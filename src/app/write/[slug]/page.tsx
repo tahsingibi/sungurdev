@@ -2,6 +2,7 @@ import { getPostsStore } from '@/src/lib/store/posts-store';
 import WriteDetailView from '@/src/view/write/detail';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { rssAlternates } from '@/src/metadata';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
-    alternates: { canonical: postUrl },
+    alternates: { canonical: postUrl, types: rssAlternates },
     openGraph: {
       title,
       description,

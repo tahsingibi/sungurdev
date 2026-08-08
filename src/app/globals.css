@@ -1,72 +1,158 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
+@custom-variant dark (&:is(.dark *));
 @config '../../tailwind.config.ts';
 
-:root {
-  --background: #09090b;
-  --foreground: #d4d4d8;
+@theme inline {
+  --font-heading: var(--inter);
+  --font-sans: var(--inter);
+  --font-mono: var(--geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-*/
-@layer base {
+:root {
+  color-scheme: light;
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.205 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.205 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.955 0 0);
+  --secondary-foreground: oklch(0.269 0 0);
+  --muted: oklch(0.955 0 0);
+  --muted-foreground: oklch(0.46 0 0);
+  --accent: oklch(0.93 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.55 0.22 27);
+  --border: oklch(0.86 0 0);
+  --input: oklch(0.86 0 0);
+  --ring: oklch(0.5 0 0);
+  --radius: 0rem;
+  --grid-line: oklch(0.82 0 0 / 55%);
+  --hatch-line: oklch(0.7 0 0 / 38%);
+  --code-background: oklch(0.965 0 0);
+  --code-foreground: oklch(0.24 0 0);
+  --code-muted: oklch(0.47 0 0);
+  --code-border: oklch(0.84 0 0);
+  --syntax-keyword: oklch(0.45 0.19 305);
+  --syntax-string: oklch(0.4 0.12 151);
+  --syntax-number: oklch(0.48 0.13 65);
+  --syntax-title: oklch(0.43 0.14 245);
+}
 
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.115 0 0);
+  --foreground: oklch(0.9 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.9 0 0);
+  --popover: oklch(0.17 0 0);
+  --popover-foreground: oklch(0.92 0 0);
+  --primary: oklch(0.92 0 0);
+  --primary-foreground: oklch(0.16 0 0);
+  --secondary: oklch(0.205 0 0);
+  --secondary-foreground: oklch(0.9 0 0);
+  --muted: oklch(0.205 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.24 0 0);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.68 0.19 22);
+  --border: oklch(1 0 0 / 13%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.58 0 0);
+  --grid-line: oklch(0.32 0 0 / 48%);
+  --hatch-line: oklch(0.42 0 0 / 38%);
+  --code-background: oklch(0.095 0 0);
+  --code-foreground: oklch(0.84 0 0);
+  --code-muted: oklch(0.62 0 0);
+  --code-border: oklch(0.27 0 0);
+  --syntax-keyword: oklch(0.78 0.16 315);
+  --syntax-string: oklch(0.8 0.13 151);
+  --syntax-number: oklch(0.84 0.14 82);
+  --syntax-title: oklch(0.78 0.12 235);
+}
+
+@layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth scroll-p-20 font-sans [scrollbar-gutter:stable_both-edges];
+  }
+
+  body {
+    @apply min-h-screen overflow-x-clip bg-background font-sans text-foreground antialiased slashed-zero;
+    font-feature-settings: 'liga', 'calt', 'cv06', 'cv11', 'cv05', 'ss01';
+  }
+
+  a {
+    @apply transition-colors;
   }
 }
 
-html {
-  @apply scroll-smooth scroll-p-20 [scrollbar-gutter:stable_both-edges];
-}
-
-body {
-  @apply min-h-screen overflow-x-clip bg-zinc-950 font-sans text-zinc-300 antialiased slashed-zero;
-  font-feature-settings: 'liga', 'calt', 'cv06', 'cv11', 'cv05', 'ss01' !important;
-}
-
-a {
-  @apply transition-all hover:transition-all;
-}
-
 ::selection {
-  @apply bg-zinc-100 text-zinc-950;
+  @apply bg-foreground text-background;
 }
 
-/* highlight.js markup is generated at runtime, so syntax tokens live here. */
+/* highlight.js produces these token classes outside the MDX component tree. */
 .hljs-comment,
 .hljs-quote {
-  @apply text-zinc-600 italic;
+  color: var(--code-muted);
+  font-style: italic;
 }
 
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-literal,
 .hljs-title.function_ {
-  @apply text-fuchsia-300;
+  color: var(--syntax-keyword);
 }
 
 .hljs-string,
 .hljs-attr,
 .hljs-template-variable {
-  @apply text-emerald-300;
+  color: var(--syntax-string);
 }
 
 .hljs-number,
 .hljs-built_in,
 .hljs-variable.language_ {
-  @apply text-amber-300;
+  color: var(--syntax-number);
 }
 
 .hljs-title,
 .hljs-property,
 .hljs-attribute {
-  @apply text-sky-300;
+  color: var(--syntax-title);
 }

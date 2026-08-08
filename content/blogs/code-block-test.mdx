@@ -1,0 +1,41 @@
+export const metadata = {
+  title: 'Kod Bloğu Test Sayfası (geçici — silinecek)',
+  publishDate: '2026-08-08',
+  description: 'Kod bloğu (code-block-command) refactor\'ünü test etmek için oluşturulan geçici sayfa.',
+  category: 'Test',
+};
+
+Bu sayfa, blog kod bloklarının [chanhdai.com/components/code-block-command](https://chanhdai.com/components/code-block-command) stiline uyarlanmasını test etmek için oluşturuldu. Doğrulama tamamlandıktan sonra bu yazı silinecek.
+
+## Paket yöneticisi komut bloğu
+
+<CodeBlockCommand
+  pnpm="pnpm add zustand"
+  yarn="yarn add zustand"
+  npm="npm install zustand"
+  bun="bun add zustand"
+/>
+
+## Preview / Code sekmesi
+
+<ComponentPreview name="counter" />
+
+## Dosya adlı kod bloğu
+
+```tsx/filename=lib/utils.ts
+import type { ClassValue } from "clsx"
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs))
+}
+```
+
+## Dosya adsız düz kod bloğu
+
+```javascript
+function greet(name) {
+  console.log(`Merhaba, ${name}!`);
+}
+```
