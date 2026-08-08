@@ -1,5 +1,14 @@
 'use client';
-import { Tweet as X } from 'react-tweet';
+import dynamic from 'next/dynamic';
+
+const X = dynamic(() => import('react-tweet').then((module) => module.Tweet), {
+  ssr: false,
+  loading: () => (
+    <div className="grid min-h-[30rem] place-items-center border border-zinc-800 font-mono text-xs text-zinc-400">
+      Loading post…
+    </div>
+  ),
+});
 
 interface TweetProps {
   id: string;

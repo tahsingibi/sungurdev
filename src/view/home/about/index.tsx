@@ -9,36 +9,56 @@ export default function About() {
     .replaceAll('{lastworklink}', settings.experience[0].path);
 
   return (
-    <aside className="flex flex-col gap-8">
-      <section className="flex items-center gap-4 w-full relative z-10">
-        <Avatar
-          image="/img/profile.jpeg"
-          className="size-010 overflow-hidden"
-        />
-        <div className="flex flex-col">
-          <h2 className="text-lg sm:text-xl lowercase ">{name}</h2>
-          <span className="text-zinc-500 inline-flex items-center relative">
-            @{slug}
-          </span>
+    <section aria-labelledby="profile-heading">
+      <div className="relative h-56 overflow-hidden border-b border-zinc-800/80 bg-[linear-gradient(rgb(39_39_42/0.28)_1px,transparent_1px),linear-gradient(90deg,rgb(39_39_42/0.28)_1px,transparent_1px)] bg-[size:56px_56px] sm:h-72">
+        <div aria-hidden="true" className="absolute left-1/2 top-1/2 size-32 -translate-x-1/2 -translate-y-1/2 rotate-[30deg] border border-zinc-700/60 sm:size-44">
+          <div className="absolute -inset-7 border border-zinc-800/70" />
+          <div className="absolute inset-7 border border-zinc-700/60" />
+          <div className="absolute -left-24 top-20 h-12 w-20 border border-zinc-800/80" />
+        </div>
+        <span className="absolute bottom-4 right-5 font-mono text-[9px] tracking-[0.22em] text-zinc-700">FIG_001</span>
+      </div>
+
+      <div className="relative flex flex-col gap-5 px-6 pb-8 sm:px-10">
+        <div className="-mt-12 flex items-end gap-5 sm:-mt-16">
+          <Avatar
+            image="/img/profile.jpeg"
+            name={name}
+            priority
+            className="size-24 overflow-hidden rounded-full ring-4 ring-zinc-950 sm:size-32"
+          />
+          <div className="min-w-0 pb-2">
+            <h1 id="profile-heading" className="truncate text-3xl font-medium tracking-[-0.04em] text-zinc-100 sm:text-4xl">{name}</h1>
+            <p className="mt-1 font-mono text-[11px] text-zinc-400">Creating with code. Small details matter.</p>
+          </div>
         </div>
 
-        {hiring && (
-          <span className="absolute right-0 top-1/2 -translate-y-1/2">
-            <span
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-green-500 size-3 rounded-full before:absolute before:block before:size-3 before:bg-green-600 before:-z-10 before:inset-0 before:scale-x-105 before:rounded-full before:animate-ping  
-    after:absolute after:ease-hover after:duration-500 after:block after:text-sm after:content-[attr(data-content)] after:whitespace-nowrap after:bg-green-700/20 after:border after:border-green-700/20 after:text-green-600 after:px-2 after:py-1 after:rounded-sm after:origin-right after:scale-0 hover:after:scale-100 after:right-5  after:-translate-y-2.5 after:transition-all"
-              data-content="Open to work"
-            ></span>
-          </span>
-        )}
-      </section>
-      <div className="flex flex-col gap-8">
-        <div
-          dangerouslySetInnerHTML={{ __html: about }}
-          className="text-zinc-400 [&>.mark]:font-semibold [&>a]:font-mono! [&>a]:underline-offset-4 [&>a:hover]:text-zinc-300 leading-loose [&>a]:w-fit [&>a]:relative [&>a]:after:content-[''] [&>a]:after:absolute [&>a]:after:-bottom-1 [&>a]:after:right-0 [&>a]:after:h-[2px] [&>a]:after:w-0 [&>a]:after:bg-current [&>a]:after:transition-all [&>a]:after:duration-500 [&>a]:after:ease-hover [&>a:hover:after]:right-auto [&>a:hover:after]:left-0 [&>a:hover:after]:w-full"
-        />
+        <div className="grid gap-px border-y border-zinc-800/80 bg-zinc-800/80 font-mono text-xs sm:grid-cols-2">
+          <div className="flex items-center gap-3 bg-zinc-950 px-4 py-3 text-zinc-400">
+            <span className="text-zinc-400">01</span>{settings.title}
+          </div>
+          <div className="flex items-center gap-3 bg-zinc-950 px-4 py-3 text-zinc-400">
+            <span className="text-zinc-400">02</span>Izmir, Türkiye
+          </div>
+          <div className="flex items-center gap-3 bg-zinc-950 px-4 py-3 text-zinc-400">
+            <span className="text-zinc-400">03</span>@{slug}
+          </div>
+          <div className="flex items-center gap-3 bg-zinc-950 px-4 py-3 text-zinc-400">
+            <span className="text-zinc-400">04</span>
+            {hiring ? 'Available for selected work' : 'Currently unavailable'}
+          </div>
+        </div>
+
         <Social />
       </div>
-    </aside>
+
+      <div className="relative px-6 py-10 before:absolute before:left-1/2 before:top-0 before:h-px before:w-screen before:-translate-x-1/2 before:bg-zinc-800/80 sm:px-10">
+        <p className="mb-5 font-mono text-sm italic text-zinc-200">Good morning</p>
+        <div
+          dangerouslySetInnerHTML={{ __html: about }}
+          className="text-pretty text-base leading-7 text-zinc-400 [&>.mark]:font-medium [&>.mark]:text-zinc-200 [&>a]:border-b [&>a]:border-zinc-700 [&>a]:font-mono [&>a]:text-xs [&>a:hover]:border-zinc-300 [&>a:hover]:text-zinc-200"
+        />
+      </div>
+    </section>
   );
 }

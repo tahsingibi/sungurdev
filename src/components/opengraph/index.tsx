@@ -25,27 +25,32 @@ export default function OpenGraph({ title, subtitle }: OpenGraphProps = {}) {
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
-        color: 'black',
-        backgroundColor: 'white',
+        color: '#f4f4f5',
+        backgroundColor: '#09090b',
         backgroundImage: `
-            linear-gradient(to right, #10101010 1px, transparent 1px),
-            linear-gradient(to bottom, #10101010 1px, transparent 1px)
+            linear-gradient(to right, #27272a 1px, transparent 1px),
+            linear-gradient(to bottom, #27272a 1px, transparent 1px)
           `,
-        backgroundSize: '32px 32px',
-        padding: '60px',
-        borderTop: '20px solid black',
+        backgroundSize: '48px 48px',
+        padding: '72px',
+        border: '1px solid #3f3f46',
       }}
     >
+      <div style={{ display: 'flex', fontSize: 20, color: '#71717a', letterSpacing: 5 }}>
+        TS/01 · FIG_OG
+      </div>
       <h2
         style={{
-          fontSize: '80px',
-          marginBottom: '-20px',
-          letterSpacing: '-4px',
+          fontSize: '72px',
+          lineHeight: 1.05,
+          marginBottom: '12px',
+          letterSpacing: '-3px',
+          maxWidth: '1000px',
         }}
       >
         {data.title}
       </h2>
-      <h5 style={{ fontSize: '32px', marginBottom: 'auto' }}>
+      <h5 style={{ fontSize: '28px', color: '#a1a1aa', marginBottom: 'auto' }}>
         {title && 'in '}
         {data.subtitle}
         {subtitle && ' - by ' + defaultTitle}
@@ -54,11 +59,10 @@ export default function OpenGraph({ title, subtitle }: OpenGraphProps = {}) {
       <p
         style={{
           fontSize: '20px',
-          borderRadius: '9999px',
-          padding: '12px 20px',
-          color: 'white',
-          background: 'black',
-          marginLeft: 4,
+          padding: '12px 16px',
+          color: '#a1a1aa',
+          background: '#18181b',
+          border: '1px solid #3f3f46',
         }}
       >
         {urlRender}

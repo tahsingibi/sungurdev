@@ -8,22 +8,22 @@ export default function Experience() {
   const { experience } = db;
 
   return (
-    <div className="grid gap-2">
+    <section>
       <Heading id="experiences">
         experiences
         <Heading.Link href="/works">view detail</Heading.Link>
       </Heading>
-      <div className="grid gap-1">
+      <div className="grid px-2 py-5 sm:px-6">
         {experience.map(({ id, image, name, title, year, path, icon }) => (
           <Link
             href={path}
             key={id}
-            className="flex items-center gap-6 flex-wrap relative active:translate-y-px group hover:bg-zinc-900/40 p-4 rounded-lg"
+            className="group relative flex items-center gap-5 p-4 transition-colors hover:bg-zinc-900/50 active:translate-y-px"
           >
             <Avatar
               image={image}
               icon={icon}
-              className="size-8 object-contain bg-transparent!"
+                className="size-9 rounded-none bg-transparent! object-contain"
               text={title}
             />
             <div className="flex flex-col grow">
@@ -36,7 +36,7 @@ export default function Experience() {
                   />
                 </span>
               </p>
-              <p className="text-zinc-500 flex max-sm:flex-col justify-between w-full text-sm">
+              <p className="flex w-full justify-between text-sm text-zinc-400 max-sm:flex-col">
                 <span>{title}</span>
                 <span>{year}</span>
               </p>
@@ -44,6 +44,6 @@ export default function Experience() {
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

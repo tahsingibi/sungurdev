@@ -11,18 +11,18 @@ export default function Work() {
     experience.find((exp) => exp.name === "Freelance")?.projects.slice(0, 3) ?? [];
 
   return (
-    <div className="grid gap-2">
+    <section>
       <Heading id="works">
         works{" "}
         <Heading.Link href="/works">
           see all
         </Heading.Link>
       </Heading>
-      <div className="grid gap-1">
+      <div className="grid px-2 py-5 sm:px-6">
         {work.map(({ id, name, explain, repo, live, icon = "code" }) => (
           <div
             key={id}
-            className="flex max-sm:flex-col max-sm:gap-4 sm:justify-between hover:bg-zinc-900/40 p-4 rounded-lg group transition-all overflow-hidden relative"
+            className="group relative flex overflow-hidden p-4 transition-colors hover:bg-zinc-900/50 max-sm:flex-col max-sm:gap-4 sm:justify-between"
           >
             <div className="flex sm:justify-between gap-6 overflow-hidden relative">
               <Avatar
@@ -44,7 +44,7 @@ export default function Work() {
                       />
                     </span>
                   </Link>
-                  <p className="text-sm text-zinc-500">{explain}</p>
+                  <p className="text-sm text-zinc-400">{explain}</p>
                 </div>
               </div>
             </div>
@@ -67,6 +67,6 @@ export default function Work() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

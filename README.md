@@ -16,6 +16,27 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Blog featured blocks
+
+Posts can render a full-width featured block from their exported MDX metadata:
+
+```tsx
+export const metadata = {
+  // ...
+  featured: {
+    type: 'image', // 'image' | 'x-post' | 'video'
+    src: '/img/example.jpg',
+    alt: 'Description',
+    caption: 'Optional caption',
+  },
+};
+```
+
+Use `{ type: 'x-post', id: 'POST_ID' }` for X posts. Videos accept
+`provider: 'youtube' | 'vimeo' | 'file'`; YouTube and Vimeo may use either an
+embed URL or an ID. The same variants are available inside MDX with the
+`Featured` component.
+
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.

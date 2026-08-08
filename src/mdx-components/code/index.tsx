@@ -1,13 +1,9 @@
-'use client';
 import { Icon } from '@/src/components/icon';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/tokyo-night-dark.css';
-import { useRef, useState, type ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
+import { CopyButton } from './copy-button';
 
 export default function Code(props: ComponentPropsWithoutRef<'code'>) {
-  const [copied, setCopied] = useState(false);
-  const codeRef = useRef<HTMLElement>(null);
-
   const className = props.className || '';
 
   // `language-<dil>/filename=<dosya_adi>` formatını eşleştirmek için regex
@@ -19,17 +15,11 @@ export default function Code(props: ComponentPropsWithoutRef<'code'>) {
   const language = matches?.groups?.lang || '';
   const fileName = matches?.groups?.fileName || '';
 
-  const handleCopy = () => {
-    if (codeRef.current) {
-      const codeText = codeRef.current.innerText;
-      navigator.clipboard.writeText(codeText).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      });
-    }
-  };
-
-  const highlightedCode = hljs.highlightAuto(String(props.children ?? ''), [language]).value;
+  const code = String(props.children ?? '');
+  const highlightedCode = hljs.highlightAuto(
+    code,
+    language ? [language] : undefined,
+  ).value;
 
   const fileTypeIcons: Record<string, string> = {
     aac: 'aac',
@@ -89,34 +79,29 @@ export default function Code(props: ComponentPropsWithoutRef<'code'>) {
   };
 
   return (
-    <div className="border border-zinc-800 rounded-lg overflow-hidden max-w-full w-full! bg-zinc-900!">
-      <div className="flex justify-between bg-transparent p-2 border-b border-zinc-800">
-        <div className="flex items-center gap-1 justify-center">
-          <span className="text-gray-300 ml-2 font-sans">
-            <Icon
-              icon={`${fileTypeIcons?.[language] || language}`}
-              className="me-2"
-            />
-            {fileName || language}
+    <div className="my-7 w-full! max-w-full overflow-hidden border border-zinc-800 bg-zinc-950 shadow-[0_18px_50px_rgb(0_0_0/0.2)]">
+      <div className="flex min-h-11 items-center justify-between border-b border-zinc-800 bg-zinc-900/60 px-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <span aria-hidden="true" className="flex gap-1.5">
+            <span className="size-1.5 rounded-full bg-zinc-700" />
+            <span className="size-1.5 rounded-full bg-zinc-700" />
+            <span className="size-1.5 rounded-full bg-zinc-700" />
+          </span>
+          <span className="truncate font-mono text-[10px] uppercase tracking-wider text-zinc-400">
+            {language && (
+              <Icon
+                icon={`${fileTypeIcons?.[language] || language}`}
+                className="me-2 text-zinc-400"
+              />
+            )}
+            {fileName || language || 'plain text'}
           </span>
         </div>
-        <button
-          type="button"
-          className="text-gray-300 hover:text-white group size-7 bg-zinc-900 cursor-pointer active:shadow-inner border border-zinc-700 flex items-center justify-center overflow-hidden rounded-lg relative"
-          onClick={handleCopy}
-          data-copied={copied}
-        >
-          <Icon icon="clipboard-line" className="group-data-[copied='true']:scale-0 ease-hover duration-350" />
-          <Icon
-            icon="clipboard-fill"
-            className="absolute opacity-0 transition-all scale-0 group-data-[copied='true']:scale-100 group-data-[copied='true']:opacity-100 ease-hover duration-350"
-          />
-        </button>
+        <CopyButton text={code} />
       </div>
-      <pre className="p-4 rounded-b-lg overflow-x-auto bg-zinc-950 m-0! max-h-96! overflow-y-auto! [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:bg-zinc-900 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar-thumb]:bg-zinc-800 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <pre className="m-0! max-h-[32rem]! overflow-auto! bg-zinc-950 p-5 text-zinc-300 [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-track]:bg-zinc-900 [&::-webkit-scrollbar]:size-2">
         <code
-          ref={codeRef}
-          className={`language-${language} text-xs font-light slashed-zero whitespace-pre-wrap leading-relaxed break-all`}
+          className={`language-${language} whitespace-pre font-mono text-xs font-normal leading-6 slashed-zero`}
           dangerouslySetInnerHTML={{ __html: highlightedCode }}
         />
       </pre>

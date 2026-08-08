@@ -10,6 +10,7 @@ export const size = {
 };
 
 export const contentType = 'image/png';
+export const alt = 'Tahsin Sungur technical note';
 
 interface ImageProps {
   params: Promise<{ slug: string }>;

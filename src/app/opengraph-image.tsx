@@ -9,6 +9,7 @@ export const size = {
 };
 
 export const contentType = 'image/png';
+export const alt = 'Tahsin Sungur — Frontend Developer';
 
 export default async function Image() {
   const font = await getOpenGraphFont();

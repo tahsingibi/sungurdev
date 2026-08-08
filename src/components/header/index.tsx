@@ -4,19 +4,26 @@ import Link from '../active-link';
 export default function Header() {
   const { nav } = settings;
   return (
-    <div className="flex flex-col gap-6 mt-8 w-full inset-0 ">
-      <nav className="flex gap-4 w-full ">
+    <header className="sticky top-0 z-50 flex h-14 w-full items-center justify-between bg-zinc-950/90 px-4 backdrop-blur-md after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-screen after:-translate-x-1/2 after:bg-zinc-800/80 sm:px-6">
+      <Link
+        href="/"
+        aria-label="TS/01"
+        className="font-mono text-xs font-medium tracking-[0.18em] text-zinc-300"
+      >
+        TS<span className="text-zinc-400">/01</span>
+      </Link>
+      <nav aria-label="Ana navigasyon" className="flex h-full items-center gap-1">
         {nav.map(({ id, name, path }) => (
           <Link
             key={id}
             href={path}
-            className="flex items-center gap-2  text-zinc-500 data-[disabled='true']:text-zinc-700 data-[disabled='true']:pointer-events-none data-[active='true']:text-white underline-offset-4 data-[active='true']:underline work-link w-fit relative after:content-[''] after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-0 after:bg-current after:transition-all after:duration-500 after:ease-hover hover:after:right-auto hover:after:left-0 hover:after:w-full"
+            className="relative flex h-full items-center px-3 text-xs capitalize text-zinc-400 hover:text-zinc-200 data-[active='true']:text-white after:absolute after:inset-x-3 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-white after:transition-transform data-[active='true']:after:origin-left data-[active='true']:after:scale-x-100"
             data-disabled={path.startsWith('#')}
           >
             {name}
           </Link>
         ))}
       </nav>
-    </div>
+    </header>
   );
 }

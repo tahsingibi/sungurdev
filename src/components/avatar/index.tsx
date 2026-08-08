@@ -8,6 +8,7 @@ interface AvatarProps extends ComponentPropsWithoutRef<'figure'> {
   text?: string;
   icon?: string;
   name?: string;
+  priority?: boolean;
 }
 
 export default function Avatar({
@@ -15,6 +16,7 @@ export default function Avatar({
   text,
   icon,
   name,
+  priority = false,
   className = '',
   ...props
 }: AvatarProps) {
@@ -27,6 +29,8 @@ export default function Avatar({
         <Image
           src={image}
           fill
+          sizes="80px"
+          priority={priority}
           className="image object-cover select-none pointer-events-none"
           alt={name || text || ''}
         />
