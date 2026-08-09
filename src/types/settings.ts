@@ -67,6 +67,7 @@ export interface Settings {
   name: string;
   slug: string;
   title: string;
+  github?: string;
   keywords: string[];
   hiring: boolean;
   resume: string;

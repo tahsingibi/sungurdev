@@ -70,7 +70,7 @@ export default function Hero() {
           className="text-foreground/75 font-sans [&_.mark]:font-black [&_a]:underline [&_a]:text-foreground  [&_a]:underline-offset-6! [&_a:hover]:decoration-wavy"
         />
       </div>
-      <div className="flex  items-center px-6 mb-6">
+      <div className="flex  items-center px-6 pb-6">
         {social.map((link) => {
           const Icon = SOCIAL_ICONS[link.icon as keyof typeof SOCIAL_ICONS] as
             | ComponentType<any>

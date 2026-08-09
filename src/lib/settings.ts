@@ -8,6 +8,7 @@ const settings: Settings = {
   name: "Tahsin Sungur",
   slug: "tahsingibi",
   title: "Frontend Developer",
+  github: "tahsingibi",
   keywords: ["tahsin", "sungur", "frontend", "developer", "izmir", "react"],
   hiring: true,
   resume: "/doc/TahsinSUNGUR_10_2025.pdf",
