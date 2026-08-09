@@ -1,7 +1,14 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
-  Bot,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import {
   ChevronDown,
   Clipboard,
   Copy,
@@ -9,18 +16,10 @@ import {
   ExternalLink,
   FileText,
   Link as LinkIcon,
-  MousePointer2,
   Share2,
 } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface ArticleActionsProps {
   title: string;
@@ -59,10 +58,19 @@ export function ArticleActions({
   const cursorQuery = new URLSearchParams({ text: prompt });
 
   const aiTargets = [
-    { label: "Open in ChatGPT", href: `https://chatgpt.com/?${chatGptQuery}`, icon: Bot },
-    { label: "Open in Claude", href: `https://claude.ai/new?${query}`, icon: Bot },
-    { label: "Open in Cursor", href: `https://cursor.com/link/prompt?${cursorQuery}`, icon: MousePointer2 },
-    { label: "Open in Grok", href: `https://grok.com/?${query}`, icon: Bot },
+    {
+      label: "Open in ChatGPT",
+      href: `https://chatgpt.com/?${chatGptQuery}`,
+    },
+    {
+      label: "Open in Claude",
+      href: `https://claude.ai/new?${query}`,
+    },
+    {
+      label: "Open in Cursor",
+      href: `https://cursor.com/link/prompt?${cursorQuery}`,
+    },
+    { label: "Open in Grok", href: `https://grok.com/?${query}` },
   ];
 
   async function handleNativeShare() {
@@ -70,7 +78,8 @@ export function ArticleActions({
       try {
         await navigator.share({ title, url: canonicalUrl });
       } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") return;
+        if (error instanceof DOMException && error.name === "AbortError")
+          return;
         toast.error("Paylaşım açılamadı");
       }
       return;
@@ -86,15 +95,14 @@ export function ArticleActions({
 
   return (
     <div className="flex flex-wrap gap-2">
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <button type="button" className="inline-flex h-9 items-center gap-2 rounded-md border px-3 text-sm hover:bg-accent">
-            <Share2 className="size-4" /> Share <ChevronDown className="size-3.5" />
-          </button>
+          <Button type="button" variant="outline" className="rounded-none">
+            <Share2 className="size-4" /> Share{" "}
+            <ChevronDown className="size-3.5" />
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Share</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             onSelect={async () => {
               try {
@@ -108,46 +116,54 @@ export function ArticleActions({
             <LinkIcon /> Copy link
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <a href={`https://x.com/intent/tweet?${new URLSearchParams({ text: title, url: canonicalUrl })}`} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={`https://x.com/intent/tweet?${new URLSearchParams({ text: title, url: canonicalUrl })}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <ExternalLink /> Share on X
-            </a>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <a href={`https://www.linkedin.com/sharing/share-offsite?${new URLSearchParams({ url: canonicalUrl })}`} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={`https://www.linkedin.com/sharing/share-offsite?${new URLSearchParams({ url: canonicalUrl })}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <ExternalLink /> Share on LinkedIn
-            </a>
+            </Link>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={handleNativeShare}>
             <Ellipsis /> Other app
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <button type="button" className="inline-flex h-9 items-center gap-2 rounded-md border px-3 text-sm hover:bg-accent">
-            <Copy className="size-4" /> Copy page <ChevronDown className="size-3.5" />
-          </button>
+          <Button type="button" variant="outline" className="rounded-none">
+            <Copy className="size-4" /> Copy page{" "}
+            <ChevronDown className="size-3.5" />
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-56">
-          <DropdownMenuLabel>Copy page</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <a href={markdownUrl} target="_blank" rel="noopener noreferrer">
+            <Link href={markdownUrl} target="_blank" rel="noopener noreferrer">
               <FileText /> View as Markdown
-            </a>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+            <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink /> Open in GitHub
-            </a>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          {aiTargets.map(({ label, href, icon: Icon }) => (
+          {aiTargets.map(({ label, href }) => (
             <DropdownMenuItem key={label} asChild>
-              <a href={href} target="_blank" rel="noopener noreferrer">
-                <Icon /> {label}
-              </a>
+              <Link href={href} target="_blank" rel="noopener noreferrer">
+                {label}
+              </Link>
             </DropdownMenuItem>
           ))}
           <DropdownMenuSeparator />
@@ -155,11 +171,15 @@ export function ArticleActions({
             onSelect={async () => {
               try {
                 const response = await fetch(markdownUrl);
-                if (!response.ok) throw new Error("Markdown alınamadı");
+                if (!response.ok)
+                  throw new Error("Markdown could not be retrieved.");
                 await copyText(await response.text());
-                toast.success("Sayfanın Markdown içeriği kopyalandı");
+                toast("The page's Markdown content has been copied!", {
+                  position: "bottom-center",
+                  closeButton: false,
+                });
               } catch {
-                toast.error("Markdown içeriği kopyalanamadı");
+                toast.error("The Markdown content could not be copied!");
               }
             }}
           >

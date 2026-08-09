@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArticleActions } from "@/components/custom/article-actions";
+import BackButton from "@/components/custom/back-button";
 import { MarkdownDocument } from "@/components/custom/markdown-document";
 import { getPost, getPosts, postToPlainText } from "@/lib/posts";
 import settings from "@/lib/settings";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -14,7 +14,9 @@ export async function generateStaticParams() {
   return (await getPosts()).map(({ slug }) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) return {};
@@ -33,7 +35,11 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       authors: [settings.name],
       tags: [post.category],
     },
-    twitter: { card: "summary_large_image", title: post.title, description: post.description },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 
@@ -56,28 +62,47 @@ export default async function PostPage({ params }: PostPageProps) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-12">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b pb-5">
-        <Link href="/write" className="text-sm text-muted-foreground hover:text-foreground">← Yazılar</Link>
+    <div className="relative flex flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <nav
+        className="flex flex-wrap items-center justify-between gap-4 p-6"
+        aria-label="Yazı işlemleri"
+      >
+        <BackButton text="Blog" />
         <ArticleActions
           title={post.title}
           canonicalUrl={post.canonicalUrl}
           markdownUrl={post.markdownUrl}
           githubUrl={post.githubUrl}
         />
-      </div>
+      </nav>
+      <div className="divider-screen" />
       <article>
-        <header className="mb-12">
-          <div className="mb-3 flex gap-3 font-mono text-xs uppercase text-muted-foreground">
+        <header className="p-6 sm:p-8">
+          <div className="mb-4 flex flex-wrap gap-2 font-mono text-xs uppercase text-muted-foreground">
             <span>{post.category}</span>
+            <span aria-hidden="true">·</span>
             <time dateTime={post.publishDate}>{post.publishDate}</time>
           </div>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{post.title}</h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">{post.description}</p>
+          <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">
+            {post.title}
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {post.description}
+          </p>
         </header>
-        <MarkdownDocument source={post.body} />
+
+        <div className="divider-screen divider-block" aria-hidden="true" />
+
+        <div className="p-6 sm:p-8">
+          <MarkdownDocument source={post.body} />
+        </div>
       </article>
-    </main>
+    </div>
   );
 }

@@ -1,7 +1,8 @@
 import type { Settings } from "@/types/settings";
 
 const prodUrl = "https://sungur.dev/";
-const url = process.env.NEXT_PUBLIC_SITE_URL || prodUrl;
+const testUrl = "http://localhost:3000";
+const url = process.env.STAGE === "production" ? prodUrl : testUrl;
 
 const settings: Settings = {
   name: "Tahsin Sungur",
@@ -51,7 +52,7 @@ const settings: Settings = {
     {
       id: 2,
       image: "/img/work/hypeople.svg",
-      name: "HYPEOPLE",
+      name: "Hypeople Studio",
       title: "Frontend Developer",
       year: "03/2024 - Present",
       path: "/works#Hypeople",
@@ -292,17 +293,17 @@ const settings: Settings = {
       heading: "blog",
       description: "some codes, snippets, hooks, etc.",
       error: "...but posts are not found.",
-      path: "/write"
+      path: "/write",
     },
     works: {
       heading: "experiences",
       description: "summary of my background as a frontend developer.",
-      path: "/works"
+      path: "/works",
     },
     projects: {
       heading: "projects",
       description: "a few things i've built on the side.",
-      path: "/works"
+      path: "/works",
     },
   },
   seo: {

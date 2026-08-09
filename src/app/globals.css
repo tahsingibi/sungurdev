@@ -224,5 +224,7 @@
   html {
     /* 100vw in divider-screen ignores the scrollbar gutter, so it overshoots the viewport by its width; clip it here instead of dropping the technique. */
     @apply font-sans overflow-x-hidden;
+    /* Reserves the scrollbar's width permanently so Radix's scroll-lock (which hides the scrollbar while a dropdown/dialog is open) doesn't reflow the layout. */
+    scrollbar-gutter: stable;
   }
 }

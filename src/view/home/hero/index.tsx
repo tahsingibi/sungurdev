@@ -67,35 +67,25 @@ export default function Hero() {
       <div className="p-6 border-t">
         <p
           dangerouslySetInnerHTML={{ __html: aboutContent }}
-          className="text-lg text-foreground/75 font-sans [&_.mark]:font-black [&_a]:underline [&_a]:underline-offset-6! [&_a:hover]:decoration-wavy"
+          className="text-foreground/75 font-sans [&_.mark]:font-black [&_a]:underline [&_a]:text-foreground  [&_a]:underline-offset-6! [&_a:hover]:decoration-wavy"
         />
       </div>
-      <div className="flex justify-between items-center px-6 border-y mb-6">
-        <div>
-          {social.map((link) => {
-            const Icon = SOCIAL_ICONS[
-              link.icon as keyof typeof SOCIAL_ICONS
-            ] as ComponentType<any> | undefined;
-            return (
-              <Link key={link.id} href={link.path} target="_blank">
-                <Button
-                  size="icon-lg"
-                  variant="outline"
-                  className="rounded-none border-y-0! first:border-l! border-l-0! bg-transparent!"
-                >
-                  {Icon ? <Icon className="size-4" /> : null}
-                </Button>
-              </Link>
-            );
-          })}
-        </div>
+      <div className="flex  items-center px-6 mb-6">
+        {social.map((link) => {
+          const Icon = SOCIAL_ICONS[link.icon as keyof typeof SOCIAL_ICONS] as
+            | ComponentType<any>
+            | undefined;
+          return (
+            <Link key={link.id} href={link.path} target="_blank">
+              <Button size="icon" variant="ghost">
+                {Icon ? <Icon className="size-4" /> : null}
+              </Button>
+            </Link>
+          );
+        })}
         {hiring && (
-          <Link href={resumeUrl} className="ml-auto" target="_blank">
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-none border-y-0!"
-            >
+          <Link href={resumeUrl} target="_blank">
+            <Button variant="ghost">
               <ArrowDownToLine />
               Resume
             </Button>

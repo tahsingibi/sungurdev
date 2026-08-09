@@ -1,6 +1,7 @@
 import Layout from "@/components/custom/layout";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { WebVitals } from "@/components/custom/web-vitals";
+import { Toaster } from "@/components/ui/sonner";
 import settings from "@/lib/settings";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata, Viewport } from "next";
@@ -128,6 +129,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             endpoint={settings.analytics.webVitalsEndpoint}
             googleAnalyticsId={settings.analytics.googleAnalyticsId}
           />
+          <Toaster />
         </ThemeProvider>
       </body>
       {settings.analytics.googleAnalyticsId && (

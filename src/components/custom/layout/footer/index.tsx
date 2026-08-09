@@ -32,14 +32,14 @@ export default function Footer() {
         </p>
         <p>
           Source{" "}
-          <a
+          <Link
             href={blog.repository}
             target="_blank"
             rel="noopener noreferrer"
             className="text-foreground underline underline-offset-4"
           >
             GitHub
-          </a>
+          </Link>
         </p>
         {!!analytics.googleAnalyticsId && (
           <p>
