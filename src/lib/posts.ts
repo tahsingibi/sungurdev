@@ -1,5 +1,6 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
+import "server-only";
+
+import generatedPosts from "@/generated/posts.json";
 import { cache } from "react";
 import settings from "@/lib/settings";
 
@@ -18,8 +19,6 @@ export interface Post extends PostMetadata {
   markdownUrl: string;
   githubUrl: string;
 }
-
-const contentDirectory = path.join(process.cwd(), settings.blog.contentDirectory);
 
 function readString(source: string, key: keyof PostMetadata): string {
   const expression = new RegExp(
@@ -59,15 +58,8 @@ function parsePost(slug: string, markdown: string): Post {
 }
 
 export const getPosts = cache(async (): Promise<Post[]> => {
-  const files = await fs.readdir(contentDirectory);
-  const posts = await Promise.all(
-    files
-      .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
-      .map(async (file) => {
-        const slug = file.replace(/\.mdx?$/, "");
-        const markdown = await fs.readFile(path.join(contentDirectory, file), "utf8");
-        return parsePost(slug, markdown);
-      }),
+  const posts = generatedPosts.map(({ slug, markdown }) =>
+    parsePost(slug, markdown),
   );
 
   return posts.sort(
