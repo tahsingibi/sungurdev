@@ -1,90 +1,238 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
 
-@config '../../tailwind.config.js';
+@custom-variant dark (&:is(.dark *));
 
-:root {
-  --border-offset-color: rgb(255 255 255 / 0.06);
-  --border-offset-size: 24px;
-}
-
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-*/
-@layer base {
-
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-pixel: var(--font-geist-pixel);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-spin-ccw: spin-ccw var(--tw-animation-duration, var(--tw-duration, 6s)) linear infinite;
+  @keyframes spin-ccw {
+  to {
+    rotate: -360deg;
+    }
   }
 }
 
-html {
-  @apply scroll-smooth scroll-p-20 [scrollbar-gutter:stable_both-edges];
+:root {
+  --font-geist-sans: Arial, Helvetica, sans-serif;
+  --font-geist-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-geist-pixel: "GeistPixel", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.553 0.195 38.402);
+  --primary-foreground: oklch(0.98 0.016 73.684);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.837 0.128 66.29);
+  --chart-2: oklch(0.705 0.213 47.604);
+  --chart-3: oklch(0.646 0.222 41.116);
+  --chart-4: oklch(0.553 0.195 38.402);
+  --chart-5: oklch(0.47 0.157 37.304);
+  --radius: 0.45rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.646 0.222 41.116);
+  --sidebar-primary-foreground: oklch(0.98 0.016 73.684);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-body {
-  @apply font-sans antialiased bg-zinc-950 text-zinc-300 slashed-zero;
-  font-feature-settings: 'liga', 'calt', 'cv06', 'cv11', 'cv05', 'ss01' !important;
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.47 0.157 37.304);
+  --primary-foreground: oklch(0.98 0.016 73.684);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.837 0.128 66.29);
+  --chart-2: oklch(0.705 0.213 47.604);
+  --chart-3: oklch(0.646 0.222 41.116);
+  --chart-4: oklch(0.553 0.195 38.402);
+  --chart-5: oklch(0.47 0.157 37.304);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.705 0.213 47.604);
+  --sidebar-primary-foreground: oklch(0.98 0.016 73.684);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
-a {
-  @apply transition-all hover:transition-all;
+/*
+ * Divider utilities: draw a border/line that bleeds past the host element's
+ * own padding.
+ *
+ * - `divider-t` / `divider-b` / `divider-l` / `divider-r` bleed out to the
+ *   edge of the nearest `relative` (or otherwise positioned) ancestor — e.g.
+ *   the page's outer bordered `<main>`. Put `relative` on that ancestor and
+ *   drop a `divider-*` element anywhere inside it.
+ * - `divider-screen` bleeds all the way to the browser viewport edges
+ *   (100vw), breaking out of every ancestor including the centered content
+ *   column, while staying in normal document flow (`position: relative`) —
+ *   so it still takes up real height and the host's own padding/margin
+ *   controls the gap around it like any other block. Requires the host's
+ *   centered ancestor chain (e.g. `mx-auto`) to be viewport-centered for the
+ *   math to land flush.
+ *
+ * `divider-hatch` composes on top of any of the above to swap the plain line
+ * for the diagonal hatch band via `--divider-size`/`--divider-color`, so the
+ * two never fight over the same declaration.
+ */
+@utility divider-t {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--divider-size, 1px);
+  background: var(--divider-color, var(--border));
+  pointer-events: none;
 }
 
-
-.border-dashed-offset-y {
-  background-image: linear-gradient(to bottom,
-      var(--border-offset-color) 50%,
-      transparent 50%),
-    linear-gradient(to bottom, var(--border-offset-color) 50%, transparent 50%);
-  background-size: 1px var(--border-offset-size);
-  background-position:
-    left top,
-    right top;
-  background-repeat: repeat-y;
+@utility divider-b {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--divider-size, 1px);
+  background: var(--divider-color, var(--border));
+  pointer-events: none;
 }
 
-.border-dashed-offset-x {
-  background-image: linear-gradient(to right,
-      var(--border-offset-color) 50%,
-      transparent 50%),
-    linear-gradient(to right, var(--border-offset-color) 50%, transparent 50%);
-  background-size: var(--border-offset-size) 1px;
-  background-position:
-    left top,
-    left bottom;
-  background-repeat: repeat-x;
+@utility divider-screen {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  height: var(--divider-size, 1px);
+  background: var(--divider-color, var(--border));
+  pointer-events: none;
 }
 
-.border-dashed-offset-t {
-  background-image: linear-gradient(to right, var(--border-offset-color) 50%, transparent 50%);
-  background-size: var(--border-offset-size) 1px;
-  background-position: top;
-  background-repeat: repeat-x;
+@utility divider-l {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: var(--divider-size, 1px);
+  background: var(--divider-color, var(--border));
+  pointer-events: none;
 }
 
-.border-dashed-offset-b {
-  background-image: linear-gradient(to right, var(--border-offset-color) 50%, transparent 50%);
-  background-size: var(--border-offset-size) 1px;
-  background-position: bottom;
-  background-repeat: repeat-x;
+@utility divider-r {
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  width: var(--divider-size, 1px);
+  background: var(--divider-color, var(--border));
+  pointer-events: none;
 }
 
-.border-dashed-offset-l {
-  background-image: linear-gradient(to bottom, var(--border-offset-color) 50%, transparent 50%);
-  background-size: 1px var(--border-offset-size);
-  background-position: left;
-  background-repeat: repeat-y;
+@utility divider-hatch {
+  --divider-size: 1.5rem;
+  /* repeating-linear-gradient anti-aliases the diagonal edge differently per
+     browser; a rasterized SVG tile renders identically everywhere. Colors are
+     baked in (data URIs can't read CSS vars), so light/dark each get their
+     own tile matching --border's value in that mode. */
+  --divider-color: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 8L8 0' stroke='oklch(0.922 0 0)'/%3E%3C/svg%3E");
+  border-block: 1px solid var(--border);
 }
 
-.border-dashed-offset-r {
-  background-image: linear-gradient(to bottom, var(--border-offset-color) 50%, transparent 50%);
-  background-size: 1px var(--border-offset-size);
-  background-position: right;
-  background-repeat: repeat-y;
+.dark .divider-hatch {
+  --divider-color: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 8L8 0' stroke='oklch(1 0 0 / 10%25)'/%3E%3C/svg%3E");
+}
+@utility divider-block {
+  --divider-size: 1.5rem;
+  --divider-color: transparent;
+  border-block: 1px solid var(--border);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    /* 100vw in divider-screen ignores the scrollbar gutter, so it overshoots the viewport by its width; clip it here instead of dropping the technique. */
+    @apply font-sans overflow-x-hidden;
+    /* Reserves the scrollbar's width permanently so Radix's scroll-lock (which hides the scrollbar while a dropdown/dialog is open) doesn't reflow the layout. */
+    scrollbar-gutter: stable;
+  }
+}
+
+/*
+ ---break---
+ */
+
+@utility link-underline {
+    @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
 }
