@@ -128,10 +128,10 @@ function CopyCodeButton({ value }: { value: string }) {
 
   const label =
     status === "success"
-      ? "Kod kopyalandı"
+      ? "Code copied"
       : status === "error"
-        ? "Kod kopyalanamadı"
-        : "Kodu kopyala";
+        ? "Failed to copy code"
+        : "Copy code";
 
   return (
     <Button
@@ -284,7 +284,7 @@ export function CodeBlock({
   const { Icon: LanguageIcon } = getCodeLanguageIcon(language);
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-[0_3px_0_0_var(--border)] dark:bg-zinc-900/70">
+    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-soft dark:bg-zinc-900/70">
       {filename ? (
         <div className="flex min-h-8 pb-2 items-center gap-3 px-2">
           <LanguageIcon className="size-4" aria-hidden="true" />
@@ -316,10 +316,10 @@ export function CodeBlockPreview({
   const blockId = useId();
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 px-2 pb-2 shadow-[0_3px_0_0_var(--border)] dark:bg-zinc-900/70 ">
+    <div className="my-6 rounded-2xl border border-border bg-muted/55 px-2 pb-2 shadow-soft dark:bg-zinc-900/70 ">
       <div
         role="tablist"
-        aria-label="Bileşen görünümü"
+        aria-label="Component view"
         className="flex h-12 items-stretch gap-1 px-2"
       >
         {(["preview", "code"] as const).map((tab) => {
@@ -396,7 +396,7 @@ export function CodeBlockCommand({
   const ActivePackageManagerIcon = PACKAGE_MANAGER_ICONS[activeManager];
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-[0_3px_0_0_var(--border)] dark:bg-zinc-900/70">
+    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-soft dark:bg-zinc-900/70">
       <div className="relative flex items-center pr-11 gap-2 min-h-10!">
         <div className="flex w-10 shrink-0 h-fit items-center justify-center text-muted-foreground">
           <AnimatePresence mode="wait" initial={false}>
@@ -414,7 +414,7 @@ export function CodeBlockCommand({
 
         <div
           role="tablist"
-          aria-label="Paket yöneticisi"
+          aria-label="Package manager"
           className="flex min-w-0 flex-1 pt-1 items-stretch overflow-x-auto gap-4"
         >
           {availableManagers.map((manager) => {

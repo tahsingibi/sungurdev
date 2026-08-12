@@ -22,10 +22,10 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${escapeXml(settings.name)} — Yazılar</title>
+    <title>${escapeXml(settings.name)} — Blog</title>
     <link>${siteUrl}/write</link>
     <description>${escapeXml(settings.pages.write.description)}</description>
-    <language>tr-TR</language>
+    <language>en-US</language>
     <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml" />${items}
   </channel>
 </rss>`;

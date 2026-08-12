@@ -1,3 +1,4 @@
+import { InlineScript } from "@/components/custom/inline-script";
 import Layout from "@/components/custom/layout";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { WebVitals } from "@/components/custom/web-vitals";
@@ -8,7 +9,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Geist_Pixel } from "next/font/google";
 import "./globals.css";
 
-const themeBootstrapScript = `(function(){try{var t=localStorage.getItem("theme");var v=t==="light"||t==="dark"||t==="system"?t:"system";var r=v==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):v;var e=document.documentElement;e.classList.remove("light","dark");e.classList.add(r);e.style.colorScheme=r}catch(e){}})()`;
+const themeBootstrapScript = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=([^;]*)/);var t=m?decodeURIComponent(m[1]):null;var v=t==="light"||t==="dark"||t==="system"?t:"system";var r=v==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):v;var e=document.documentElement;e.classList.remove("light","dark");e.classList.add(r);e.style.colorScheme=r}catch(e){}})()`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -114,7 +115,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
+        <InlineScript html={themeBootstrapScript} />
       </head>
       <body className="flex min-h-full flex-col bg-background">
         <script

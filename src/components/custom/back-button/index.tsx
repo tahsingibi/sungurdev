@@ -22,12 +22,12 @@ export default function BackButton({
   const { back } = useRouter();
   const handleBack = () => (onClick ? onClick() : back());
   const buttonSize = size || (!!text ? size || "default" : "icon");
-  const buttonVariant = variant || "outline";
+  const buttonVariant = variant || "secondary";
   return (
     <Button
       onClick={handleBack}
       size={buttonSize}
-      className={cn("rounded-none", className)}
+      className={cn(className)}
       variant={buttonVariant}
       {...props}
     >

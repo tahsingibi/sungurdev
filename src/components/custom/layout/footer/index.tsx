@@ -19,9 +19,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative">
-      <div className="divider-screen divider-hatch" aria-hidden="true" />
-
+    <footer className="relative border-t border-border/60">
       <div className="flex flex-col items-center gap-1.5 p-6 text-center font-mono text-sm text-foreground/50">
         <p>
           Crafted by <span className="text-foreground">{name}</span>{" "}
@@ -48,8 +46,8 @@ export default function Footer() {
         )}
       </div>
 
-      <div className="flex flex-col items-center gap-3 border-t px-6 py-4">
-        <div className="flex items-center gap-1">
+      <div className="flex flex-col items-center gap-4 px-6 pb-8 pt-2">
+        <div className="flex items-center gap-1 rounded-xl border border-border/70 bg-muted/40 p-1 shadow-soft">
           {social.map((link) => {
             const Icon = SOCIAL_ICONS[
               link.icon as keyof typeof SOCIAL_ICONS
@@ -65,7 +63,7 @@ export default function Footer() {
           <ThemeToggle />
           <BackToTop />
         </div>
-        <span className="font-pixel text-xs upp text-zinc-400">
+        <span className="font-mono text-xs text-muted-foreground">
           © {year} {name}
         </span>
       </div>

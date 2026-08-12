@@ -1,8 +1,10 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async rewrites() {
     return [{ source: "/write/:slug.md", destination: "/markdown/:slug" }];
   },
@@ -31,6 +33,8 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX();
+
+export default withMDX(nextConfig);
 
 import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());

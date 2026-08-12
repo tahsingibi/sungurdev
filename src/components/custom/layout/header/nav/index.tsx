@@ -6,6 +6,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+export const NAV_LINK_CLASSNAME =
+  "inline-block font-mono text-xs font-medium uppercase text-muted-foreground transition-colors hover:text-foreground";
+
 function isActivePath(itemPath: string, pathname: string) {
   return itemPath === "/" ? pathname === "/" : pathname.startsWith(itemPath);
 }
@@ -34,21 +37,18 @@ export default function Nav() {
               if (node) linkRefs.current.set(item.id, node);
               else linkRefs.current.delete(item.id);
             }}
-            className={cn(
-              "inline-block font-mono text-xs font-medium uppercase text-muted-foreground transition-colors hover:text-foreground",
-              isActive && "text-foreground",
-            )}
+            className={cn(NAV_LINK_CLASSNAME, isActive && "text-primary")}
           >
             {item.name}
           </Link>
         );
       })}
-      {/* -bottom-4 mirrors Header's `mt-4` gap so this lines up with the
-          divider-screen rule underneath the header. */}
+      {/* -bottom-7 lands the indicator near Header's own border-b so the two
+          read as one line. */}
       {indicator && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-7 h-px bg-foreground transition-[left,width] duration-300 ease-out"
+          className="pointer-events-none absolute -bottom-7 h-0.5 rounded-sm bg-primary transition-[left,width] duration-300 ease-out"
           style={{ left: indicator.left, width: indicator.width }}
         />
       )}

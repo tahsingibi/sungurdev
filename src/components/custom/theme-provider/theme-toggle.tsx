@@ -13,9 +13,9 @@ const ICONS: Record<Theme, typeof Sun> = {
 };
 
 const LABELS: Record<Theme, string> = {
-  system: "Sistem",
-  dark: "Koyu",
-  light: "Açık",
+  system: "System",
+  dark: "Dark",
+  light: "Light",
 };
 
 export function ThemeToggle() {
@@ -27,7 +27,7 @@ export function ThemeToggle() {
       type="button"
       size="icon-sm"
       variant="ghost"
-      aria-label={`Tema: ${LABELS[theme]}. Değiştirmek için tıklayın.`}
+      aria-label={`Theme: ${LABELS[theme]}. Click to change.`}
       onClick={() =>
         setTheme(CYCLE[(CYCLE.indexOf(theme) + 1) % CYCLE.length])
       }

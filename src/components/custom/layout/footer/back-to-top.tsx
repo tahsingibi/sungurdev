@@ -9,7 +9,7 @@ export function BackToTop() {
       type="button"
       size="icon-sm"
       variant="ghost"
-      aria-label="Başa dön"
+      aria-label="Back to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
       <ArrowUp className="size-3.5" />

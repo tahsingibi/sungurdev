@@ -19,7 +19,8 @@ type ThemeContextValue = {
   setTheme: (theme: Theme) => void;
 };
 
-const STORAGE_KEY = "theme";
+const COOKIE_NAME = "theme";
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 const THEME_EVENT = "sungur-theme-change";
 const DARK_QUERY = "(prefers-color-scheme: dark)";
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -28,11 +29,20 @@ function isTheme(value: string | null): value is Theme {
   return value === "light" || value === "dark" || value === "system";
 }
 
+function readCookie(name: string): string | null {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function writeCookie(name: string, value: string) {
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
+}
+
 function getTheme(): Theme {
-  if (typeof window === "undefined") return "system";
+  if (typeof document === "undefined") return "system";
 
   try {
-    const storedTheme = window.localStorage.getItem(STORAGE_KEY);
+    const storedTheme = readCookie(COOKIE_NAME);
     return isTheme(storedTheme) ? storedTheme : "system";
   } catch {
     return "system";
@@ -61,12 +71,10 @@ function subscribe(onStoreChange: () => void) {
     onStoreChange();
   };
 
-  window.addEventListener("storage", syncTheme);
   window.addEventListener(THEME_EVENT, syncTheme);
   mediaQuery.addEventListener("change", syncTheme);
 
   return () => {
-    window.removeEventListener("storage", syncTheme);
     window.removeEventListener(THEME_EVENT, syncTheme);
     mediaQuery.removeEventListener("change", syncTheme);
   };
@@ -91,9 +99,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((nextTheme: Theme) => {
     try {
-      window.localStorage.setItem(STORAGE_KEY, nextTheme);
+      writeCookie(COOKIE_NAME, nextTheme);
     } catch {
-      // Theme switching still works when storage is unavailable.
+      // Theme switching still works when cookies are unavailable.
     }
 
     applyTheme(nextTheme);

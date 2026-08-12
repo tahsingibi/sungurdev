@@ -1,6 +1,7 @@
 import { ArticleActions } from "@/components/custom/article-actions";
 import BackButton from "@/components/custom/back-button";
-import { MarkdownDocument } from "@/components/custom/markdown-document";
+import { SectionHeader } from "@/components/custom/section-header";
+import { Badge } from "@/components/ui/badge";
 import { getPost, getPosts, postToPlainText } from "@/lib/posts";
 import settings from "@/lib/settings";
 import type { Metadata } from "next";
@@ -9,6 +10,9 @@ import { notFound } from "next/navigation";
 interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return (await getPosts()).map(({ slug }) => ({ slug }));
@@ -70,8 +74,8 @@ export default async function PostPage({ params }: PostPageProps) {
         }}
       />
       <nav
-        className="flex flex-wrap items-center justify-between gap-4 p-6"
-        aria-label="Yazı işlemleri"
+        className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 p-6"
+        aria-label="Article actions"
       >
         <BackButton text="Blog" />
         <ArticleActions
@@ -81,26 +85,28 @@ export default async function PostPage({ params }: PostPageProps) {
           githubUrl={post.githubUrl}
         />
       </nav>
-      <div className="divider-screen" />
       <article>
-        <header className="p-6 sm:p-8">
-          <div className="mb-4 flex flex-wrap gap-2 font-mono text-xs uppercase text-muted-foreground">
-            <span>{post.category}</span>
-            <span aria-hidden="true">·</span>
-            <time dateTime={post.publishDate}>{post.publishDate}</time>
-          </div>
-          <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">
-            {post.title}
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            {post.description}
-          </p>
-        </header>
+        <SectionHeader
+          level="h1"
+          size="lg"
+          bordered
+          heading={post.title}
+          description={post.description}
+          eyebrow={
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <Badge variant="accent">{post.category}</Badge>
+              <time
+                dateTime={post.publishDate}
+                className="font-pixel text-xs text-muted-foreground"
+              >
+                {post.publishDate}
+              </time>
+            </div>
+          }
+        />
 
-        <div className="divider-screen divider-block" aria-hidden="true" />
-
-        <div className="p-6 sm:p-8">
-          <MarkdownDocument source={post.body} />
+        <div className="p-6 text-base leading-7 text-foreground/75 sm:p-8">
+          <post.Content />
         </div>
       </article>
     </div>
