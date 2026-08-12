@@ -128,10 +128,10 @@ function CopyCodeButton({ value }: { value: string }) {
 
   const label =
     status === "success"
-      ? "Kod kopyalandı"
+      ? "Code copied"
       : status === "error"
-        ? "Kod kopyalanamadı"
-        : "Kodu kopyala";
+        ? "Failed to copy code"
+        : "Copy code";
 
   return (
     <Button
@@ -319,7 +319,7 @@ export function CodeBlockPreview({
     <div className="my-6 rounded-2xl border border-border bg-muted/55 px-2 pb-2 shadow-soft dark:bg-zinc-900/70 ">
       <div
         role="tablist"
-        aria-label="Bileşen görünümü"
+        aria-label="Component view"
         className="flex h-12 items-stretch gap-1 px-2"
       >
         {(["preview", "code"] as const).map((tab) => {
@@ -414,7 +414,7 @@ export function CodeBlockCommand({
 
         <div
           role="tablist"
-          aria-label="Paket yöneticisi"
+          aria-label="Package manager"
           className="flex min-w-0 flex-1 pt-1 items-stretch overflow-x-auto gap-4"
         >
           {availableManagers.map((manager) => {

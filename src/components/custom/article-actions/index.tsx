@@ -43,7 +43,7 @@ async function copyText(value: string) {
   textarea.select();
   const copied = document.execCommand("copy");
   textarea.remove();
-  if (!copied) throw new Error("Clipboard kullanılamıyor");
+  if (!copied) throw new Error("Clipboard is unavailable");
 }
 
 export function ArticleActions({
@@ -80,16 +80,16 @@ export function ArticleActions({
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError")
           return;
-        toast.error("Paylaşım açılamadı");
+        toast.error("Sharing failed");
       }
       return;
     }
 
     try {
       await copyText(canonicalUrl);
-      toast.info("Web Share desteklenmiyor; bağlantı panoya kopyalandı.");
+      toast.info("Web Share isn't supported; link copied to clipboard.");
     } catch {
-      toast.error("Bu tarayıcı paylaşım veya pano erişimini desteklemiyor.");
+      toast.error("This browser doesn't support sharing or clipboard access.");
     }
   }
 
@@ -97,7 +97,7 @@ export function ArticleActions({
     <div className="flex flex-wrap gap-2">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="outline">
+          <Button type="button" variant="secondary">
             <Share2 className="size-4" /> Share{" "}
             <ChevronDown className="size-3.5" />
           </Button>
@@ -107,9 +107,9 @@ export function ArticleActions({
             onSelect={async () => {
               try {
                 await copyText(canonicalUrl);
-                toast.success("Bağlantı panoya kopyalandı");
+                toast.success("Link copied to clipboard");
               } catch {
-                toast.error("Bağlantı kopyalanamadı");
+                toast.error("Could not copy link");
               }
             }}
           >
@@ -142,7 +142,7 @@ export function ArticleActions({
 
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="outline">
+          <Button type="button" variant="secondary">
             <Copy className="size-4" /> Copy page{" "}
             <ChevronDown className="size-3.5" />
           </Button>

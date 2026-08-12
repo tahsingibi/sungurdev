@@ -309,9 +309,9 @@ const settings: Settings = {
   },
   seo: {
     description:
-      "Tahsin Sungur'un frontend geliştirme, Next.js ve web teknolojileri üzerine kişisel sitesi ve yazıları.",
-    locale: "tr-TR",
-    ogLocale: "tr_TR",
+      "Tahsin Sungur's personal site and writing on frontend development, Next.js, and web technologies.",
+    locale: "en-US",
+    ogLocale: "en_US",
     themeColor: "#ffffff",
     googleSiteVerification: process.env.GOOGLE_SITE_VERIFICATION,
     ahrefsSiteVerification: process.env.AHREFS_SITE_VERIFICATION,

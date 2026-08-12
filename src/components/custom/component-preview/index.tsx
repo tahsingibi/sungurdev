@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 const CLICK_INSIDE_OUTSIDE_CODE = `<div id="click-area">
   <div id="target">Click here</div>
-  <output id="result">Bir alana tıkla</output>
+  <output id="result">Click somewhere</output>
 </div>
 
 <script>
@@ -29,7 +29,7 @@ const CLICK_INSIDE_OUTSIDE_CODE = `<div id="click-area">
 function ClickInsideOutsidePreview() {
   const surfaceRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
-  const [result, setResult] = useState("Bir alana tıkla");
+  const [result, setResult] = useState("Click somewhere");
 
   useEffect(() => {
     const surface = surfaceRef.current;
@@ -74,7 +74,7 @@ function ClickInsideOutsidePreview() {
         {result}
       </output>
       <p className="text-xs text-muted-foreground">
-        Butona veya bu alanın boş bir noktasına tıkla.
+        Click the button, or an empty spot in this area.
       </p>
     </div>
   );
@@ -94,7 +94,7 @@ export function ComponentPreview({ name }: { name: string }) {
   return (
     <CodeBlockPreview
       preview={<p className="text-sm text-muted-foreground">{name} preview</p>}
-      code={`// “${name}” önizlemesi henüz kayıtlı değil.`}
+      code={`// A preview for "${name}" isn't registered yet.`}
       language="tsx"
     />
   );

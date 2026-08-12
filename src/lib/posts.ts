@@ -1,8 +1,10 @@
 import "server-only";
 
-import generatedPosts from "@/generated/posts.json";
-import { cache } from "react";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import settings from "@/lib/settings";
+import { cache } from "react";
+import type { ComponentType } from "react";
 
 export interface PostMetadata {
   title: string;
@@ -15,42 +17,49 @@ export interface Post extends PostMetadata {
   slug: string;
   markdown: string;
   body: string;
+  Content: ComponentType;
   canonicalUrl: string;
   markdownUrl: string;
   githubUrl: string;
 }
 
-function readString(source: string, key: keyof PostMetadata): string {
-  const expression = new RegExp(
-    `${key}\\s*:\\s*(?:'((?:\\\\.|[^'])*)'|"((?:\\\\.|[^"])*)"|\`([^\`]*)\`)`,
-  );
-  const match = source.match(expression);
-  const value = match?.[1] ?? match?.[2] ?? match?.[3] ?? "";
-
-  return value
-    .replaceAll("\\'", "'")
-    .replaceAll('\\"', '"')
-    .replaceAll("\\n", "\n");
+interface PostModule {
+  default: ComponentType;
+  metadata: PostMetadata;
 }
 
-function parsePost(slug: string, markdown: string): Post {
-  const metadataBlock = markdown.match(
-    /export\s+const\s+metadata\s*=\s*\{([\s\S]*?)\};?/,
-  );
-  const metadataSource = metadataBlock?.[1] ?? "";
-  const body = metadataBlock
-    ? markdown.slice((metadataBlock.index ?? 0) + metadataBlock[0].length).trim()
-    : markdown.trim();
+const contentDirectory = path.join(process.cwd(), "content", "blogs");
+const METADATA_BLOCK_PATTERN = /export\s+const\s+metadata\s*=\s*\{[\s\S]*?\};?/;
+
+function stripMetadata(source: string): string {
+  const match = source.match(METADATA_BLOCK_PATTERN);
+  if (!match) return source.trim();
+  return source.slice((match.index ?? 0) + match[0].length).trim();
+}
+
+async function listSlugs(): Promise<string[]> {
+  const entries = await fs.readdir(contentDirectory, { withFileTypes: true });
+  return entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"))
+    .map((entry) => entry.name.replace(/\.mdx$/, ""))
+    .sort((left, right) => left.localeCompare(right));
+}
+
+async function buildPost(slug: string): Promise<Post> {
+  const filePath = path.join(contentDirectory, `${slug}.mdx`);
+  const [mod, markdown] = await Promise.all([
+    import(`../../content/blogs/${slug}.mdx`) as Promise<PostModule>,
+    fs.readFile(filePath, "utf8"),
+  ]);
+  const body = stripMetadata(markdown);
   const siteUrl = settings.url.replace(/\/$/, "");
 
   return {
     slug,
-    title: readString(metadataSource, "title") || slug,
-    publishDate: readString(metadataSource, "publishDate"),
-    description: readString(metadataSource, "description"),
-    category: readString(metadataSource, "category") || "Writing",
+    ...mod.metadata,
     markdown,
     body,
+    Content: mod.default,
     canonicalUrl: `${siteUrl}/write/${slug}`,
     markdownUrl: `${siteUrl}/write/${slug}.md`,
     githubUrl: `${settings.blog.repository}/blob/${settings.blog.repositoryBranch}/${settings.blog.contentDirectory}/${slug}.mdx`,
@@ -58,9 +67,8 @@ function parsePost(slug: string, markdown: string): Post {
 }
 
 export const getPosts = cache(async (): Promise<Post[]> => {
-  const posts = generatedPosts.map(({ slug, markdown }) =>
-    parsePost(slug, markdown),
-  );
+  const slugs = await listSlugs();
+  const posts = await Promise.all(slugs.map(buildPost));
 
   return posts.sort(
     (left, right) =>

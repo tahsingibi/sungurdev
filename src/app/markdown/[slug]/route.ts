@@ -1,4 +1,11 @@
-import { getPost } from "@/lib/posts";
+import { getPost, getPosts } from "@/lib/posts";
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  return (await getPosts()).map(({ slug }) => ({ slug }));
+}
 
 export async function GET(
   _request: Request,

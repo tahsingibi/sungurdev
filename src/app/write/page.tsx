@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import settings from "@/lib/settings";
 import WriteView from "@/view/write";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Yazılar",
+  title: "Blog",
   description: settings.pages.write.description,
   alternates: {
     canonical: "/write",

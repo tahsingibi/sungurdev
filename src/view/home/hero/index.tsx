@@ -90,7 +90,7 @@ export default function Hero() {
         })}
         {hiring && (
           <Link href={resumeUrl} target="_blank" className="ml-1">
-            <Button variant="secondary">
+            <Button variant="ghost">
               <ArrowDownToLine />
               Resume
             </Button>
