@@ -172,7 +172,7 @@ function renderInline(content: string): ReactNode[] {
 
     if (part.startsWith("`") && part.endsWith("`")) {
       return (
-        <code key={index} className="border border-border bg-muted px-1 py-0.5 font-mono text-[0.9em] text-foreground">
+        <code key={index} className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
           {part.slice(1, -1)}
         </code>
       );

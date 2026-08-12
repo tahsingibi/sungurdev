@@ -16,30 +16,31 @@ export default async function Write() {
           {heading}{" "}
           <ArrowUpRight className="inline scale-0 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all origin-left ml-auto" />
         </h2>
-        <span className="font-pixel text-sm upp text-zinc-400">
+        <span className="font-pixel text-sm text-muted-foreground">
           {description}
         </span>
       </Link>
-      <div className="divider-screen" aria-hidden="true" />
 
       {posts.length ? (
-        posts.map((post, index) => (
-          <Link
-            key={post.slug}
-            href={`/write/${post.slug}`}
-            className="flex flex-col gap-2 p-6 hover:bg-accent/50 border-b last:border-b-0"
-          >
-            <h3 className="truncate text-xl">{post.title}</h3>
-            <span>
-              <Badge variant="secondary" className="font-mono">
-                {post.category}
-              </Badge>
-              <Badge variant="ghost" className="pointer-events-auto">
-                {post.publishDate}
-              </Badge>
-            </span>
-          </Link>
-        ))
+        <div className="mx-6 mb-6 overflow-hidden rounded-lg border border-border">
+          {posts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/write/${post.slug}`}
+              className="flex flex-col gap-2 border-b border-border p-4 transition-colors last:border-b-0 hover:bg-accent/40"
+            >
+              <h3 className="truncate text-xl">{post.title}</h3>
+              <span>
+                <Badge variant="default" className="font-mono">
+                  {post.category}
+                </Badge>
+                <Badge variant="ghost" className="pointer-events-auto">
+                  {post.publishDate}
+                </Badge>
+              </span>
+            </Link>
+          ))}
+        </div>
       ) : (
         <p className="px-6 pb-6 text-foreground/75">{pages.write.error}</p>
       )}

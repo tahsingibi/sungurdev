@@ -43,12 +43,12 @@ export default function Nav() {
           </Link>
         );
       })}
-      {/* -bottom-4 mirrors Header's `mt-4` gap so this lines up with the
-          divider-screen rule underneath the header. */}
+      {/* -bottom-7 lands the indicator near Header's own border-b so the two
+          read as one line. */}
       {indicator && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-7 h-px bg-foreground transition-[left,width] duration-300 ease-out"
+          className="pointer-events-none absolute -bottom-7 h-0.5 rounded-sm bg-foreground transition-[left,width] duration-300 ease-out"
           style={{ left: indicator.left, width: indicator.width }}
         />
       )}

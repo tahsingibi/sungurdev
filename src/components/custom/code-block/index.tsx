@@ -284,7 +284,7 @@ export function CodeBlock({
   const { Icon: LanguageIcon } = getCodeLanguageIcon(language);
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-[0_3px_0_0_var(--border)] dark:bg-zinc-900/70">
+    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-soft dark:bg-zinc-900/70">
       {filename ? (
         <div className="flex min-h-8 pb-2 items-center gap-3 px-2">
           <LanguageIcon className="size-4" aria-hidden="true" />
@@ -316,7 +316,7 @@ export function CodeBlockPreview({
   const blockId = useId();
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 px-2 pb-2 shadow-[0_3px_0_0_var(--border)] dark:bg-zinc-900/70 ">
+    <div className="my-6 rounded-2xl border border-border bg-muted/55 px-2 pb-2 shadow-soft dark:bg-zinc-900/70 ">
       <div
         role="tablist"
         aria-label="Bileşen görünümü"
@@ -396,7 +396,7 @@ export function CodeBlockCommand({
   const ActivePackageManagerIcon = PACKAGE_MANAGER_ICONS[activeManager];
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-[0_3px_0_0_var(--border)] dark:bg-zinc-900/70">
+    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-soft dark:bg-zinc-900/70">
       <div className="relative flex items-center pr-11 gap-2 min-h-10!">
         <div className="flex w-10 shrink-0 h-fit items-center justify-center text-muted-foreground">
           <AnimatePresence mode="wait" initial={false}>

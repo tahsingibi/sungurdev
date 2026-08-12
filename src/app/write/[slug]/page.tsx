@@ -1,6 +1,7 @@
 import { ArticleActions } from "@/components/custom/article-actions";
 import BackButton from "@/components/custom/back-button";
 import { MarkdownDocument } from "@/components/custom/markdown-document";
+import { Badge } from "@/components/ui/badge";
 import { getPost, getPosts, postToPlainText } from "@/lib/posts";
 import settings from "@/lib/settings";
 import type { Metadata } from "next";
@@ -70,7 +71,7 @@ export default async function PostPage({ params }: PostPageProps) {
         }}
       />
       <nav
-        className="flex flex-wrap items-center justify-between gap-4 p-6"
+        className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 p-6"
         aria-label="Yazı işlemleri"
       >
         <BackButton text="Blog" />
@@ -81,13 +82,15 @@ export default async function PostPage({ params }: PostPageProps) {
           githubUrl={post.githubUrl}
         />
       </nav>
-      <div className="divider-screen" />
       <article>
-        <header className="p-6 sm:p-8">
-          <div className="mb-4 flex flex-wrap gap-2 font-mono text-xs uppercase text-muted-foreground">
-            <span>{post.category}</span>
-            <span aria-hidden="true">·</span>
-            <time dateTime={post.publishDate}>{post.publishDate}</time>
+        <header className="border-b border-border/60 p-6 sm:p-8">
+          <div className="mb-4 flex flex-wrap gap-2">
+            <Badge variant="secondary" className="font-mono uppercase">
+              {post.category}
+            </Badge>
+            <Badge variant="ghost" className="font-mono">
+              <time dateTime={post.publishDate}>{post.publishDate}</time>
+            </Badge>
           </div>
           <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">
             {post.title}
@@ -96,8 +99,6 @@ export default async function PostPage({ params }: PostPageProps) {
             {post.description}
           </p>
         </header>
-
-        <div className="divider-screen divider-block" aria-hidden="true" />
 
         <div className="p-6 sm:p-8">
           <MarkdownDocument source={post.body} />

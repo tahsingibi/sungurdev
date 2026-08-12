@@ -27,7 +27,7 @@ export default function BackButton({
     <Button
       onClick={handleBack}
       size={buttonSize}
-      className={cn("rounded-none", className)}
+      className={cn(className)}
       variant={buttonVariant}
       {...props}
     >

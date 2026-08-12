@@ -97,7 +97,7 @@ export function ArticleActions({
     <div className="flex flex-wrap gap-2">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="outline" className="rounded-none">
+          <Button type="button" variant="outline">
             <Share2 className="size-4" /> Share{" "}
             <ChevronDown className="size-3.5" />
           </Button>
@@ -142,7 +142,7 @@ export function ArticleActions({
 
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="outline" className="rounded-none">
+          <Button type="button" variant="outline">
             <Copy className="size-4" /> Copy page{" "}
             <ChevronDown className="size-3.5" />
           </Button>

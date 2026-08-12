@@ -15,64 +15,65 @@ export default function Projects() {
           {heading}{" "}
           <ArrowUpRight className="inline scale-0 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all origin-left ml-auto" />
         </h2>
-        <span className="font-pixel text-sm upp text-zinc-400">
+        <span className="font-pixel text-sm text-muted-foreground">
           {description}
         </span>
       </Link>
-      <div className="divider-screen" aria-hidden="true" />
 
-      {projects.map((project) => (
-        <div
-          key={project.id}
-          className="flex items-end justify-between gap-3 p-6 border-b last:border-b-0"
-        >
-          <div className="min-w-0 flex flex-col gap-1">
-            <Link href={project?.live || project?.repo || "#"} className="group">
-              <h3 className="truncate text-xl ">
-                {project.name}
-                <ArrowUpRight className="inline scale-0 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all origin-left ml-auto size-4 ms-2!" />
-              </h3>
-            </Link>
-            {project.explain && (
-              <p className="text-sm text-foreground/70">{project.explain}</p>
-            )}
-          </div>
-          {(project.repo || project.live) && (
-            <div className="flex shrink-0 items-center gap-1">
-              {project.repo && (
-                <Link
-                  href={project.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    variant="ghost"
-                    className="font-mono uppercase text-2xs!"
-                    size="xs"
-                  >
-                    Github
-                  </Button>
-                </Link>
-              )}
-              {project.live && (
-                <Link
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    variant="ghost"
-                    className="font-mono uppercase text-2xs!"
-                    size="xs"
-                  >
-                    Live
-                  </Button>
-                </Link>
+      <div className="mx-6 mb-6 overflow-hidden rounded-lg border border-border">
+        {projects.map((project) => (
+          <div
+            key={project.id}
+            className="flex items-end justify-between gap-3 border-b border-border p-4 transition-colors last:border-b-0 hover:bg-accent/40"
+          >
+            <div className="min-w-0 flex flex-col gap-1">
+              <Link href={project?.live || project?.repo || "#"} className="group">
+                <h3 className="truncate text-xl ">
+                  {project.name}
+                  <ArrowUpRight className="inline scale-0 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all origin-left ml-auto size-4 ms-2!" />
+                </h3>
+              </Link>
+              {project.explain && (
+                <p className="text-sm text-foreground/70">{project.explain}</p>
               )}
             </div>
-          )}
-        </div>
-      ))}
+            {(project.repo || project.live) && (
+              <div className="flex shrink-0 items-center gap-1">
+                {project.repo && (
+                  <Link
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      variant="secondary"
+                      className="font-mono uppercase text-2xs!"
+                      size="xs"
+                    >
+                      Github
+                    </Button>
+                  </Link>
+                )}
+                {project.live && (
+                  <Link
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      variant="secondary"
+                      className="font-mono uppercase text-2xs!"
+                      size="xs"
+                    >
+                      Live
+                    </Button>
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

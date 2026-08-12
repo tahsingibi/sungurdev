@@ -6,16 +6,20 @@ import Write from "./write";
 
 export default function HomepageView() {
   return (
-    <main>
+    <main className="flex flex-col">
       <Hero />
-      <div className="divider-screen" />
-      <HomeGitHubContributions />
-      <div className="divider-screen divider-hatch" />
-      <Experiences />
-      <div className="divider-screen divider-block" />
-      <Write />
-      <div className="divider-screen divider-block" />
-      <Projects />
+      <div className="border-t border-border/60">
+        <HomeGitHubContributions />
+      </div>
+      <div className="border-t border-border/60">
+        <Experiences />
+      </div>
+      <div className="border-t border-border/60">
+        <Write />
+      </div>
+      <div className="border-t border-border/60">
+        <Projects />
+      </div>
     </main>
   );
 }

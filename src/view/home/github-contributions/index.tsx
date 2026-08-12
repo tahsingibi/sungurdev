@@ -14,12 +14,14 @@ export default function HomeGitHubContributions() {
 
   return (
     <div className="p-6">
-      <Suspense fallback={<GitHubContributionsFallback />}>
-        <GitHubContributions
-          contributions={contributions}
-          githubProfileUrl={GITHUB_PROFILE_URL}
-        />
-      </Suspense>
+      <div className="rounded-2xl border border-border/60 bg-card/40 p-4 shadow-soft">
+        <Suspense fallback={<GitHubContributionsFallback />}>
+          <GitHubContributions
+            contributions={contributions}
+            githubProfileUrl={GITHUB_PROFILE_URL}
+          />
+        </Suspense>
+      </div>
     </div>
   );
 }
