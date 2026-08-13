@@ -1,7 +1,5 @@
 import "server-only";
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
 import settings from "@/lib/settings";
 import { cache } from "react";
 import type { ComponentType } from "react";
@@ -28,8 +26,21 @@ interface PostModule {
   metadata: PostMetadata;
 }
 
-const contentDirectory = path.join(process.cwd(), "content", "blogs");
 const METADATA_BLOCK_PATTERN = /export\s+const\s+metadata\s*=\s*\{[\s\S]*?\};?/;
+
+// Enumerated by webpack at bundle time (see next.config.ts's `?raw` rule) so no
+// filesystem access happens at request time — the Cloudflare Worker runtime has none.
+type WebpackRequireContext = { keys(): string[] };
+const listSlugs = (): string[] =>
+  (
+    require as unknown as {
+      context(dir: string, sub: boolean, regExp: RegExp): WebpackRequireContext;
+    }
+  )
+    .context("../../content/blogs", false, /\.mdx$/)
+    .keys()
+    .map((key) => key.replace(/^\.\//, "").replace(/\.mdx$/, ""))
+    .sort((left, right) => left.localeCompare(right));
 
 function stripMetadata(source: string): string {
   const match = source.match(METADATA_BLOCK_PATTERN);
@@ -37,20 +48,12 @@ function stripMetadata(source: string): string {
   return source.slice((match.index ?? 0) + match[0].length).trim();
 }
 
-async function listSlugs(): Promise<string[]> {
-  const entries = await fs.readdir(contentDirectory, { withFileTypes: true });
-  return entries
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"))
-    .map((entry) => entry.name.replace(/\.mdx$/, ""))
-    .sort((left, right) => left.localeCompare(right));
-}
-
 async function buildPost(slug: string): Promise<Post> {
-  const filePath = path.join(contentDirectory, `${slug}.mdx`);
-  const [mod, markdown] = await Promise.all([
+  const [mod, raw] = await Promise.all([
     import(`../../content/blogs/${slug}.mdx`) as Promise<PostModule>,
-    fs.readFile(filePath, "utf8"),
+    import(`../../content/blogs/${slug}.mdx?raw`) as Promise<{ default: string }>,
   ]);
+  const markdown = raw.default;
   const body = stripMetadata(markdown);
   const siteUrl = settings.url.replace(/\/$/, "");
 
@@ -67,8 +70,7 @@ async function buildPost(slug: string): Promise<Post> {
 }
 
 export const getPosts = cache(async (): Promise<Post[]> => {
-  const slugs = await listSlugs();
-  const posts = await Promise.all(slugs.map(buildPost));
+  const posts = await Promise.all(listSlugs().map(buildPost));
 
   return posts.sort(
     (left, right) =>
