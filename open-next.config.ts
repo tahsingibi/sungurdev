@@ -1,9 +1,10 @@
-// default open-next.config.ts file created by @opennextjs/cloudflare
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
-// import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";
+// Serves prerendered pages straight from the existing Workers Static Assets (ASSETS)
+// binding — no R2/KV needed. Revalidation isn't persisted, which is fine here since
+// none of our routes rely on it staying fresh beyond redeploys.
+// See https://opennext.js.org/cloudflare/caching for more details
+import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache";
 
 export default defineCloudflareConfig({
-	// For best results consider enabling R2 caching
-	// See https://opennext.js.org/cloudflare/caching for more details
-	// incrementalCache: r2IncrementalCache
+	incrementalCache: staticAssetsIncrementalCache,
 });
