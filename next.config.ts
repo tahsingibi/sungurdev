@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.mdx$/,
+      resourceQuery: /raw/,
+      type: "asset/source",
+    });
+    return config;
+  },
   async rewrites() {
     return [{ source: "/write/:slug.md", destination: "/markdown/:slug" }];
   },
