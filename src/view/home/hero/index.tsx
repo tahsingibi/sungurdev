@@ -55,7 +55,7 @@ export default function Hero() {
 
         <div>
           <h1 className="text-3xl">{name}</h1>
-          <p className="mt-1.5 inline-flex w-fit items-center gap-1 rounded-md bg-muted/60 px-2.5 py-1">
+          <p className="mt-1.5 w-fit rounded-md bg-muted/60 px-2.5 py-1">
             <EncryptedText
               text={title}
               className="font-pixel text-xs text-muted-foreground"
