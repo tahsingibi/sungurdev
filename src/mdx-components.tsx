@@ -57,7 +57,7 @@ const components: MDXComponents = {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-foreground underline underline-offset-4"
+      className="text-foreground underline underline-offset-4 hover:decoration-wavy"
     >
       {children}
     </a>

@@ -36,6 +36,12 @@ export interface Experience {
   projects: Project[];
 }
 
+export interface StackCategory {
+  id: number;
+  label: string;
+  items: string[];
+}
+
 export interface PageSettings {
   heading: string;
   description: string;
@@ -79,10 +85,12 @@ export interface Settings {
   social: SocialLink[];
   experience: Experience[];
   work: Project[];
+  stack: StackCategory[];
   pages: {
     write: PageSettings;
     works: PageSettings;
     projects: PageSettings;
+    stack: PageSettings;
   };
   seo: SeoSettings;
   analytics: AnalyticsSettings;
