@@ -62,7 +62,7 @@ const settings: Settings = {
       projects: [
         {
           id: "HY001",
-          name: "Pratikargo - Affordable and Reliable International Shipping Solutions",
+          name: "Pratikargo - International Shipping Solutions",
           image: "/img/work/pratikargo.svg",
           live: "https://pratikargo.vercel.app/",
           tech: "Next.js, Supabase",
@@ -289,6 +289,64 @@ const settings: Settings = {
       live: "https://tahsinbey.com/",
     },
   ],
+  stack: [
+    {
+      id: 0,
+      label: "Language",
+      items: ["JavaScript", "TypeScript"],
+    },
+    {
+      id: 1,
+      label: "Frontend",
+      items: [
+        "React.js",
+        "Next.js",
+        "Redux",
+        "TailwindCSS",
+        "Ant Design",
+        "Material UI",
+        "Bootstrap",
+        "Storybook",
+        "Lottie",
+      ],
+    },
+    {
+      id: 2,
+      label: "Backend & Database",
+      items: [
+        "Node.js",
+        "Supabase",
+        "Cloudflare Workers",
+        "REST API & WebSocket",
+        "Web3",
+        "Ethers.js",
+      ],
+    },
+    {
+      id: 3,
+      label: "Workflow & AI",
+      items: [
+        "Git",
+        "GitHub",
+        "Bitbucket",
+        "Jira",
+        "Agile & Scrum",
+        "Claude Code",
+        "Codex",
+        "Gemini",
+      ],
+    },
+    {
+      id: 4,
+      label: "Analytics",
+      items: ["Google Analytics", "Web Vitals", "Ahrefs"],
+    },
+    {
+      id: 5,
+      label: "Design",
+      items: ["Figma", "Adobe XD", "Illustrator & Photoshop", "Premiere Pro"],
+    },
+  ],
   pages: {
     write: {
       heading: "blog",
@@ -304,6 +362,11 @@ const settings: Settings = {
     projects: {
       heading: "projects",
       description: "a few things i've built on the side.",
+      path: "/works",
+    },
+    stack: {
+      heading: "stack",
+      description: "languages, tools and technologies i work with.",
       path: "/works",
     },
   },

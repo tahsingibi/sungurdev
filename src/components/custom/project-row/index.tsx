@@ -48,11 +48,7 @@ export function ProjectRow({ project }: { project: Project }) {
         {project.repo || project.live ? (
           <div className="flex shrink-0 items-center gap-1 max-sm:w-fit">
             {project.repo ? (
-              <Button
-                asChild
-                variant="secondary"
-                size="xs"
-              >
+              <Button asChild variant="secondary" size="xs">
                 <Link
                   href={project.repo}
                   target="_blank"
@@ -64,11 +60,7 @@ export function ProjectRow({ project }: { project: Project }) {
               </Button>
             ) : null}
             {project.live ? (
-              <Button
-                asChild
-                variant="secondary"
-                size="xs"
-              >
+              <Button asChild variant="secondary" size="xs">
                 <Link
                   href={project.live}
                   target="_blank"
