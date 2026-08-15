@@ -1,4 +1,27 @@
 import {
+  SiAntdesign,
+  SiBitbucket,
+  SiBootstrap,
+  SiClaude,
+  SiCloudflareworkers,
+  SiEthers,
+  SiFigma,
+  SiGit,
+  SiGithub,
+  SiGoogleanalytics,
+  SiGooglegemini,
+  SiJira,
+  SiLottiefiles,
+  SiMui,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiReact,
+  SiRedux,
+  SiStorybook,
+  SiSupabase,
+  SiTailwindcss,
+} from "@icons-pack/react-simple-icons";
+import {
   Binary,
   Braces,
   Code2,
@@ -216,6 +239,30 @@ const CODE_LANGUAGE_ICONS: Record<string, CodeLanguageIconMeta> = {
   diff: { label: "Diff", Icon: lucide(GitBranch) },
   text: { label: "Text", Icon: lucide(FileText) },
   txt: { label: "Text", Icon: lucide(FileText) },
+};
+
+export const STACK_ICONS: Record<string, AppIconComponent> = {
+  "React.js": SiReact as AppIconComponent,
+  "Next.js": SiNextdotjs as AppIconComponent,
+  Redux: SiRedux as AppIconComponent,
+  TailwindCSS: SiTailwindcss as AppIconComponent,
+  "Ant Design": SiAntdesign as AppIconComponent,
+  "Material UI": SiMui as AppIconComponent,
+  Bootstrap: SiBootstrap as AppIconComponent,
+  Storybook: SiStorybook as AppIconComponent,
+  Lottie: SiLottiefiles as AppIconComponent,
+  "Node.js": SiNodedotjs as AppIconComponent,
+  Supabase: SiSupabase as AppIconComponent,
+  "Cloudflare Workers": SiCloudflareworkers as AppIconComponent,
+  "Ethers.js": SiEthers as AppIconComponent,
+  Git: SiGit as AppIconComponent,
+  GitHub: SiGithub as AppIconComponent,
+  Bitbucket: SiBitbucket as AppIconComponent,
+  Jira: SiJira as AppIconComponent,
+  "Claude Code": SiClaude as AppIconComponent,
+  Gemini: SiGooglegemini as AppIconComponent,
+  "Google Analytics": SiGoogleanalytics as AppIconComponent,
+  Figma: SiFigma as AppIconComponent,
 };
 
 export function getCodeLanguageIcon(language = "text"): CodeLanguageIconMeta {

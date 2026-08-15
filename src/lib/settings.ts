@@ -62,7 +62,7 @@ const settings: Settings = {
       projects: [
         {
           id: "HY001",
-          name: "Pratikargo - Affordable and Reliable International Shipping Solutions",
+          name: "Pratikargo - International Shipping Solutions",
           image: "/img/work/pratikargo.svg",
           live: "https://pratikargo.vercel.app/",
           tech: "Next.js, Supabase",
@@ -133,7 +133,17 @@ const settings: Settings = {
         "<p>Sometime around 2018 or a bit earlier, I started developing using HTML/CSS and WordPress, which I continued as a side job until 2022. Regardless of my main occupation, I persisted in constantly improving my coding skills. In 2022, I decided to make coding my primary occupation and began enhancing my expertise in React/Next.js. Before venturing into a freelance frontend developer career, I delivered numerous WordPress products and released a couple of WordPress themes. Some of the projects I worked on during my freelance period include:</p>",
       projects: [
         {
-          id: 0,
+          id: 12,
+          name: "OrbitCast",
+          explain: "Synchronised radio broadcast",
+          tech: "Next.js, Upstash/Redis",
+          icon: "code-s-slash-line",
+          live: "https://cast.sungur.dev",
+          repo: "https://github.com/tahsingibi/sungurdev",
+          year: 2026,
+        },
+        {
+          id: 11,
           name: "sungur.dev",
           explain: "My developer portfolio.",
           tech: "Next.js",
@@ -143,7 +153,7 @@ const settings: Settings = {
           year: 2024,
         },
         {
-          id: 1,
+          id: 10,
           icon: "reply-all-line",
           name: "MailSender",
           explain: "Nodemailer-based HTML email sender.",
@@ -152,7 +162,7 @@ const settings: Settings = {
           year: 2024,
         },
         {
-          id: 2,
+          id: 9,
           icon: "bit-coin-line",
           name: "Cryptos App.",
           explain: "Real-time cryptocurrency market tracker.",
@@ -162,7 +172,7 @@ const settings: Settings = {
           year: 2024,
         },
         {
-          id: 3,
+          id: 8,
           icon: "dashboard-line",
           name: "CompanyCRM",
           explain: "React Antd-based admin panel design.",
@@ -172,7 +182,7 @@ const settings: Settings = {
           year: 2024,
         },
         {
-          id: 4,
+          id: 7,
           icon: "bookmark-line",
           name: "Bountyhub",
           explain: "Storybook for Bountyhub application.",
@@ -181,7 +191,7 @@ const settings: Settings = {
           year: 2023,
         },
         {
-          id: 5,
+          id: 6,
           icon: "quill-pen-line",
           name: "tahsinbey.com",
           explain: "My personal blog.",
@@ -190,14 +200,14 @@ const settings: Settings = {
           year: 2020,
         },
         {
-          id: 6,
+          id: 5,
           name: "ToDo App.",
           live: "https://todoapp-practicum.vercel.app/",
           tech: "React - TailwindCSS",
           year: 2022,
         },
         {
-          id: 7,
+          id: 4,
           name: "Weather App.",
           live: "https://weatherapptr.vercel.app/",
           tech: "React - TailwindCSS",
@@ -205,28 +215,28 @@ const settings: Settings = {
         },
 
         {
-          id: 8,
+          id: 3,
           name: "HEXWORD-TR",
           live: "https://hexword-tr.vercel.app/",
           tech: "React - TailwindCSS",
           year: 2022,
         },
         {
-          id: 9,
+          id: 2,
           name: "Landify Landing Page",
           live: "https://tahsinbey.com/cv/landify/",
           tech: "TailwindCSS",
           year: 2022,
         },
         {
-          id: 10,
+          id: 1,
           name: "BRN Architecture & Engineering",
           live: "https://tahsinbey.com/cv/brn/",
           tech: "TailwindCSS",
           year: 2020,
         },
         {
-          id: 11,
+          id: 0,
           name: "Pena Weddings Web Page",
           live: "https://tahsinbey.com/cv/penaweddings/",
           tech: "Bootstrap",
@@ -237,7 +247,17 @@ const settings: Settings = {
   ],
   work: [
     {
-      id: 0,
+      id: 6,
+      name: "OrbitCast",
+      explain: "Synchronised radio broadcast.",
+      tech: "Next.js, Upstash/Redis",
+      icon: "code-slash",
+      live: "https://cast.sungur.dev",
+      repo: "https://github.com/tahsingibi/orbitcast",
+      year: 2026,
+    },
+    {
+      id: 5,
       name: "sungur.dev",
       explain: "My developer portfolio.",
       tech: "Next.js",
@@ -246,7 +266,7 @@ const settings: Settings = {
       repo: "https://github.com/tahsingibi/sungurdev",
     },
     {
-      id: 1,
+      id: 4,
       icon: "reply-all",
       name: "MailSender",
       explain: "Nodemailer-based HTML email sender.",
@@ -254,7 +274,7 @@ const settings: Settings = {
       repo: "https://github.com/tahsingibi/nodejs-mailsender",
     },
     {
-      id: 2,
+      id: 3,
       icon: "currency-bitcoin",
       name: "Cryptos App.",
       explain: "Real-time cryptocurrency market tracker.",
@@ -263,7 +283,7 @@ const settings: Settings = {
       live: "https://cryptos-view.vercel.app/",
     },
     {
-      id: 3,
+      id: 2,
       icon: "kanban",
       name: "CompanyCRM",
       explain: "React Antd-based admin panel design.",
@@ -272,7 +292,7 @@ const settings: Settings = {
       live: "https://companycrm.vercel.app/",
     },
     {
-      id: 4,
+      id: 1,
       icon: "bookmark",
       name: "Bountyhub",
       explain: "Storybook for Bountyhub application.",
@@ -281,12 +301,70 @@ const settings: Settings = {
       live: "https://bountyhub-storybook.vercel.app/",
     },
     {
-      id: 5,
+      id: 0,
       icon: "feather",
       name: "tahsinbey.com",
       explain: "My personal blog.",
       tech: "WordPress, TailwindCSS",
       live: "https://tahsinbey.com/",
+    },
+  ],
+  stack: [
+    {
+      id: 0,
+      label: "Language",
+      items: ["JavaScript", "TypeScript"],
+    },
+    {
+      id: 1,
+      label: "Frontend",
+      items: [
+        "React.js",
+        "Next.js",
+        "Redux",
+        "TailwindCSS",
+        "Ant Design",
+        "Material UI",
+        "Bootstrap",
+        "Storybook",
+        "Lottie",
+      ],
+    },
+    {
+      id: 2,
+      label: "Backend & Database",
+      items: [
+        "Node.js",
+        "Supabase",
+        "Cloudflare Workers",
+        "REST API & WebSocket",
+        "Web3",
+        "Ethers.js",
+      ],
+    },
+    {
+      id: 3,
+      label: "Workflow & AI",
+      items: [
+        "Git",
+        "GitHub",
+        "Bitbucket",
+        "Jira",
+        "Agile & Scrum",
+        "Claude Code",
+        "Codex",
+        "Gemini",
+      ],
+    },
+    {
+      id: 4,
+      label: "Analytics",
+      items: ["Google Analytics", "Web Vitals", "Ahrefs"],
+    },
+    {
+      id: 5,
+      label: "Design",
+      items: ["Figma", "Adobe XD", "Illustrator & Photoshop", "Premiere Pro"],
     },
   ],
   pages: {
@@ -304,6 +382,11 @@ const settings: Settings = {
     projects: {
       heading: "projects",
       description: "a few things i've built on the side.",
+      path: "/works",
+    },
+    stack: {
+      heading: "stack",
+      description: "languages, tools and technologies i work with.",
       path: "/works",
     },
   },
