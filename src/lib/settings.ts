@@ -138,8 +138,8 @@ const settings: Settings = {
           explain: "Synchronised radio broadcast",
           tech: "Next.js, Upstash/Redis",
           icon: "code-s-slash-line",
-          live: "https://cast.sungur.dev",
-          repo: "https://github.com/tahsingibi/sungurdev",
+          live: "https://orbitcast.sungur.dev",
+          repo: "https://github.com/tahsingibi/orbitcast",
           year: 2026,
         },
         {
