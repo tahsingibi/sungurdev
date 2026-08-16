@@ -10,8 +10,14 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        /*
+         * Düz, köşesiz, saç teli çerçeve; vurgu amber. Eski hâli `shadow-xs`
+         * ve `dark:bg-input/30` taşıyordu — dolgulu ve gölgeli, yani sayfanın
+         * geri kalanına ait olmayan bir dil. Bu varyantı başlıktaki arama,
+         * RSS ve yazı eylem düğmelerinin hepsi kullanıyor.
+         */
         outline:
-          "border-border bg-background shadow-xs hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+          "border-border text-muted-foreground hover:border-primary/60 hover:text-primary aria-expanded:border-primary/60 aria-expanded:text-primary",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:

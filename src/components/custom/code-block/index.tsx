@@ -232,15 +232,24 @@ function CodeContent({
   compact?: boolean;
 }) {
   const highlighted = useHighlightedCode(code, language);
-  const lineCount = Math.max(1, code.split("\n").length);
-  const verticalPadding = compact ? 24 : 32;
-  const viewportHeight = Math.min(384, lineCount * 24 + verticalPadding);
+  /*
+   * Sabit yükseklik yerine tavan.
+   *
+   * Eskiden yükseklik `satırSayısı * 24` ile hesaplanıyordu; ama `<pre>`
+   * `whitespace-pre-wrap` olduğu için uzun satırlar birden fazla görsel
+   * satıra sarıyor ve gerçek içerik hesaplanandan yüksek çıkıyordu — sonuç,
+   * sığmayan her blokta gereksiz bir kaydırma çubuğu.
+   *
+   * `maxHeight` ile kısa bloklar kendi boyunda duruyor, yalnızca gerçekten
+   * uzun olanlar kaydırılıyor.
+   */
+  const maxViewportHeight = 384;
 
   return (
     <ScrollArea
-      className="overflow-hidden rounded-xl"
+      className="overflow-hidden"
       viewportClassName="!overflow-x-hidden"
-      style={{ height: viewportHeight }}
+      style={{ maxHeight: maxViewportHeight }}
     >
       <pre
         className={

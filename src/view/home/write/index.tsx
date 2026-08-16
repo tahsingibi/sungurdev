@@ -5,17 +5,26 @@ import settings from "@/lib/settings";
 
 export default async function Write() {
   const { pages } = settings;
-  const posts = (await getPosts()).slice(0, 3);
+  const allPosts = await getPosts();
+  // Sayaç toplamı göstermeli; listede yalnızca son üçü var.
+  const posts = allPosts.slice(0, 3);
   const { path, heading, description } = pages.write;
 
   return (
     <section className="relative flex flex-col">
-      <SectionHeader heading={heading} description={description} href={path} />
+      <SectionHeader
+        heading={heading}
+        description={description}
+        href={path}
+        meta={`${allPosts.length} posts`}
+      />
 
       {posts.length ? (
-        <PostList posts={posts} />
+        <div className="px-6 pb-8">
+          <PostList posts={posts} />
+        </div>
       ) : (
-        <p className="px-6 pb-6 text-foreground/75">{pages.write.error}</p>
+        <p className="px-6 pb-8 text-xs text-muted-foreground">{pages.write.error}</p>
       )}
     </section>
   );

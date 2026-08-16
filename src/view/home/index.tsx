@@ -1,25 +1,25 @@
+import Arsenal from "./arsenal";
 import Experiences from "./experiences";
-import HomeGitHubContributions from "./github-contributions";
 import Hero from "./hero";
 import Projects from "./projects";
-import Stack from "./stack";
 import Write from "./write";
 
 export default function HomepageView() {
   return (
     <main className="flex flex-col">
       <Hero />
-      <HomeGitHubContributions />
-      <div className="border-t border-border/60">
-        <Stack />
+      {/* Arsenal + Activity tek bantta yan yana; sayfadaki tek iki sütunlu
+          alan burası ve bu, akışa ritim veriyor. */}
+      <div className="border-t border-border">
+        <Arsenal />
       </div>
-      <div className="border-t border-border/60">
+      <div className="border-t border-border">
         <Experiences />
       </div>
-      <div className="border-t border-border/60">
+      <div className="border-t border-border">
         <Write />
       </div>
-      <div className="border-t border-border/60">
+      <div className="border-t border-border">
         <Projects />
       </div>
     </main>
