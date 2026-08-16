@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     types: {
-      "application/rss+xml": [{ url: "/rss.xml", title: "sungur.dev RSS" }],
+      "application/rss+xml": [{ url: "/rss.xml", title: `${settings.name} RSS` }],
     },
   },
   openGraph: {

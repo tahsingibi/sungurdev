@@ -22,7 +22,7 @@ export function DropdownMenuContent({
       <DropdownMenuPrimitive.Content
         sideOffset={sideOffset}
         className={cn(
-          "z-50 min-w-48 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
+          "pop-in z-50 min-w-48 overflow-hidden border border-border bg-popover p-1 text-popover-foreground shadow-xl shadow-black/50",
           className,
         )}
         {...props}
@@ -40,7 +40,7 @@ export function DropdownMenuItem({
     <DropdownMenuPrimitive.Item
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none",
+        "relative flex cursor-pointer select-none items-center gap-2.5 px-2.5 py-2 text-xs text-muted-foreground outline-none focus:bg-primary/12 focus:text-primary [&_svg]:size-3.5 [&_svg]:shrink-0",
         "focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset=true]:pl-8 [&_svg]:size-4 [&_svg]:shrink-0",
         className,
       )}
@@ -106,7 +106,7 @@ export function DropdownMenuSubContent({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
   return (
     <DropdownMenuPrimitive.SubContent
-      className={cn("z-50 min-w-40 rounded-md border bg-popover p-1 shadow-lg", className)}
+      className={cn("pop-in z-50 min-w-40 border border-border bg-popover p-1 shadow-xl shadow-black/50", className)}
       {...props}
     />
   );

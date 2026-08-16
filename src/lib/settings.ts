@@ -16,6 +16,8 @@ const settings: Settings = {
   currentCompany: "Hypeople Studio",
   about:
     "i'm a <span class='mark'>frontend developer</span> based in Izmir, and currently working at <a href={lastworklink}>{lastwork}</a>, where I develop end-to-end web applications tailored to the needs of both individual and corporate clients. ",
+  tagline: "a frontend developer's notebook and workshop.",
+  location: "İzmir / TR",
   image: "/img/profile.jpeg",
   nav: [
     { id: 0, name: "home", path: "/", icon: "home-line" },

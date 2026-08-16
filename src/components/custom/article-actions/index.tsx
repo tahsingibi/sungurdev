@@ -59,18 +59,18 @@ export function ArticleActions({
 
   const aiTargets = [
     {
-      label: "Open in ChatGPT",
+      label: "open in chatgpt",
       href: `https://chatgpt.com/?${chatGptQuery}`,
     },
     {
-      label: "Open in Claude",
+      label: "open in claude",
       href: `https://claude.ai/new?${query}`,
     },
     {
-      label: "Open in Cursor",
+      label: "open in cursor",
       href: `https://cursor.com/link/prompt?${cursorQuery}`,
     },
-    { label: "Open in Grok", href: `https://grok.com/?${query}` },
+    { label: "open in grok", href: `https://grok.com/?${query}` },
   ];
 
   async function handleNativeShare() {
@@ -80,26 +80,32 @@ export function ArticleActions({
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError")
           return;
-        toast.error("Sharing failed");
+        toast.error("share failed");
       }
       return;
     }
 
     try {
       await copyText(canonicalUrl);
-      toast.info("Web Share isn't supported; link copied to clipboard.");
+      toast.info("web share unavailable — link copied instead");
     } catch {
-      toast.error("This browser doesn't support sharing or clipboard access.");
+      toast.error("sharing and clipboard unavailable");
     }
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="secondary">
-            <Share2 className="size-4" /> Share{" "}
-            <ChevronDown className="size-3.5" />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="text-xs uppercase tracking-[0.16em]"
+          >
+            <Share2 className="size-3.5" />
+            share
+            <ChevronDown className="size-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -107,13 +113,13 @@ export function ArticleActions({
             onSelect={async () => {
               try {
                 await copyText(canonicalUrl);
-                toast.success("Link copied to clipboard");
+                toast.success("link copied");
               } catch {
-                toast.error("Could not copy link");
+                toast.error("could not copy link");
               }
             }}
           >
-            <LinkIcon /> Copy link
+            <LinkIcon /> copy link
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
@@ -121,7 +127,7 @@ export function ArticleActions({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ExternalLink /> Share on X
+              <ExternalLink /> share on x
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
@@ -130,32 +136,38 @@ export function ArticleActions({
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ExternalLink /> Share on LinkedIn
+              <ExternalLink /> share on linkedin
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={handleNativeShare}>
-            <Ellipsis /> Other app
+            <Ellipsis /> other app
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button type="button" variant="secondary">
-            <Copy className="size-4" /> Copy page{" "}
-            <ChevronDown className="size-3.5" />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="text-xs uppercase tracking-[0.16em]"
+          >
+            <Copy className="size-3.5" />
+            copy page
+            <ChevronDown className="size-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-56">
           <DropdownMenuItem asChild>
             <Link href={markdownUrl} target="_blank" rel="noopener noreferrer">
-              <FileText /> View as Markdown
+              <FileText /> view as markdown
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink /> Open in GitHub
+              <ExternalLink /> open in github
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -172,18 +184,18 @@ export function ArticleActions({
               try {
                 const response = await fetch(markdownUrl);
                 if (!response.ok)
-                  throw new Error("Markdown could not be retrieved.");
+                  throw new Error("markdown could not be retrieved");
                 await copyText(await response.text());
-                toast("The page's Markdown content has been copied!", {
+                toast.success("markdown copied", {
                   position: "bottom-center",
                   closeButton: false,
                 });
               } catch {
-                toast.error("The Markdown content could not be copied!");
+                toast.error("could not copy markdown");
               }
             }}
           >
-            <Clipboard /> Copy Markdown
+            <Clipboard /> copy markdown
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

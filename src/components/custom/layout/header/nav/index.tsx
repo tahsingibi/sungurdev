@@ -25,8 +25,13 @@ export default function Nav() {
     setIndicator(el ? { left: el.offsetLeft, width: el.offsetWidth } : null);
   }, [pathname, navItems]);
 
+  /*
+   * Dar ekranda gizli: üç bağlantı yan yana yer kaplıyordu ve hepsi zaten
+   * komut paletinin içinde. Mobilde gezinme başlıktaki menü ikonundan
+   * (CommandHint) yürüyor.
+   */
   return (
-    <nav className="relative flex items-center gap-4">
+    <nav className="relative hidden items-center gap-4 sm:flex">
       {navItems.map((item) => {
         const isActive = isActivePath(item.path, pathname);
         return (
