@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: settings.pages.write.description,
   alternates: {
     canonical: "/write",
-    types: { "application/rss+xml": [{ url: "/rss.xml", title: "sungur.dev RSS" }] },
+    types: { "application/rss+xml": [{ url: "/rss.xml", title: `${settings.name} RSS` }] },
   },
 };
 

@@ -1,102 +1,169 @@
-import {
-  GithubIcon,
-  LinkedInIcon,
-  XTwitterIcon,
-} from "@/components/custom/icons";
-import { Button } from "@/components/ui/button";
-import { EncryptedText } from "@/components/ui/encrypted-text";
+import { SocialIcon } from "@/components/custom/social-icon";
 import settings from "@/lib/settings";
-import { ArrowDownToLine, Mail } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import type { ComponentType } from "react";
 
-const SOCIAL_ICONS = {
-  "twitter-x": XTwitterIcon,
-  linkedin: LinkedInIcon,
-  github: GithubIcon,
-  mail: Mail,
-};
+/**
+ * ASCII banner.
+ *
+ * Sayfanın tek büyük görsel öğesi ve tüm dili tek başına kuran şey. Metin
+ * olarak duruyor (görsel değil): seçilebiliyor, temayla renk değiştiriyor,
+ * her ekran genişliğinde ölçekleniyor ve tek bir bayt bile indirilmiyor.
+ *
+ * `aria-label` var çünkü ekran okuyucuya blok karakterleri okumak işkence;
+ * içerik `aria-hidden` ve isim `h1`in etiketinden geliyor.
+ */
+const BANNER = String.raw`
+ ███████╗██╗   ██╗███╗   ██╗ ██████╗ ██╗   ██╗██████╗
+ ██╔════╝██║   ██║████╗  ██║██╔════╝ ██║   ██║██╔══██╗
+ ███████╗██║   ██║██╔██╗ ██║██║  ███╗██║   ██║██████╔╝
+ ╚════██║██║   ██║██║╚██╗██║██║   ██║██║   ██║██╔══██╗
+ ███████║╚██████╔╝██║ ╚████║╚██████╔╝╚██████╔╝██║  ██║
+ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝`;
+
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex gap-4 max-sm:flex-col max-sm:gap-0.5 sm:items-baseline">
+      <dt className="w-24 shrink-0 text-2xs uppercase tracking-[0.2em] text-muted-foreground">
+        {label}
+      </dt>
+      <dd className="min-w-0 text-xs leading-relaxed">{children}</dd>
+    </div>
+  );
+}
 
 export default function Hero() {
   const {
     name,
     title,
-    currentCompany = null,
+    currentCompany,
     about,
     social,
     hiring,
-    url,
     resume,
+    experience,
+    work,
+    location,
   } = settings;
+
   const aboutContent = about
-    .replaceAll("{lastwork}", settings.experience[0].name)
-    .replaceAll("{lastworklink}", settings.experience[0].path);
+    .replaceAll("{lastwork}", experience[0].name)
+    .replaceAll("{lastworklink}", experience[0].path);
 
-  const resumeUrl = url + !!resume ? resume : "";
+  // "Şu an ne yayında" — canlı olan projeler künyenin içinde duruyor.
+  const shipping = work.filter((project) => project.live).slice(0, 3);
+
   return (
-    <div className="flex flex-col relative">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-16 left-1/2 h-56 w-56 -translate-x-1/2 rounded-3xl bg-primary/20 blur-3xl"
-      />
+    <section className="flex flex-col px-6 pt-8 pb-8">
+      <h1 className="sr-only">
+        {name} — {title}
+      </h1>
 
-      <div className="relative z-10 pt-6 px-6 pb-6 flex items-center gap-6">
-        <div className="relative">
-          <figure className="relative size-16 bg-white rounded-2xl shrink-0 flex items-center justify-center has-[img]:bg-transparent overflow-hidden ring-4 ring-background shadow-soft">
-            <Image
-              src="/img/profile.jpeg"
-              alt="Profile"
-              fill
-              className="object-cover scale-140 translate-x-2 translate-y-2"
-            />
-          </figure>
-        </div>
+      <pre
+        aria-hidden
+        className="nfo-banner nfo-glow text-primary select-all"
+      >
+        {BANNER}
+      </pre>
 
-        <div>
-          <h1 className="text-3xl">{name}</h1>
-          <p className="mt-1.5 w-fit rounded-md bg-muted/60 px-2.5 py-1">
-            <EncryptedText
-              text={title}
-              className="font-pixel text-xs text-muted-foreground"
-            />
-            {!!currentCompany && (
-              <EncryptedText
-                text={` @ ${currentCompany}`}
-                className="font-pixel text-xs text-foreground"
-              />
-            )}
-          </p>
-        </div>
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-2xs uppercase tracking-[0.16em] text-muted-foreground">
+        <span className="text-foreground">{name}</span>
+        <span aria-hidden>·</span>
+        <span className="text-foreground">{title}</span>
+        <span aria-hidden>·</span>
+        <span>{location}</span>
+        <span aria-hidden>·</span>
+        <span className={hiring ? "text-primary" : undefined}>
+          {hiring ? "● available" : "○ not looking"}
+        </span>
+        <span aria-hidden className="nfo-caret text-primary">
+          █
+        </span>
       </div>
-      <div className="relative z-10 p-6 border-t border-border/60">
+
+      <div className="mt-6 border-t border-border pt-6">
+        <dl className="flex flex-col gap-2">
+          <Field label="current">
+            {currentCompany ? (
+              <>
+                <Link
+                  href={experience[0].path}
+                  className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
+                >
+                  {currentCompany}
+                </Link>
+                <span className="text-muted-foreground">
+                  {" "}
+                  — end-to-end web apps for individual and corporate clients
+                </span>
+              </>
+            ) : (
+              <span className="text-muted-foreground">independent</span>
+            )}
+          </Field>
+
+          {shipping.length ? (
+            <Field label="shipping">
+              <span className="flex flex-wrap items-center gap-x-2">
+                {shipping.map((project, index) => (
+                  <span key={project.id}>
+                    {index > 0 ? (
+                      <span aria-hidden className="text-border">
+                        {" · "}
+                      </span>
+                    ) : null}
+                    <Link
+                      href={project.live as string}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
+                    >
+                      {project.name.toLowerCase()}
+                    </Link>
+                  </span>
+                ))}
+              </span>
+            </Field>
+          ) : null}
+
+          <Field label="contact">
+            <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              {social.map((link) => (
+                <Link
+                  key={link.id}
+                  href={link.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
+                >
+                  <SocialIcon name={link.icon} className="size-3.5" />
+                  {link.name}
+                </Link>
+              ))}
+              {resume ? (
+                <Link
+                  href={resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
+                >
+                  resume.pdf
+                </Link>
+              ) : null}
+            </span>
+          </Field>
+        </dl>
+
         <p
           dangerouslySetInnerHTML={{ __html: aboutContent }}
-          className="text-foreground/75 font-sans [&_.mark]:font-black [&_a]:underline [&_a]:text-foreground  [&_a]:underline-offset-6! [&_a:hover]:decoration-wavy"
+          className="mt-6 text-xs leading-relaxed text-muted-foreground [&_.mark]:text-foreground [&_a]:text-foreground [&_a]:underline [&_a]:decoration-border [&_a]:underline-offset-4 [&_a:hover]:text-primary [&_a:hover]:decoration-current"
         />
       </div>
-      <div className="relative z-10 flex items-center gap-1 px-6 pb-6">
-        {social.map((link) => {
-          const Icon = SOCIAL_ICONS[link.icon as keyof typeof SOCIAL_ICONS] as
-            | ComponentType<any>
-            | undefined;
-          return (
-            <Link key={link.id} href={link.path} target="_blank">
-              <Button size="icon" variant="ghost">
-                {Icon ? <Icon className="size-4" /> : null}
-              </Button>
-            </Link>
-          );
-        })}
-        {hiring && (
-          <Link href={resumeUrl} target="_blank" className="ml-1">
-            <Button variant="ghost">
-              <ArrowDownToLine />
-              Resume
-            </Button>
-          </Link>
-        )}
-      </div>
-    </div>
+    </section>
   );
 }

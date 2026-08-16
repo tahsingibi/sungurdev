@@ -1,21 +1,24 @@
-import { ProjectRow } from "@/components/custom/project-row";
+import { ProjectGrid } from "@/components/custom/project-grid";
 import { SectionHeader } from "@/components/custom/section-header";
 import settings from "@/lib/settings";
 
 export default function Projects() {
   const { work, pages } = settings;
   const { path, heading, description } = pages.projects;
-  const projects = work.slice(0, 3);
+  // Ana sayfada dördü: ızgara iki sütun olduğu için çift sayı tam satır kapatıyor.
+  const projects = work.slice(0, 4);
 
   return (
-    <section className="relative flex flex-col">
-      <SectionHeader heading={heading} description={description} href={path} />
-
-      <ol className="mx-6 mb-6 overflow-hidden rounded-xl border border-border bg-card/40 shadow-soft">
-        {projects.map((project) => (
-          <ProjectRow key={project.id} project={project} />
-        ))}
-      </ol>
+    <section className="flex flex-col">
+      <SectionHeader
+        heading={heading}
+        description={description}
+        href={path}
+        meta={`${work.length} releases`}
+      />
+      <div className="px-6 pb-8">
+        <ProjectGrid projects={projects} />
+      </div>
     </section>
   );
 }

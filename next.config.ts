@@ -1,7 +1,32 @@
 import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
+/**
+ * Geliştirme sırasında telefondan/başka cihazdan test edebilmek için.
+ *
+ * Next, dev sunucusunun `/_next/*` kaynaklarını tanımadığı origin'lere
+ * güvenlik gereği 403 ile reddediyor. İzin verilmeyen bir adresten
+ * (`sungurdev.local`, LAN IP'si) girildiğinde sayfa açılıyor ama istemci JS'i
+ * inmiyor: React hidrate olmadığı için düğmelerin hiçbiri çalışmıyor, yalnızca
+ * düz bağlantılar iş görüyor. Üretimde böyle bir kısıt yok.
+ *
+ * Ek adresleri ALLOWED_DEV_ORIGINS ile virgülle ayırarak tanımlayabilirsin.
+ */
+const extraDevOrigins = (process.env.ALLOWED_DEV_ORIGINS ?? "")
+  .split(",")
+  .map((value) => value.trim())
+  .filter(Boolean);
+
 const nextConfig: NextConfig = {
+  allowedDevOrigins: [
+    "*.local",
+    "*.localhost",
+    // Yerel ağ adresleri. CIDR değil glob: Next bu alanı ana bilgisayar adı
+    // kalıbı olarak eşliyor, "192.168.0.0/16" hiçbir şeyle eşleşmiyordu.
+    "192.168.*.*",
+    "10.*.*.*",
+    ...extraDevOrigins,
+  ],
   poweredByHeader: false,
   compress: true,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
