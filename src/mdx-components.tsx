@@ -3,13 +3,46 @@ import { ComponentPreview } from "@/components/custom/component-preview";
 import type { MDXComponents } from "mdx/types";
 import { isValidElement, type ReactNode } from "react";
 
-const HEADING_CLASSNAME =
-  "mb-3 mt-10 text-xl font-medium text-foreground first:mt-0 sm:text-2xl";
+/**
+ * Başlık ölçeği.
+ *
+ * Altı seviye de aynı sınıfı kullanıyordu, yani h2 ile h3 birbirinden
+ * ayırt edilemiyordu — uzun bir yazıda okuyucunun nerede olduğunu anlaması
+ * imkânsızdı. Her seviyenin artık kendi ağırlığı var.
+ *
+ * h2 ayrıca solunda amber bir işaret taşıyor: yazının ana bölümleri sayfanın
+ * geri kalanındaki `[ BÖLÜM ]` diliyle aynı sinyali veriyor.
+ */
+/**
+ * Metin bloklarının iç girintisi.
+ *
+ * Yalnızca *okunan* öğelere uygulanıyor: paragraflar, listeler, başlıklar.
+ * Kod blokları ve görseller bu girintiyi almıyor, yani kabın tam genişliğini
+ * kullanıyorlar — sonuç, metnin rahat bir satır uzunluğuna inmesi ve kodun
+ * nefes alması. İkisine aynı genişliği vermek her ikisi için de yanlıştı.
+ */
+const PROSE_INSET = "sm:px-8";
+
+const HEADING_STYLES: Record<1 | 2 | 3 | 4 | 5 | 6, string> = {
+  1: "mt-10 mb-4 text-2xl font-medium tracking-tight text-foreground first:mt-0",
+  /*
+   * Hiyerarşi yalnızca punto ve boşlukla kuruluyor. Bölüm başlıklarının
+   * solundaki amber işaret metnin hizasını bozuyordu: paragraflar bir
+   * hizada, başlıklar işaret kadar içeride kalıyordu.
+   */
+  2: "mt-14 mb-4 text-xl font-medium tracking-tight text-foreground first:mt-0",
+  3: "mt-12 mb-3 text-lg font-medium tracking-tight text-foreground first:mt-0",
+  4: "mt-8 mb-2 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground first:mt-0",
+  5: "mt-6 mb-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground first:mt-0",
+  6: "mt-6 mb-2 text-2xs font-medium uppercase tracking-[0.2em] text-muted-foreground first:mt-0",
+};
 
 function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const Tag = `h${level}` as const;
   return function Heading({ children }: { children?: ReactNode }) {
-    return <Tag className={HEADING_CLASSNAME}>{children}</Tag>;
+    return (
+      <Tag className={`${PROSE_INSET} ${HEADING_STYLES[level]}`}>{children}</Tag>
+    );
   };
 }
 
@@ -37,18 +70,29 @@ const components: MDXComponents = {
   h5: createHeading(5),
   h6: createHeading(6),
   p: ({ children }) => (
-    <p className="my-5 whitespace-pre-wrap first:mt-0 last:mb-0">{children}</p>
+    <p className={`${PROSE_INSET} my-6 whitespace-pre-wrap first:mt-0 last:mb-0`}>
+      {children}
+    </p>
   ),
   ul: ({ children }) => (
-    <ul className="my-5 list-disc space-y-2 pl-6 marker:text-muted-foreground">
+    <ul
+      className={`${PROSE_INSET} my-6 list-disc space-y-2.5 pl-10 marker:text-muted-foreground`}
+    >
       {children}
     </ul>
+  ),
+  ol: ({ children }) => (
+    <ol
+      className={`${PROSE_INSET} my-6 list-decimal space-y-2.5 pl-10 marker:text-muted-foreground`}
+    >
+      {children}
+    </ol>
   ),
   strong: ({ children }) => (
     <strong className="font-semibold text-foreground">{children}</strong>
   ),
   code: ({ children }) => (
-    <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+    <code className="border border-border bg-muted/60 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground">
       {children}
     </code>
   ),
@@ -57,7 +101,7 @@ const components: MDXComponents = {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-foreground underline underline-offset-4 hover:decoration-wavy"
+      className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
     >
       {children}
     </a>

@@ -79,6 +79,10 @@ export interface Settings {
   resume: string;
   url: string;
   about: string;
+  /** Altbilgide ve OG kartında görünen tek satırlık tanım. */
+  tagline: string;
+  /** Şehir/ülke — künyede ve OG kartında kullanılıyor. */
+  location: string;
   currentCompany?: string;
   image: string;
   nav: NavigationItem[];
