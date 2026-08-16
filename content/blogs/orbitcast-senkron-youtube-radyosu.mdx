@@ -1,0 +1,131 @@
+export const metadata = {
+  title: `OrbitCast - sunucusu tek bayt ses göndermeyen senkron radyo`,
+  publishDate: "2026-08-16",
+  description: `Herkesin aynı anda aynı şarkının aynı saniyesini dinlediği bir internet radyosu. Veritabanında "şu an ne çalıyor" diye bir kayıt yok, WebSocket yok, bant genişliği faturası yok — tek bir modulo işlemi var.`,
+  category: "Project",
+};
+
+Bir internet radyosu kurmak istedim. Şart basitti: siteyi kim açarsa açsın **aynı şarkının aynı saniyesini** duysun. İleri sarma yok, atlama yok, baştan başlatma yok — gerçek bir radyo gibi.
+
+Klasik çözüm bellidir: sunucuda bir ses akışı (Icecast, HLS) başlatırsın, herkes ona bağlanır. Ama o an iki fatura doğuyor: **bant genişliği** ve **telif**. 100 dinleyici 128 kbps'den saatte 5.7 GB eder ve çaldığın müziğin hakları sana ait değildir.
+
+[OrbitCast](https://github.com/tahsingibi/orbitcast) bu iki faturayı da ödemiyor. Ses hiç sunucudan geçmiyor.
+
+### Fikir: durum tutma, hesapla
+
+Senkronizasyonun tamamı tek satır:
+
+```ts
+elapsed = (now - epoch) mod toplamSüre
+```
+
+`epoch` yayının kavramsal başlangıcı, `toplamSüre` playlist'in toplam uzunluğu. `elapsed` değerini parça sürelerinde yürütünce "hangi parça, kaçıncı saniye" sorusunun cevabı çıkıyor.
+
+Girdiler herkeste aynı olduğu için **cevap da herkeste aynı**. Yani hiçbir yerde "şu an X çalıyor" diye bir kayıt tutmuyorum; her istemci kendisi hesaplıyor.
+
+Bunun güzel yan etkileri var:
+
+- **Sonsuz döngü bedava geliyor.** Modulo zaten başa sarıyor, "liste bitti" diye bir durum yok.
+- **WebSocket gerekmiyor.** Herkese sürekli "şimdi buradayız" demek gerekmiyor, çünkü herkes zaten biliyor.
+- **Ölçeklenme sorunu yok.** 10 dinleyici de 10.000 dinleyici de aynı hesabı kendi tarayıcısında yapıyor.
+
+Sunucunun tek işi doğru zamanı ve playlist'i söylemek.
+
+### Ses nereden geliyor?
+
+Resmî **YouTube IFrame Player API**'sinden. Oynatıcı kapağın arkasına gizleniyor, kontrolleri kapalı; dinleyici sadece oynat/duraklat ve ses seviyesini görüyor.
+
+Bu tercihin iki sonucu var:
+
+- Ses YouTube'un CDN'inden doğrudan dinleyiciye gidiyor. **Benim sunucumdan tek bayt ses geçmiyor**, dolayısıyla dinleyici sayısı arttıkça fatura büyümüyor.
+- Oynatma YouTube'un kendi oynatıcısında, onun şartları ve reklamlarıyla gerçekleşiyor. Hak sahipleri ödemesini alıyor.
+
+Sesi indirip kendi sunucumdan yayınlamak teknik olarak mümkün ama projeyi özel kılan şeyi de, hukuki zeminini de yok ediyor. O yüzden hiç o tarafa gitmedim.
+
+### İstemci saatine güvenilmez
+
+`now` değerini `Date.now()` ile alsam biterdi — ama kullanıcının saati 3 dakika ileri olabilir. O yüzden zaman referansı sunucudan geliyor:
+
+- Sayfa, sunucunun zaman damgasıyla birlikte geliyor; ilk çapa bu.
+- `/api/now` üç kez örnekleniyor, **gidiş-dönüşü en kısa** olan kazanıyor ve yarısı telafi ediliyor.
+- İlerleme `performance.now()` ile sürüyor. Monotonik olduğu için kullanıcı sistem saatini değiştirse bile bozulmuyor.
+- 5 dakikada bir ve sekmeye her dönüşte yeniden hizalanıyor.
+
+Sonra 500 ms'de bir oynatıcının konumu hesaplanan konumla karşılaştırılıyor; 2 saniyeyi aşan sapmada `seekTo` ile düzeltiliyor.
+
+### Reklamı fark etmek
+
+IFrame API'de reklam diye bir kavram yok: `onAdStart` yok, durum bilgisi reklam sırasında da `PLAYING` diyor.
+
+Ama bir sızıntı var — **reklam çalarken `getDuration()` parçanın değil, reklamın süresini bildiriyor.** Kayıtlı süreyle 5 saniyeden fazla ayrışıyorsa araya reklam girmiş demektir.
+
+Kendi istasyonumdaki 10 parçada kayıtlı süre ile oynatıcının bildirdiği süreyi karşılaştırdım: **10/10 birebir aynı**. Yani 5 saniyelik tolerans yanlış alarm vermiyor.
+
+Reklamı engellemiyorum — engelleyemem de, engellememeliyim de; hak sahiplerine ödeme onunla yapılıyor. Sadece iki şey yapıyorum: dinleyiciye "reklam, bitince yayına döneceksin" diyorum ve reklam boyunca boşuna sapma düzeltmesi yapmayı bırakıyorum. Reklam bitince tek hamlede canlıya dönülüyor.
+
+### Playlist nerede duruyor?
+
+Üç seçenek var, kurulum sihirbazı hangisini istediğini soruyor:
+
+- **YouTube playlist** — en kolayı. Listeyi YouTube'da düzenliyorsun, yayın beş dakika içinde uyuyor. Panel de veritabanı da gerekmiyor.
+- **Upstash Redis** — panelden yönetiyorsun, şarkı eklemek için deploy almıyorsun.
+- **`data/playlist.json`** — liste repoda duruyor.
+
+Ayrıca kaynağı çalışma anında panelden değiştirebiliyorsun; seçim playlist ile birlikte saklandığı için yeniden deploy gerekmiyor.
+
+YouTube kaynağında hoş bir detay çıktı: playlist sayfası zaten her parçanın başlığını, sanatçısını, süresini ve kapağını taşıyor. Yani **tüm liste tek bir HTTP isteğiyle** çözülüyor — parça başına sorgu yok, API anahtarı bile şart değil.
+
+### Yerel mp3'ler
+
+Kayıtlar senin ise YouTube gömmek yerine dosyaları doğrudan yayınlayabiliyorsun. Süre burada kritik, çünkü senkronun tamamı ona dayanıyor.
+
+Bunun için bağımlılıksız bir MP3 çözümleyici yazdım: ID3 etiketlerinden başlık, sanatçı ve gömülü kapak; Xing/LAME başlığından da süre. Kodlayıcının başa ve sona eklediği sessizliği (delay/padding) düşmezsem süre ~40 ms uzun çıkıyor ve saniyeye yuvarlarken bir tam saniye kayabiliyor. Düşünce **0 ms sapma** ile ölçüyor.
+
+Yerel dosyalar ayrı bir "mod" değil; `kind: "audio"` taşıyan parçalar. YouTube parçalarıyla aynı listede durabiliyorlar, oynatıcı parça başına motor değiştiriyor.
+
+Tek uyarı: yerel dosyalarda ses senin sunucundan gidiyor. Yani bant genişliği faturası da lisans sorumluluğu da sana geçiyor.
+
+### Kaç kişi dinliyor?
+
+Bunu ucuza yapmak sandığımdan zor. Upstash'in ücretsiz katmanı ayda 500.000 komut ve bu bütçeyi istasyon okumalarıyla paylaşıyorum. Dinleyici başına saniyelik kalp atışı göndermek bütçeyi tek başına bitiriyor.
+
+Çözüm HyperLogLog oldu — kaç dinleyici olursa olsun sabit ~12 KB yer kaplıyor. Üstüne iki karar:
+
+- Kalp atışı **5 dakikada bir**.
+- Yalnızca **ses gerçekten çalarken** gönderiliyor. Sayfayı açıp play'e basmayan ziyaretçi hiç komut harcamıyor. Hem daha ucuz hem daha doğru: "dinleyici" zaten dinleyen kişi demek.
+
+Atış başına 2 komut. Bedeli, sayının 5 dakikaya kadar gecikmeli olması — bir radyo için kabul edilebilir.
+
+### Paylaşım
+
+X'te paylaşınca her parça kendi kartını gösteriyor. Bunun için `/p/[videoId]` diye ayrı adresler var; çünkü X, OpenGraph görsellerini adres başına önbelleğe alıyor. Tek adres kullansaydım ilk taranan parçanın kartı bütün paylaşımlarda donup kalırdı.
+
+Instagram tamamen başka çalışıyor: story'ye bağlantı değil **görsel** gidiyor ve web'de "story'ye gönder" diye bir arayüz yok. Yapılabilecek en iyi şey 1080x1920 bir kart üretip cihazın kendi paylaşım sayfasına dosya olarak vermek. Kullanıcı oradan Instagram'ı seçiyor.
+
+### Maliyet
+
+Vercel Hobby + Upstash ücretsiz katman = **0 ₺**.
+
+Ses YouTube'un CDN'inden aktığı için dinleyici sayısı arttıkça bant genişliği faturası oluşmuyor. İzlenmesi gereken tek şey Upstash komut bütçesi; o da istasyon önbelleğini 60 saniyeye çekince rahatlıyor.
+
+### Neyi çözemedim
+
+- **Mobilde arka plan.** Tarayıcıyı arka plana alınca müzik duruyor. Gömülü YouTube oynatıcıları arka plan oynatmayı tasarım gereği engelliyor (Premium özelliği) ve PWA dahil hiçbir web tekniği bunu değiştirmiyor.
+- **Reklam kaybı.** Reklam izleyen dinleyici geride kalıyor; sonra canlıya çekiliyor ama parçanın bir kısmını kaçırıyor.
+- **Karıştırma yok.** Herkesin aynı anda aynı parçada olması gerektiği için sıra sabit.
+
+### Kurulum
+
+```bash
+git clone https://github.com/tahsingibi/orbitcast.git my-radio
+cd my-radio
+npm install
+npm run radio:setup
+npm run dev
+```
+
+Kurulum sihirbazı istasyon adını soruyor, playlist'in nereden okunacağını seçtiriyor, `.env.local` dosyasını yazıyor ve ilk listeyi dolduruyor.
+
+Repo boş bir playlist ile geliyor — silmen gereken örnek içerik yok. MIT lisanslı, iki dilli (Türkçe/İngilizce) ve tek zorunlu adım künyeyi kendinle değiştirmek.
+
+Kaynak kod: [github.com/tahsingibi/orbitcast](https://github.com/tahsingibi/orbitcast)
