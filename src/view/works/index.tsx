@@ -1,3 +1,5 @@
+import { ExperienceTimeline } from "@/components/custom/experience-timeline";
+import { Panel } from "@/components/custom/panel";
 import { ProjectGrid } from "@/components/custom/project-grid";
 import { SectionHeader } from "@/components/custom/section-header";
 import settings from "@/lib/settings";
@@ -20,6 +22,11 @@ export default function WorksView() {
   const { experience, pages } = settings;
   const { heading, description } = pages.works;
 
+  const shipped = experience.reduce(
+    (sum, item) => sum + item.projects.length,
+    0,
+  );
+
   return (
     <div className="flex flex-col">
       <SectionHeader
@@ -29,6 +36,24 @@ export default function WorksView() {
         meta={`${experience.length} roles`}
         bordered
       />
+
+      {/*
+        Ana sayfadaki zaman çizelgesinin aynısı, burada içindekiler olarak
+        çalışıyor: satırlar aşağıdaki bölümlerin çapalarına gidiyor, yani
+        sayfanın haritası hem şeklini gösteriyor hem gezinmeyi sağlıyor.
+      */}
+      <div className="border-b border-border px-6 py-8">
+        <Panel
+          label="timeline"
+          action={
+            <span className="tnum text-2xs text-muted-foreground">
+              {String(shipped).padStart(2, "0")} shipped
+            </span>
+          }
+        >
+          <ExperienceTimeline items={experience} />
+        </Panel>
+      </div>
 
       {experience.map((item, experienceIndex) => {
         const anchor = item.path.split("#")[1] || `experience-${item.id}`;
