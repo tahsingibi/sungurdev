@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Cloudflare derleme çıktısı. `.gitignore`da vardı ama burada yoktu:
+    // `opennextjs-cloudflare build` yerelde çalıştırıldığında eslint paketlenmiş
+    // kodu tarayıp yüzlerce anlamsız hata üretiyordu.
+    ".open-next/**",
   ]),
 ]);
 
