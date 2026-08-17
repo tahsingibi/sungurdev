@@ -30,8 +30,13 @@ const HEADING_STYLES: Record<1 | 2 | 3 | 4 | 5 | 6, string> = {
    * solundaki amber işaret metnin hizasını bozuyordu: paragraflar bir
    * hizada, başlıklar işaret kadar içeride kalıyordu.
    */
-  2: "mt-14 mb-4 text-xl font-medium tracking-tight text-foreground first:mt-0",
-  3: "mt-12 mb-3 text-lg font-medium tracking-tight text-foreground first:mt-0",
+  /*
+   * Gövde 18px'e çıkınca h2/h3 ona fazla yaklaştı ve başlıklar başlık gibi
+   * okunmaz oldu. Hiyerarşi yalnızca puntoyla kurulduğu için (amber işaret
+   * kaldırıldı) aradaki farkın belirgin olması gerekiyor: 26 / 22 / 18.
+   */
+  2: "mt-14 mb-4 text-2xl font-medium tracking-tight text-foreground first:mt-0",
+  3: "mt-12 mb-3 text-xl font-medium tracking-tight text-foreground first:mt-0",
   4: "mt-8 mb-2 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground first:mt-0",
   5: "mt-6 mb-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground first:mt-0",
   6: "mt-6 mb-2 text-2xs font-medium uppercase tracking-[0.2em] text-muted-foreground first:mt-0",
