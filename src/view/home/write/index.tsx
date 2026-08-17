@@ -1,7 +1,6 @@
 import { Panel } from "@/components/custom/panel";
 import { PostCard } from "@/components/custom/post-card";
 import { PostIndex } from "@/components/custom/post-index";
-import { SectionHeader } from "@/components/custom/section-header";
 import { getPosts } from "@/lib/posts";
 import settings from "@/lib/settings";
 import Link from "next/link";
@@ -23,13 +22,6 @@ export default async function Write() {
 
   return (
     <section className="relative flex flex-col">
-      <SectionHeader
-        heading={heading}
-        description={description}
-        href={path}
-        meta={`${allPosts.length} posts`}
-      />
-
       {posts.length ? (
         <div className="flex flex-col gap-4 px-6 pb-8">
           <Panel

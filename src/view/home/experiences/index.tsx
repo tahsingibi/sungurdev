@@ -1,6 +1,5 @@
 import { ExperienceTimeline } from "@/components/custom/experience-timeline";
 import { Panel } from "@/components/custom/panel";
-import { SectionHeader } from "@/components/custom/section-header";
 import settings from "@/lib/settings";
 
 /**
@@ -21,13 +20,6 @@ export default function Experiences() {
 
   return (
     <section className="flex flex-col">
-      <SectionHeader
-        heading={heading}
-        description={description}
-        href={path}
-        meta={`${experience.length} roles`}
-      />
-
       <div className="px-6 pb-8">
         <Panel
           label="timeline"

@@ -1,7 +1,6 @@
 import { Panel } from "@/components/custom/panel";
 import { ProjectGrid } from "@/components/custom/project-grid";
 import { ProjectIndex } from "@/components/custom/project-index";
-import { SectionHeader } from "@/components/custom/section-header";
 import settings from "@/lib/settings";
 import Link from "next/link";
 
@@ -19,13 +18,6 @@ export default function Projects() {
 
   return (
     <section className="flex flex-col">
-      <SectionHeader
-        heading={heading}
-        description={description}
-        href={path}
-        meta={`${work.length} releases`}
-      />
-
       <div className="flex flex-col gap-4 px-6 pb-8">
         <Panel
           label="index"

@@ -14,13 +14,11 @@ export default function HomepageView() {
       <div className="border-t border-border">
         <Arsenal />
       </div>
-      <div className="border-t border-border">
-        <Experiences />
-      </div>
-      <div className="border-t border-border">
+      <Experiences />
+      <div className="border-t border-border pt-6">
         <Write />
       </div>
-      <div className="border-t border-border">
+      <div className="border-t border-border pt-6">
         <Projects />
       </div>
     </main>

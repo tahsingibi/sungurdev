@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Logo({ className = "", href = "/", ...props }) {
   return (
     <Link
-      href="/"
+      href={href}
       className={cn("font-pixel font-medium antialiased", className)}
       {...props}
     >
