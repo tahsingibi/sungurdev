@@ -7,6 +7,7 @@ import {
 } from "@/components/custom/icons";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toLanguage } from "@/lib/highlighter-langs";
 import { Check, Copy, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -17,7 +18,6 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { codeToHtml, type BundledLanguage } from "shiki/bundle/full";
 
 interface CodeBlockProps {
   code: string;
@@ -174,27 +174,8 @@ function CopyCodeButton({ value }: { value: string }) {
   );
 }
 
-const SHIKI_LANGUAGE_ALIASES: Record<string, BundledLanguage> = {
-  javascript: "javascript",
-  jsx: "jsx",
-  typescript: "typescript",
-  tsx: "tsx",
-  bash: "bash",
-  shell: "shell",
-  bat: "bat",
-  powershell: "powershell",
-  html: "html",
-  css: "css",
-  json: "json",
-};
-
-function toShikiLanguage(language?: string): BundledLanguage | null {
-  if (!language) return null;
-  return SHIKI_LANGUAGE_ALIASES[language.toLowerCase()] ?? null;
-}
-
 function useHighlightedCode(code: string, language?: string) {
-  const lang = toShikiLanguage(language);
+  const lang = toLanguage(language);
   const highlightKey = lang ? `${lang}:${code}` : null;
   const [highlight, setHighlight] = useState<{
     key: string;
@@ -205,14 +186,20 @@ function useHighlightedCode(code: string, language?: string) {
     if (!lang || !highlightKey) return;
 
     let cancelled = false;
-    codeToHtml(code, {
-      lang,
-      themes: { light: "github-light", dark: "github-dark" },
-      defaultColor: false,
-      structure: "inline",
-    }).then((html) => {
-      if (!cancelled) setHighlight({ key: highlightKey, html });
-    });
+
+    /*
+     * Dinamik import: vurgulayıcı yalnızca tarayıcıda, gerçekten bir kod
+     * bloğu göründüğünde iniyor. Statik import edilseydi hem sunucu paketine
+     * girerdi (orada hiç çalışmayacak kod) hem de ilk sayfa yüküne binerdi.
+     */
+    import("@/lib/highlighter")
+      .then(({ highlight }) => highlight(code, lang))
+      .then((html) => {
+        if (!cancelled) setHighlight({ key: highlightKey, html });
+      })
+      .catch(() => {
+        // Vurgulama başarısızsa kod düz metin olarak kalır; blok yine okunur.
+      });
 
     return () => {
       cancelled = true;
