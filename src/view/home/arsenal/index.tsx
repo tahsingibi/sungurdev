@@ -1,5 +1,5 @@
-import { DotList, Panel, PanelField } from "@/components/custom/panel";
 import type { Activity } from "@/components/contribution-graph";
+import { Panel } from "@/components/custom/panel";
 import { getCachedContributions } from "@/lib/get-cached-contributions";
 import settings from "@/lib/settings";
 import Link from "next/link";
@@ -53,17 +53,25 @@ export default async function Arsenal() {
   return (
     <section className="grid gap-4 px-6 py-8 md:grid-cols-2">
       <Panel label="arsenal">
-        <dl className="flex flex-col gap-2">
+        <dl className="flex flex-col gap-3.5">
           {stack.map((category) => (
-            <PanelField key={category.id} label={category.label}>
-              <DotList items={category.items} />
-            </PanelField>
+            <div key={category.id}>
+              <dt className="text-2xs uppercase tracking-[0.2em] text-muted-foreground">
+                {category.label}
+              </dt>
+              <dd className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-2xs leading-relaxed">
+                {category.items.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </dd>
+            </div>
           ))}
         </dl>
       </Panel>
 
       <Panel
         label="activity"
+        className="max-sm:order-first"
         action={
           <Link
             href={GITHUB_PROFILE_URL}
@@ -92,10 +100,10 @@ export default async function Arsenal() {
           {sparkline.length ? (
             <div
               aria-hidden
-              // Sabit yükseklik yerine kalan alanı doldurur: arsenal paneli
-              // uzun olduğu için sparkline dipte ezik bir şerit gibi kalıyor
-              // ve üstünde büyük bir boşluk oluşuyordu.
-              className="mt-6 flex min-h-24 flex-1 items-end gap-[2px]"
+              // Sabit yükseklik: kalan alanı doldurmasına izin verilince
+              // arsenal ne kadar uzunsa grafik de o kadar uzuyordu. Yılın
+              // ritmi okunsun diye bu kadarı yeterli.
+              className="mt-6 flex h-20 sm:h-60 sm:mt-auto items-end gap-0.5"
             >
               {sparkline.map((value, index) => (
                 <span
