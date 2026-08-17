@@ -8,8 +8,9 @@ export default function HomepageView() {
   return (
     <main className="flex flex-col">
       <Hero />
-      {/* Arsenal + Activity tek bantta yan yana; sayfadaki tek iki sütunlu
-          alan burası ve bu, akışa ritim veriyor. */}
+      {/* Panel bantları: her bölüm çerçeveli kutulardan kuruluyor ama düzenleri
+          farklı (yan yana ikili, tam genişlik tek panel, şerit + üçlü ızgara)
+          — hepsi aynı ızgarada olsaydı sayfa tek bir tablo gibi düzleşirdi. */}
       <div className="border-t border-border">
         <Arsenal />
       </div>
