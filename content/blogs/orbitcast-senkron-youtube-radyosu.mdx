@@ -1,5 +1,5 @@
 export const metadata = {
-  title: `OrbitCast: ses yayınlamayan senkron radyo`,
+  title: `OrbitCast: sunucusuz senkron radyo`,
   publishDate: "2026-08-16",
   description: `Herkesin aynı anda aynı şarkının aynı saniyesini dinlediği bir internet radyosu. Veritabanında "şu an ne çalıyor" diye bir kayıt yok, WebSocket yok, bant genişliği faturası yok — tek bir modulo işlemi var.`,
   category: "Project",
@@ -9,7 +9,7 @@ Bir internet radyosu kurmak istedim. Şart basitti: siteyi kim açarsa açsın *
 
 Klasik çözüm bellidir: sunucuda bir ses akışı (Icecast, HLS) başlatırsın, herkes ona bağlanır. Ama o an iki fatura doğuyor: **bant genişliği** ve **telif**. 100 dinleyici 128 kbps'den saatte 5.7 GB eder ve çaldığın müziğin hakları sana ait değildir.
 
-[OrbitCast](https://github.com/tahsingibi/orbitcast) bu iki faturayı da ödemiyor. Ses hiç sunucudan geçmiyor.
+[OrbitCast](https://github.com/tahsingibi/orbitcast) ikisini de ödemiyor. Uygulama sunucusundan tek bayt ses geçmiyor — ses ya YouTube'un CDN'inden ya da bir nesne deposundan doğrudan dinleyiciye gidiyor.
 
 ### Fikir: durum tutma, hesapla
 
@@ -40,7 +40,7 @@ Bu tercihin iki sonucu var:
 - Ses YouTube'un CDN'inden doğrudan dinleyiciye gidiyor. **Benim sunucumdan tek bayt ses geçmiyor**, dolayısıyla dinleyici sayısı arttıkça fatura büyümüyor.
 - Oynatma YouTube'un kendi oynatıcısında, onun şartları ve reklamlarıyla gerçekleşiyor. Hak sahipleri ödemesini alıyor.
 
-Sesi indirip kendi sunucumdan yayınlamak teknik olarak mümkün ama projeyi özel kılan şeyi de, hukuki zeminini de yok ediyor. O yüzden hiç o tarafa gitmedim.
+Uzun süre bu tek seçenekti. Sonra kendi kayıtlarını yayınlamak isteyenler için ikinci bir yol ekledim — aşağıda anlatıyorum. Ekledikten sonra fark ettim ki asıl mesele "sesi kim barındırıyor" değil, **uygulama sunucusunun yolun üstünde olup olmadığı**. İkisinde de değil.
 
 ### İstemci saatine güvenilmez
 
@@ -83,7 +83,11 @@ Bunun için bağımlılıksız bir MP3 çözümleyici yazdım: ID3 etiketlerinde
 
 Yerel dosyalar ayrı bir "mod" değil; `kind: "audio"` taşıyan parçalar. YouTube parçalarıyla aynı listede durabiliyorlar, oynatıcı parça başına motor değiştiriyor.
 
-Tek uyarı: yerel dosyalarda ses senin sunucundan gidiyor. Yani bant genişliği faturası da lisans sorumluluğu da sana geçiyor.
+Dosyalar repoda durabilir ama asıl kurulum **Cloudflare R2**: 10 GB ücretsiz ve — önemli olan bu — **egress ücreti yok**. Ses ağır bir yük, 128 kbps'de saatte ~57 MB; çoğu barındırıcıda fatura tam olarak bu kalemden çıkıyor. R2'de o kalem mevcut değil, yani dinleyici sayısı arttıkça yine bir şey ödemiyorsun. Yükleme imzalı S3 ucundan gidiyor, oynatma public bir custom domain'den; hotlink'i tek bir WAF kuralı kesiyor.
+
+Kapaklar da depoya kopyalanıyor. Eşleştiği YouTube kaydının görselini *göstermek* yeterli görünüyordu ama sesi kendi deponda olan bir yayının kapak için YouTube'a bağımlı kalması tuhaf — video silinince kapak da gidiyor.
+
+Bu yolda lisans sorumluluğu sana geçiyor: dosyaları sen barındırıyor, sen dağıtıyorsun.
 
 ### Kaç kişi dinliyor?
 
@@ -110,9 +114,9 @@ Ses YouTube'un CDN'inden aktığı için dinleyici sayısı arttıkça bant geni
 
 ### Neyi çözemedim
 
-- **Mobilde arka plan.** Tarayıcıyı arka plana alınca müzik duruyor. Gömülü YouTube oynatıcıları arka plan oynatmayı tasarım gereği engelliyor (Premium özelliği) ve PWA dahil hiçbir web tekniği bunu değiştirmiyor.
+- **Mobilde arka plan — YouTube parçalarında.** Gömülü YouTube oynatıcıları arka plan oynatmayı tasarım gereği engelliyor (Premium özelliği) ve PWA dahil hiçbir web tekniği bunu değiştirmiyor. Kendi dosyalarında sorun yok: ses `<audio>` üzerinden çalıyor ve MediaSession API ile kendini işletim sistemine tanıtıyor, yani kilit ekranında kapak, şarkı adı ve çalışan bir oynat düğmesi çıkıyor. Arka plan senin için önemliyse listeyi tamamen kendi dosyalarından kurmak gerekiyor.
 - **Reklam kaybı.** Reklam izleyen dinleyici geride kalıyor; sonra canlıya çekiliyor ama parçanın bir kısmını kaçırıyor.
-- **Karıştırma yok.** Herkesin aynı anda aynı parçada olması gerektiği için sıra sabit.
+- **Dinleyiciye özel karıştırma yok.** Herkesin aynı anda aynı parçada olması gerektiği için sıra herkes için ortak. Listeyi panelden karıştırabiliyorum — aynı sanatçıyı arka arkaya koymamaya çalışan bir sıralama — ama bu yayının tamamını değiştiriyor, kişiye özel olmuyor.
 
 ### Kurulum
 
