@@ -6,7 +6,6 @@ import {
   type PackageManagerIconName,
 } from "@/components/custom/icons";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { toLanguage } from "@/lib/highlighter-langs";
 import { Check, Copy, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -232,35 +231,50 @@ function CodeContent({
    */
   const maxViewportHeight = 384;
 
+  /*
+   * Kaydırma yerel, Radix'in kaydırma alanı değil.
+   *
+   * Eski kurulumda tavan yükseklik `overflow-hidden` olan kökteydi: uzun
+   * bloklar kaydırılmıyor, 384 pikselden sonrası *kesiliyordu*. Yatay taraf
+   * ayrıca `!overflow-x-hidden` ile kapatılmıştı ve Radix yalnızca dikey
+   * çubuğu basıyordu — yani taşan koda ulaşmanın hiçbir yolu yoktu.
+   *
+   * Radix kendi çubuklarını `type="auto"` ile de basmadı (yerel çubukları
+   * gizlediği için ortada hiçbir gösterge kalmıyordu), o yüzden bu blok düz
+   * bir kaydırma kabına indi: çubuklar tarayıcının kendisinden geliyor,
+   * `scroll-thin` ile inceltilip arayüzün rengine boyanıyor.
+   */
   return (
-    <ScrollArea
-      className="overflow-hidden"
-      viewportClassName="!overflow-x-hidden"
-      style={{ maxHeight: maxViewportHeight }}
-    >
+    <div className="scroll-thin" style={{ maxHeight: maxViewportHeight }}>
       <pre
+        /*
+         * `w-max min-w-full` + `whitespace-pre`: satırlar sarmıyor, blok
+         * yatayda kayıyor. Sarma girintiyi bozuyor ve uzun bir ifadeyi
+         * kelime ortasından ikiye bölüyordu; üstelik yatay kaydırma ayrıca
+         * kapatıldığı için taşan koda ulaşmak mümkün değildi.
+         */
         className={
           compact
-            ? "m-0 w-full min-w-0 whitespace-pre-wrap wrap-break-word p-3 font-mono text-xs leading-6 text-foreground/85"
-            : "m-0 w-full min-w-0 whitespace-pre-wrap wrap-break-word p-4 pr-12 font-mono text-xs leading-6 text-foreground/85 sm:pr-14"
+            ? "m-0 w-max min-w-full whitespace-pre p-3 font-mono text-xs leading-6 text-foreground/85"
+            : "m-0 w-max min-w-full whitespace-pre p-4 pr-12 font-mono text-xs leading-6 text-foreground/85 sm:pr-14"
         }
       >
         {highlighted ? (
           <code
             data-language={language || "text"}
-            className="block min-w-0 whitespace-pre-wrap break-words font-mono [overflow-wrap:anywhere] [&_span]:whitespace-pre-wrap [&_span]:break-words [&_span]:text-(--shiki-light) [&_span]:[overflow-wrap:anywhere] dark:[&_span]:text-(--shiki-dark)"
+            className="block font-mono [&_span]:text-(--shiki-light) dark:[&_span]:text-(--shiki-dark)"
             dangerouslySetInnerHTML={{ __html: highlighted }}
           />
         ) : (
           <code
             data-language={language || "text"}
-            className="block min-w-0 whitespace-pre-wrap break-words font-mono [overflow-wrap:anywhere]"
+            className="block font-mono"
           >
             {code}
           </code>
         )}
       </pre>
-    </ScrollArea>
+    </div>
   );
 }
 

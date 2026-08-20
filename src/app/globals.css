@@ -77,6 +77,15 @@
     rotate: -360deg;
     }
   }
+  --animate-ticker: ticker var(--tw-animation-duration, var(--tw-duration, 30s)) linear infinite;
+  /* Kayma miktarı tam bir kopya kadar: `--ticker-shift` şeritteki kopya
+     sayısından geliyor (2 kopya → -50%, 3 kopya → -33.33%). Döngü kopya
+     sınırında kapandığı için dikiş görünmüyor. */
+  @keyframes ticker {
+  to {
+    translate: var(--ticker-shift, -50%) 0;
+    }
+  }
 }
 
 :root {
@@ -290,7 +299,7 @@
   }
   html {
     /* 100vw in divider-screen ignores the scrollbar gutter, so it overshoots the viewport by its width; clip it here instead of dropping the technique. */
-    @apply font-sans overflow-x-hidden;
+    @apply font-sans overflow-x-hidden scroll-smooth;
     /* Reserves the scrollbar's width permanently so Radix's scroll-lock (which hides the scrollbar while a dropdown/dialog is open) doesn't reflow the layout. */
     scrollbar-gutter: stable;
   }
@@ -427,3 +436,72 @@ body::after {
 }
 
 .tnum { font-variant-numeric: tabular-nums; }
+
+/* ===========================================================================
+ * TICKER — sonsuz kayan şerit (bkz. components/custom/ticker)
+ * =========================================================================== */
+
+/* Kenarlarda sert kesim yerine erime: içerik kolonun kenarına çarpmıyor. */
+.ticker-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 2rem,
+    #000 calc(100% - 2rem),
+    transparent
+  );
+}
+
+/* Üstüne gelince duruyor — okumak isteyen okuyabilsin. */
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/*
+ * Hareket kapalıysa şerit statik bir listeye dönüşüyor: klonlar gizleniyor,
+ * tek kopya normal şekilde satır satır sarıyor.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .ticker-track > [data-ticker-clone] {
+    display: none;
+  }
+}
+
+/* ===========================================================================
+ * İNCE KAYDIRMA ÇUBUĞU
+ *
+ * Kendi kabında yatay kayan içerikler için (yazı içindeki tablolar): çubuk
+ * arayüzün geri kalanı gibi köşesiz ve tek renk, tarayıcı varsayılanı gibi
+ * kabarık değil.
+ * =========================================================================== */
+
+@utility scroll-thin {
+  overflow: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--border);
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: var(--muted-foreground);
+  }
+}
