@@ -1,7 +1,7 @@
 import { ExperienceTimeline } from "@/components/custom/experience-timeline";
+import { PageHeader } from "@/components/custom/page-header";
 import { Panel } from "@/components/custom/panel";
 import { ProjectGrid } from "@/components/custom/project-grid";
-import { SectionHeader } from "@/components/custom/section-header";
 import settings from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -20,7 +20,7 @@ import Link from "next/link";
  */
 export default function WorksView() {
   const { experience, pages } = settings;
-  const { heading, description } = pages.works;
+  const { heading, description, path } = pages.works;
 
   const shipped = experience.reduce(
     (sum, item) => sum + item.projects.length,
@@ -29,12 +29,11 @@ export default function WorksView() {
 
   return (
     <div className="flex flex-col">
-      <SectionHeader
+      <PageHeader
+        path={path}
         heading={heading}
         description={description}
-        level="h1"
-        meta={`${experience.length} roles`}
-        bordered
+        meta={`${String(experience.length).padStart(2, "0")} roles`}
       />
 
       {/*
@@ -108,7 +107,7 @@ export default function WorksView() {
             */}
             <div
               dangerouslySetInnerHTML={{ __html: item.description }}
-              className="mt-6 max-w-2xl font-sans text-sm leading-relaxed text-muted-foreground [&_.mark]:text-foreground [&_a:hover]:text-primary [&_a]:text-foreground [&_a]:underline [&_a]:decoration-border [&_a]:underline-offset-4 [&_li+li]:mt-1.5 [&_li]:pl-1 [&_p+p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5"
+              className="mt-6 max-w-2xl font-sans text-sm leading-relaxed text-muted-foreground [&_.mark]:text-foreground [&_a:hover]:text-primary [&_a]:text-foreground [&_a]:underline [&_a]:decoration-border [&_a]:underline-offset-4 [&_li+li]:mt-1.5 [&_li]:pl-1 [&_p+p]:mt-3 [&_ul]:mt-3 [&_ul]:list-[square] [&_ul]:marker:text-primary/60 [&_ul]:pl-5"
             />
 
             {item.projects.length > 0 ? (

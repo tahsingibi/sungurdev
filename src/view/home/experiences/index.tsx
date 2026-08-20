@@ -10,8 +10,7 @@ import settings from "@/lib/settings";
  * hem okunacak kaydı hem kariyerin şeklini gösteriyor.
  */
 export default function Experiences() {
-  const { experience, pages } = settings;
-  const { path, heading, description } = pages.works;
+  const { experience } = settings;
 
   const shipped = experience.reduce(
     (sum, item) => sum + item.projects.length,
