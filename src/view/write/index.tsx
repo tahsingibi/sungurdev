@@ -1,7 +1,7 @@
+import { PageHeader } from "@/components/custom/page-header";
 import { Panel } from "@/components/custom/panel";
 import { PostCard } from "@/components/custom/post-card";
 import { PostIndex } from "@/components/custom/post-index";
-import { SectionHeader } from "@/components/custom/section-header";
 import { getPosts } from "@/lib/posts";
 import settings from "@/lib/settings";
 import { Rss } from "lucide-react";
@@ -17,15 +17,16 @@ import Link from "next/link";
  */
 export default async function WriteView() {
   const posts = await getPosts();
-  const { heading, description, error } = settings.pages.write;
+  const { heading, description, error, path } = settings.pages.write;
 
   return (
     <div className="flex flex-col">
-      <SectionHeader
+      <PageHeader
+        path={path}
         heading={heading}
         description={description}
-        level="h1"
-        meta={`${posts.length} posts`}
+        // Sayaçlar sitede hep iki hane: `LOG_05`, `01 shipped`.
+        meta={`${String(posts.length).padStart(2, "0")} posts`}
         action={
           <Link
             href="/rss.xml"
@@ -38,7 +39,7 @@ export default async function WriteView() {
       />
 
       {posts.length ? (
-        <div className="flex flex-col gap-4 px-6 pb-8">
+        <div className="flex flex-col gap-4 px-6 py-8">
           <Panel label="index">
             <PostIndex posts={posts} />
           </Panel>

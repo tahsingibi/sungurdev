@@ -1,4 +1,5 @@
 import { SocialIcon } from "@/components/custom/social-icon";
+import { Ticker } from "@/components/custom/ticker";
 import settings from "@/lib/settings";
 import Link from "next/link";
 
@@ -49,6 +50,7 @@ export default function Hero() {
     experience,
     work,
     location,
+    stack,
   } = settings;
 
   const aboutContent = about
@@ -64,10 +66,7 @@ export default function Hero() {
         {name} — {title}
       </h1>
 
-      <pre
-        aria-hidden
-        className="nfo-banner nfo-glow text-primary select-all"
-      >
+      <pre aria-hidden className="nfo-banner nfo-glow text-primary select-all">
         {BANNER}
       </pre>
 
@@ -156,6 +155,18 @@ export default function Hero() {
                 </Link>
               ) : null}
             </span>
+          </Field>
+
+          {/*
+            Arsenal künyenin son satırı — ve künyedeki diğerleri gibi tek satır.
+            Otuz küsur teknoloji alt alta sarınca hero'nun yarısını yiyordu;
+            oysa bu bir liste değil, arka plan bilgisi. Kayan şerit hem tek
+            satıra indiriyor hem de yeni teknoloji eklendiğinde hero'nun boyu
+            değişmiyor. Etiketler `[ FRONTEND ]` biçiminde akıyor ki hangi
+            öğenin nereye ait olduğu şerit geçerken de belli olsun.
+          */}
+          <Field label="arsenal">
+            <Ticker groups={stack} />
           </Field>
         </dl>
 

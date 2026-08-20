@@ -1,6 +1,6 @@
 import { ArticleActions } from "@/components/custom/article-actions";
 import BackButton from "@/components/custom/back-button";
-import { SectionHeader } from "@/components/custom/section-header";
+import { ArticleHeader } from "@/components/custom/page-header";
 import { getPost, getPosts, postToPlainText } from "@/lib/posts";
 import settings from "@/lib/settings";
 import type { Metadata } from "next";
@@ -112,28 +112,14 @@ export default async function PostPage({ params }: PostPageProps) {
         />
       </nav>
       <article>
-        <SectionHeader
-          level="h1"
-          size="lg"
-          variant="title"
-          bordered
-          heading={post.title}
+        <ArticleHeader
+          // Arşivdeki kartla aynı kayıt numarası: aynı yazı, aynı künye.
+          record={`log_${String(posts.length - index).padStart(2, "0")}`}
+          category={post.category}
+          date={post.publishDate}
+          readingMinutes={readingMinutes}
+          title={post.title}
           description={post.description}
-          eyebrow={
-            <div className="mb-3 flex flex-wrap items-center gap-3 text-2xs text-muted-foreground">
-              <span className="nfo-tag uppercase tracking-[0.3em] text-primary">
-                {post.category}
-              </span>
-              <span aria-hidden className="h-px w-6 bg-border" />
-              <time dateTime={post.publishDate} className="tnum">
-                {post.publishDate}
-              </time>
-              <span aria-hidden className="text-border">
-                ·
-              </span>
-              <span className="tnum">{readingMinutes} min read</span>
-            </div>
-          }
         />
 
         {/*
