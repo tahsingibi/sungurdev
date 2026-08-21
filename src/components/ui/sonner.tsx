@@ -10,7 +10,8 @@ export function Toaster() {
     /*
       `richColors` kaldırıldı: doygun yeşil/kırmızı kutular sayfanın hiçbir
       yerinde olmayan bir palet getiriyordu. Bildirimler de arayüzün geri
-      kalanı gibi — köşesiz, saç teli çerçeveli, mono, vurgu amber.
+      kalanı gibi — yumuşak köşe, saç teli çerçeve, popover zemini. İkon da
+      nötr: bir kopyalama bildirimi vurgu rengini hak etmiyor.
     */
     <Sonner
       theme={resolvedTheme}
@@ -18,11 +19,11 @@ export function Toaster() {
       toastOptions={{
         classNames: {
           toast:
-            "!rounded-none !border !border-border !bg-popover !font-mono !text-xs !text-foreground !shadow-xl !shadow-black/50",
-          description: "!text-muted-foreground",
-          actionButton: "!rounded-none !bg-primary !text-primary-foreground",
-          cancelButton: "!rounded-none !bg-muted !text-muted-foreground",
-          icon: "!text-primary",
+            "!rounded-xl !border !border-border !bg-popover !text-sm !text-foreground !shadow-lg !shadow-black/25",
+          description: "!text-xs !text-muted-foreground",
+          actionButton: "!rounded-lg !bg-foreground !text-background",
+          cancelButton: "!rounded-lg !bg-muted !text-muted-foreground",
+          icon: "!text-muted-foreground",
         },
       }}
     />
