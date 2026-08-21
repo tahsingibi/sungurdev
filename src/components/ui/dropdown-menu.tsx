@@ -22,7 +22,7 @@ export function DropdownMenuContent({
       <DropdownMenuPrimitive.Content
         sideOffset={sideOffset}
         className={cn(
-          "pop-in z-50 min-w-48 overflow-hidden border border-border bg-popover p-1 text-popover-foreground shadow-xl shadow-black/50",
+          "pop-in z-50 min-w-48 overflow-hidden rounded-xl border border-border bg-popover p-1.5 text-popover-foreground shadow-lg shadow-black/25",
           className,
         )}
         {...props}
@@ -40,8 +40,7 @@ export function DropdownMenuItem({
     <DropdownMenuPrimitive.Item
       data-inset={inset}
       className={cn(
-        "relative flex cursor-pointer select-none items-center gap-2.5 px-2.5 py-2 text-xs text-muted-foreground outline-none focus:bg-primary/12 focus:text-primary [&_svg]:size-3.5 [&_svg]:shrink-0",
-        "focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset=true]:pl-8 [&_svg]:size-4 [&_svg]:shrink-0",
+        "relative flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-muted-foreground outline-none select-none focus:bg-foreground/8 focus:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset=true]:pl-8 [&_svg]:size-3.5 [&_svg]:shrink-0",
         className,
       )}
       {...props}
@@ -57,7 +56,7 @@ export function DropdownMenuLabel({
   return (
     <DropdownMenuPrimitive.Label
       data-inset={inset}
-      className={cn("px-2 py-1.5 text-xs font-medium data-[inset=true]:pl-8", className)}
+      className={cn("px-2.5 pt-2 pb-1 font-mono text-2xs lowercase text-muted-foreground data-[inset=true]:pl-8", className)}
       {...props}
     />
   );
@@ -69,14 +68,14 @@ export function DropdownMenuSeparator({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
   return (
     <DropdownMenuPrimitive.Separator
-      className={cn("-mx-1 my-1 h-px bg-border", className)}
+      className={cn("-mx-1.5 my-1.5 h-px bg-border", className)}
       {...props}
     />
   );
 }
 
 export function DropdownMenuShortcut(props: React.ComponentProps<"span">) {
-  return <span className="ml-auto text-xs tracking-widest opacity-60" {...props} />;
+  return <span className="ml-auto font-mono text-2xs text-muted-foreground" {...props} />;
 }
 
 export function DropdownMenuSubTrigger({
@@ -89,7 +88,7 @@ export function DropdownMenuSubTrigger({
     <DropdownMenuPrimitive.SubTrigger
       data-inset={inset}
       className={cn(
-        "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent data-[inset=true]:pl-8",
+        "flex cursor-pointer items-center rounded-lg px-2.5 py-2 text-xs text-muted-foreground outline-none select-none focus:bg-foreground/8 focus:text-foreground data-[state=open]:bg-foreground/8 data-[inset=true]:pl-8",
         className,
       )}
       {...props}
@@ -106,7 +105,7 @@ export function DropdownMenuSubContent({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
   return (
     <DropdownMenuPrimitive.SubContent
-      className={cn("pop-in z-50 min-w-40 border border-border bg-popover p-1 shadow-xl shadow-black/50", className)}
+      className={cn("pop-in z-50 min-w-40 rounded-xl border border-border bg-popover p-1.5 shadow-lg shadow-black/25", className)}
       {...props}
     />
   );
@@ -121,7 +120,7 @@ export function DropdownMenuCheckboxItem({
   return (
     <DropdownMenuPrimitive.CheckboxItem
       checked={checked}
-      className={cn("relative flex items-center rounded-sm py-1.5 pr-2 pl-8 text-sm outline-none focus:bg-accent", className)}
+      className={cn("relative flex cursor-pointer items-center rounded-lg py-2 pr-2 pl-8 text-xs outline-none focus:bg-foreground/8 focus:text-foreground", className)}
       {...props}
     >
       <span className="absolute left-2 grid size-4 place-items-center">
@@ -139,7 +138,7 @@ export function DropdownMenuRadioItem({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
   return (
     <DropdownMenuPrimitive.RadioItem
-      className={cn("relative flex items-center rounded-sm py-1.5 pr-2 pl-8 text-sm outline-none focus:bg-accent", className)}
+      className={cn("relative flex cursor-pointer items-center rounded-lg py-2 pr-2 pl-8 text-xs outline-none focus:bg-foreground/8 focus:text-foreground", className)}
       {...props}
     >
       <span className="absolute left-2 grid size-4 place-items-center">

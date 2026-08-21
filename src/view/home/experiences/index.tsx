@@ -1,36 +1,39 @@
-import { ExperienceTimeline } from "@/components/custom/experience-timeline";
-import { Panel } from "@/components/custom/panel";
+import { Row, RowMedia, Rows, Section } from "@/components/custom/section";
 import settings from "@/lib/settings";
 
+/** "Hypeople Studio" → "HY". Logo dosyası olmayan kayıtlar için. */
+function initials(name: string) {
+  return name.slice(0, 2).toUpperCase();
+}
+
 /**
- * Deneyim bandı — tek panel.
+ * Deneyim.
  *
- * Yanında bir rol listesi de vardı ve aynı üç kaydı iki kere yazıyordu.
- * Liste kalktı, taşıdığı bilgi çubukların künye satırına girdi: tek kutu
- * hem okunacak kaydı hem kariyerin şeklini gösteriyor.
+ * Zaman çizelgesi grafiği burada değil, `/works` sayfasında: ana sayfada
+ * sorulan şey "nerede çalıştı", çubukların anlattığı "ne kadar sürdü" ise
+ * detay. Üç satır o soruyu tam olarak cevaplıyor.
  */
 export default function Experiences() {
-  const { experience } = settings;
-
-  const shipped = experience.reduce(
-    (sum, item) => sum + item.projects.length,
-    0,
-  );
+  const { experience, pages } = settings;
 
   return (
-    <section className="flex flex-col">
-      <div className="px-6 pb-8">
-        <Panel
-          label="timeline"
-          action={
-            <span className="tnum text-2xs text-muted-foreground">
-              {String(shipped).padStart(2, "0")} shipped
-            </span>
-          }
-        >
-          <ExperienceTimeline items={experience} />
-        </Panel>
-      </div>
-    </section>
+    <Section
+      id="experiences"
+      title="experiences"
+      link={{ href: pages.works.path }}
+    >
+      <Rows>
+        {experience.map((item) => (
+          <Row
+            key={item.id}
+            href={item.path}
+            media={<RowMedia>{initials(item.name)}</RowMedia>}
+            title={item.name}
+            subtitle={item.title}
+            meta={item.year}
+          />
+        ))}
+      </Rows>
+    </Section>
   );
 }
