@@ -1,8 +1,7 @@
 import type { Activity } from "@/components/contribution-graph";
-import { Panel } from "@/components/custom/panel";
+import { Section } from "@/components/custom/section";
 import { getCachedContributions } from "@/lib/get-cached-contributions";
 import settings from "@/lib/settings";
-import Link from "next/link";
 
 const GITHUB_USERNAME = settings.github as string;
 const GITHUB_PROFILE_URL = `https://github.com/${GITHUB_USERNAME}`;
@@ -35,12 +34,11 @@ function toSparkline(activities: Activity[]): number[] {
 }
 
 /**
- * Arsenal + Activity.
+ * Aktivite.
  *
- * İki blok tek bir bantta yan yana duruyor. Ayrı ayrı, tam genişlikte
- * bölümler olarak sayfanın yarısını yiyorlardı — oysa ikisi de referans
- * bilgisi, ana anlatı değil. Yan yana konunca hem yer açılıyor hem sayfaya
- * ritim geliyor: her şeyin tam genişlikte akmadığı tek bant burası.
+ * Sayfadaki tek grafik ve çerçevesi yok: dar kolonda kutuya alınınca hem
+ * kendi kenarlığı hem sayfanın boşluğu aynı işi iki kere yapıyordu. Sayı,
+ * künye ve çubuklar alt alta duruyor — okunacak sıra da bu.
  */
 export default async function Activity() {
   const contributions = await getCachedContributions(GITHUB_USERNAME);
@@ -50,58 +48,37 @@ export default async function Activity() {
   const year = contributions.at(-1)?.date.slice(0, 4) ?? "";
 
   return (
-    <section className="grid gap-4 px-6 pb-8 ">
-      <Panel
-        label="activity"
-        className="max-sm:order-first"
-        action={
-          <Link
-            href={GITHUB_PROFILE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-2xs text-muted-foreground transition-colors hover:text-primary"
-          >
-            github →
-          </Link>
-        }
-      >
-        <div className="flex h-full flex-col">
-          <p className="nfo-glow tnum text-5xl leading-none text-primary">
-            {total.toLocaleString("en-US")}
-          </p>
-          <p className="mt-2 text-2xs text-muted-foreground">
-            contributions · {year} · github
-          </p>
+    <Section title="activity" link={{ href: GITHUB_PROFILE_URL, external: true }}>
+      <div className="flex flex-col gap-1">
+        <p className="tnum text-5xl leading-none font-medium tracking-tight text-foreground">
+          {total.toLocaleString("en-US")}
+        </p>
+        <p className="font-mono text-2xs text-muted-foreground">
+          contributions · {year} · github
+        </p>
 
-          {/*
-            Sparkline gerçek veriden: her çubuk bir haftanın toplamı, yükseklik
-            yılın en yoğun haftasına göre normalize. Blok karakteri yerine
-            gerçek elemanlar kullanılıyor — yazı tipinden bağımsız, her
-            genişlikte net.
-          */}
-          {sparkline.length ? (
-            <div
-              aria-hidden
-              // Sabit yükseklik: kalan alanı doldurmasına izin verilince
-              // arsenal ne kadar uzunsa grafik de o kadar uzuyordu. Yılın
-              // ritmi okunsun diye bu kadarı yeterli.
-              className="mt-6 flex h-20 sm:mt-auto items-end gap-0.5"
-            >
-              {sparkline.map((value, index) => (
-                <span
-                  key={index}
-                  className="flex-1 bg-primary"
-                  style={{
-                    // Sıfır katkılı haftalar da görünsün: taban çizgisi kalıyor.
-                    height: `${Math.max(6, value * 100)}%`,
-                    opacity: 0.35 + value * 0.65,
-                  }}
-                />
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </Panel>
-    </section>
+        {/*
+          Sparkline gerçek veriden: her çubuk bir haftanın toplamı, yükseklik
+          yılın en yoğun haftasına göre normalize. Blok karakteri yerine
+          gerçek elemanlar kullanılıyor — yazı tipinden bağımsız, her
+          genişlikte net.
+        */}
+        {sparkline.length ? (
+          <div aria-hidden className="mt-6 flex h-18 items-end gap-0.5">
+            {sparkline.map((value, index) => (
+              <span
+                key={index}
+                className="flex-1 rounded-t-[2px] bg-foreground"
+                style={{
+                  // Sıfır katkılı haftalar da görünsün: taban çizgisi kalıyor.
+                  height: `${Math.max(6, value * 100)}%`,
+                  opacity: 0.35 + value * 0.65,
+                }}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </Section>
   );
 }

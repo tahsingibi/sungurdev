@@ -212,10 +212,13 @@ function CodeContent({
   code,
   language,
   compact = false,
+  reserveAction = true,
 }: {
   code: string;
   language?: string;
   compact?: boolean;
+  /** Kopyala düğmesi bloğun *üstünde* değil içinde duruyorsa sağda yer ayrılır. */
+  reserveAction?: boolean;
 }) {
   const highlighted = useHighlightedCode(code, language);
   /*
@@ -232,31 +235,30 @@ function CodeContent({
   const maxViewportHeight = 384;
 
   /*
-   * Kaydırma yerel, Radix'in kaydırma alanı değil.
-   *
-   * Eski kurulumda tavan yükseklik `overflow-hidden` olan kökteydi: uzun
-   * bloklar kaydırılmıyor, 384 pikselden sonrası *kesiliyordu*. Yatay taraf
-   * ayrıca `!overflow-x-hidden` ile kapatılmıştı ve Radix yalnızca dikey
-   * çubuğu basıyordu — yani taşan koda ulaşmanın hiçbir yolu yoktu.
-   *
-   * Radix kendi çubuklarını `type="auto"` ile de basmadı (yerel çubukları
-   * gizlediği için ortada hiçbir gösterge kalmıyordu), o yüzden bu blok düz
-   * bir kaydırma kabına indi: çubuklar tarayıcının kendisinden geliyor,
-   * `scroll-thin` ile inceltilip arayüzün rengine boyanıyor.
+   * Yalnızca dikey kaydırma: uzun bloklarda çubuk tarayıcının kendisinden
+   * geliyor ve `scroll-thin` ile arayüzün rengine boyanıyor.
    */
   return (
-    <div className="scroll-thin" style={{ maxHeight: maxViewportHeight }}>
+    <div
+      className="scroll-thin overflow-x-hidden"
+      style={{ maxHeight: maxViewportHeight }}
+    >
       <pre
         /*
-         * `w-max min-w-full` + `whitespace-pre`: satırlar sarmıyor, blok
-         * yatayda kayıyor. Sarma girintiyi bozuyor ve uzun bir ifadeyi
-         * kelime ortasından ikiye bölüyordu; üstelik yatay kaydırma ayrıca
-         * kapatıldığı için taşan koda ulaşmak mümkün değildi.
+         * Satırlar sarıyor, blok yatayda kaymıyor.
+         *
+         * 490px'lik bir kolonda yatay kaydırma pratikte kodun yarısını
+         * gizlemek demekti — okur çubuğu görmeden satırın bittiğini sanıyor.
+         * `whitespace-pre-wrap` girintiyi koruyarak sarıyor, `break-words`
+         * ise sarılacak boşluğu olmayan tek parça uzun dizeleri (URL, hash)
+         * kaba sığdırıyor.
          */
         className={
           compact
-            ? "m-0 w-max min-w-full whitespace-pre p-3 font-mono text-xs leading-6 text-foreground/85"
-            : "m-0 w-max min-w-full whitespace-pre p-4 pr-12 font-mono text-xs leading-6 text-foreground/85 sm:pr-14"
+            ? "m-0 w-full p-3 font-mono text-xs leading-6 break-words whitespace-pre-wrap text-foreground/85"
+            : `m-0 w-full p-4 font-mono text-xs leading-6 break-words whitespace-pre-wrap text-foreground/85 ${
+                reserveAction ? "pr-12 sm:pr-14" : ""
+              }`
         }
       >
         {highlighted ? (
@@ -280,7 +282,7 @@ function CodeContent({
 
 function CodeFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="relative rounded-xl border border-border bg-background dark:bg-zinc-950">
+    <div className="relative rounded-lg border border-border bg-background dark:bg-zinc-950">
       {children}
     </div>
   );
@@ -294,11 +296,11 @@ export function CodeBlock({
   const { Icon: LanguageIcon } = getCodeLanguageIcon(language);
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-soft dark:bg-zinc-900/70">
+    <div className="my-6 rounded-xl border border-border bg-muted/40 p-2">
       {filename ? (
         <div className="flex min-h-8 pb-2 items-center gap-3 px-2">
-          <LanguageIcon className="size-4" aria-hidden="true" />
-          <span className="min-w-0 flex-1 break-all font-mono text-sm text-muted-foreground">
+          <LanguageIcon className="size-3.5" aria-hidden="true" />
+          <span className="min-w-0 flex-1 break-all font-mono text-2xs text-muted-foreground">
             {filename}
           </span>
           <CopyCodeButton value={code} />
@@ -311,7 +313,14 @@ export function CodeBlock({
             <CopyCodeButton value={code} />
           </div>
         )}
-        <CodeContent code={code} language={language} />
+        {/* Dosya adı varsa kopyala düğmesi künye satırında; blok içinde
+            ayrılacak yer de kalmıyor — 390px'de o boşluk satır genişliğinin
+            onda birini yiyordu. */}
+        <CodeContent
+          code={code}
+          language={language}
+          reserveAction={!filename}
+        />
       </CodeFrame>
     </div>
   );
@@ -326,11 +335,11 @@ export function CodeBlockPreview({
   const blockId = useId();
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 px-2 pb-2 shadow-soft dark:bg-zinc-900/70 ">
+    <div className="my-6 rounded-xl border border-border bg-muted/40 px-2 pb-2">
       <div
         role="tablist"
         aria-label="Component view"
-        className="flex h-12 items-stretch gap-1 px-2"
+        className="flex h-10 items-stretch gap-1 px-2"
       >
         {(["preview", "code"] as const).map((tab) => {
           const isActive = tab === activeTab;
@@ -342,7 +351,9 @@ export function CodeBlockPreview({
               role="tab"
               aria-selected={isActive}
               onClick={() => setActiveTab(tab)}
-              className="relative px-2.5 text-base capitalize text-muted-foreground transition-colors hover:text-foreground aria-selected:text-foreground"
+              /* Künye satırıyla aynı ölçek: sekmeler 18px'te kod bloğunun
+                 kendisinden daha yüksek sesle konuşuyordu. */
+              className="relative px-2.5 font-mono text-xs lowercase text-muted-foreground transition-colors hover:text-foreground aria-selected:text-foreground"
             >
               {tab}
               {isActive ? (
@@ -406,7 +417,7 @@ export function CodeBlockCommand({
   const ActivePackageManagerIcon = PACKAGE_MANAGER_ICONS[activeManager];
 
   return (
-    <div className="my-6 rounded-2xl border border-border bg-muted/55 p-2 shadow-soft dark:bg-zinc-900/70">
+    <div className="my-6 rounded-xl border border-border bg-muted/40 p-2">
       <div className="relative flex items-center pr-11 gap-2 min-h-10!">
         <div className="flex w-10 shrink-0 h-fit items-center justify-center text-muted-foreground">
           <AnimatePresence mode="wait" initial={false}>
@@ -437,7 +448,7 @@ export function CodeBlockCommand({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => savePackageManager(manager)}
-                className="relative bg-transparent! pb-2 px-0!"
+                className="relative bg-transparent! px-0! pb-2 font-mono text-xs lowercase text-muted-foreground transition-colors hover:text-foreground aria-selected:text-foreground"
               >
                 {manager}
                 {isActive ? (

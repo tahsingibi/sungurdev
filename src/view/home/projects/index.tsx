@@ -1,40 +1,68 @@
-import { Panel } from "@/components/custom/panel";
-import { ProjectGrid } from "@/components/custom/project-grid";
-import { ProjectIndex } from "@/components/custom/project-index";
+import { Row, RowMedia, Rows, Section } from "@/components/custom/section";
 import settings from "@/lib/settings";
 import Link from "next/link";
 
 /**
- * Proje bandı — dizin şeridi + kartlar.
+ * İşler.
  *
- * Blog bölümüyle aynı kurgu: üstte bölümü tek bakışta özetleyen şerit,
- * altında kayıt kutuları. Şerit bütün kayıtları sayıyor, ızgarada ise
- * yalnızca ilk dördü var — gerisi bölüm başlığındaki bağlantıda.
+ * Satırın kendisi bağlantı değil: her projenin iki ayrı hedefi var (kaynak
+ * ve canlı) ve ikisi de satırın içinde kendi bağlantısı olarak duruyor —
+ * satırı tek bir yere bağlayıp içine ikinci bağlantı koymak hem geçersiz
+ * hem klavyeyle gezilemez bir yapı doğuruyordu.
  */
 export default function Projects() {
   const { work, pages } = settings;
-  const { path, heading, description } = pages.projects;
   const projects = work.slice(0, 4);
 
   return (
-    <section className="flex flex-col">
-      <div className="flex flex-col gap-4 px-6 pb-8">
-        <Panel
-          label="index"
-          action={
-            <Link
-              href={path}
-              className="text-2xs text-muted-foreground transition-colors hover:text-primary"
-            >
-              all →
-            </Link>
-          }
-        >
-          <ProjectIndex projects={work} />
-        </Panel>
-
-        <ProjectGrid projects={projects} />
-      </div>
-    </section>
+    <Section
+      id="works"
+      title="works"
+      link={{ href: pages.works.path }}
+    >
+      <Rows>
+        {projects.map((project, index) => (
+          <Row
+            key={project.id}
+            /* Numara sıradaki yeri değil, kaçıncı iş olduğunu söylüyor:
+               liste yeniden eskiye aktığı için en üstteki en büyük numarayı
+               taşıyor. Kırpılmış listede de arşivdeki gerçek sırasını
+               koruyor — ana sayfada 07'den başlaması, arkada üç iş daha
+               olduğunu kendiliğinden anlatıyor. */
+            media={
+              <RowMedia>
+                {String(work.length - index).padStart(2, "0")}
+              </RowMedia>
+            }
+            title={project.name}
+            subtitle={project.explain}
+            after={
+              <span className="flex shrink-0 items-center gap-2.5 font-mono text-2xs lowercase">
+                {project.repo ? (
+                  <Link
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    github
+                  </Link>
+                ) : null}
+                {project.live ? (
+                  <Link
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground transition-colors hover:text-primary"
+                  >
+                    live
+                  </Link>
+                ) : null}
+              </span>
+            }
+          />
+        ))}
+      </Rows>
+    </Section>
   );
 }
