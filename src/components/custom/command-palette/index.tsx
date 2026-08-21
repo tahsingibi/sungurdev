@@ -165,21 +165,21 @@ export function CommandPalette() {
           punto için yer var. Rozeti başlıkta küçültmeye çalışmak `⌘` glifini
           okunmaz hâle getiriyordu.
         */}
-        <div className="flex items-center gap-4 border-t border-border px-3 py-2 text-2xs text-muted-foreground">
+        <div className="flex items-center gap-4 border-t border-border px-4 py-2.5 font-mono text-2xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <kbd className="border border-border px-1.5 py-0.5 text-foreground">
+            <kbd className="rounded-sm border border-border px-1.5 py-0.5 text-foreground">
               ↑↓
             </kbd>
             navigate
           </span>
           <span className="flex items-center gap-1.5">
-            <kbd className="border border-border px-1.5 py-0.5 text-foreground">
+            <kbd className="rounded-sm border border-border px-1.5 py-0.5 text-foreground">
               ↵
             </kbd>
             open
           </span>
           <span className="ml-auto flex items-center gap-1.5">
-            <kbd className="border border-border px-1.5 py-0.5 text-foreground">
+            <kbd className="rounded-sm border border-border px-1.5 py-0.5 text-foreground">
               esc
             </kbd>
             close

@@ -6,13 +6,13 @@ import { ImageResponse } from "next/og";
 /**
  * OpenGraph kartı — sayfanın kendi dilinde.
  *
- * Aynı NFO grameri: is siyahı zemin, fosfor amber, köşesiz çerçeve,
- * `[ ETİKET ]` biçimi ve hizalı bir künye bloğu. Paylaşılan bağlantı sitenin
- * neye benzediğini söylemeli; jenerik bir profil fotoğrafı bunu yapmıyordu.
+ * Sitenin kabuğunu birebir taşıyor: is siyahı zemin, üstünde yumuşak köşeli
+ * tek bir yüzey, sans başlık, mono künye satırları ve tek renkli bir durum
+ * göstergesi. Paylaşılan bağlantı sitenin neye benzediğini söylemeli —
+ * jenerik bir profil fotoğrafı bunu yapmıyor.
  *
  * Yazı tipi elle veriliyor: satori sistem fontlarını görmüyor, verilmezse
- * sans-serif bir varsayılana düşüyor ve mono grid tamamen kayboluyor —
- * yani kartın karakterini taşıyan tek şey kaybolurdu.
+ * sans-serif bir varsayılana düşüyor ve kartın bütün tipografisi kayboluyor.
  */
 /*
  * Kart derleme anında bir kez üretilip statik varlık olarak yayınlanıyor.
@@ -29,24 +29,27 @@ export const alt = `${settings.name} — ${settings.title}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BG = "#0d0b07";
-const FG = "#efe6d4";
-const AMBER = "#ffb020";
-const DIM = "#8b8172";
-const LINE = "#2a241a";
+/*
+ * Renkler koyu temanın token'larıyla aynı, yalnızca opak: satori `oklch()`
+ * ve CSS değişkeni okumuyor, her değer düz bir hex olmak zorunda.
+ */
+const BG = "#09090b"; /* zinc-950 — sayfanın zemini */
+const CARD = "#121214"; /* künyenin zemini, sayfadaki gibi bir tık açık */
+const LINE = "#202024";
+const FG = "#fafafa";
+const BODY = "#d4d4d8"; /* zinc-300 */
+const DIM = "#71717a"; /* zinc-500 */
+const GREEN = "#34d399";
 
 export default async function OpenGraphImage() {
   const fontDir = path.join(process.cwd(), "public", "fonts");
-  const [regular, bold] = await Promise.all([
+  const [sans, sansMedium, mono] = await Promise.all([
+    readFile(path.join(fontDir, "Geist-Regular.ttf")),
+    readFile(path.join(fontDir, "Geist-Medium.ttf")),
     readFile(path.join(fontDir, "GeistMono-Regular.ttf")),
-    readFile(path.join(fontDir, "GeistMono-Bold.ttf")),
   ]);
 
-  const stack = settings.stack
-    .slice(0, 2)
-    .flatMap((category) => category.items)
-    .slice(0, 6)
-    .join("  ·  ");
+  const host = settings.url.replace(/^https?:\/\/|\/$/g, "");
 
   return new ImageResponse(
     (
@@ -55,97 +58,116 @@ export default async function OpenGraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
           background: BG,
-          color: FG,
-          fontFamily: "GeistMono",
-          padding: 64,
-          // Köşesiz, kalın amber çerçeve — kartın NFO kimliği.
-          border: `2px solid ${AMBER}`,
+          padding: 48,
+          fontFamily: "Geist",
         }}
       >
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            fontSize: 20,
-            letterSpacing: 6,
-            color: DIM,
-          }}
-        >
-          <span>[ {settings.url.replace(/^https?:\/\/|\/$/g, "").toUpperCase()} ]</span>
-          <span style={{ color: AMBER }}>● {settings.hiring ? "AVAILABLE" : "BUSY"}</span>
-        </div>
-
-        <div
-          style={{
+            flex: 1,
             display: "flex",
             flexDirection: "column",
-            marginTop: "auto",
+            background: CARD,
+            border: `1px solid ${LINE}`,
+            borderRadius: 32,
+            padding: 64,
           }}
         >
           <div
             style={{
-              fontSize: 96,
-              fontWeight: 700,
-              letterSpacing: 4,
-              color: AMBER,
-              lineHeight: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontFamily: "GeistMono",
+              fontSize: 26,
+              color: DIM,
             }}
           >
-            {settings.name.toUpperCase()}
+            <span>{host}</span>
+            {settings.hiring ? (
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  color: GREEN,
+                }}
+              >
+                {/* Noktanın kendisi bir öğe: sitede de renk tek başına
+                    durumu anlatmıyor, yanında yazısı duruyor. */}
+                <span
+                  style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: 999,
+                    background: GREEN,
+                    display: "flex",
+                  }}
+                />
+                open to work
+              </span>
+            ) : null}
           </div>
 
-          {/*
-            Tek metin düğümü: satori, birden fazla çocuğu olan her `div` için
-            açık `display` istiyor. Metni burada birleştirmek, sırf bu kural
-            için sarmalayıcı eklemekten temiz.
-          */}
           <div
             style={{
-              marginTop: 20,
-              fontSize: 28,
-              letterSpacing: 6,
-              color: FG,
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "auto",
             }}
           >
-            {[
-              settings.title.toUpperCase(),
-              settings.currentCompany
-                ? `@ ${settings.currentCompany.toUpperCase()}`
-                : null,
-            ]
-              .filter(Boolean)
-              .join(" ")}
-          </div>
-        </div>
+            <div
+              style={{
+                fontSize: 92,
+                fontWeight: 500,
+                letterSpacing: -2,
+                lineHeight: 1.05,
+                color: FG,
+              }}
+            >
+              {settings.name}
+            </div>
 
-        <div
-          style={{
-            marginTop: 40,
-            height: 1,
-            background: LINE,
-            display: "flex",
-          }}
-        />
-
-        <div
-          style={{
-            marginTop: 24,
-            display: "flex",
-            flexDirection: "column",
-            gap: 10,
-            fontSize: 20,
-            color: DIM,
-          }}
-        >
-          <div style={{ display: "flex", gap: 24 }}>
-            <span style={{ width: 120, letterSpacing: 4 }}>LOC</span>
-            <span style={{ color: FG }}>{settings.location.toUpperCase()}</span>
+            {/*
+              Tek metin düğümü: satori, birden fazla çocuğu olan her `div` için
+              açık `display` istiyor. Metni burada birleştirmek, sırf bu kural
+              için sarmalayıcı eklemekten temiz.
+            */}
+            <div
+              style={{
+                marginTop: 18,
+                fontFamily: "GeistMono",
+                fontSize: 30,
+                color: DIM,
+              }}
+            >
+              {[
+                `@${settings.slug}`,
+                settings.title.toLowerCase(),
+                settings.location,
+              ].join("  ·  ")}
+            </div>
           </div>
-          <div style={{ display: "flex", gap: 24 }}>
-            <span style={{ width: 120, letterSpacing: 4 }}>STACK</span>
-            <span style={{ color: FG }}>{stack}</span>
+
+          <div
+            style={{
+              marginTop: 44,
+              height: 1,
+              background: LINE,
+              display: "flex",
+            }}
+          />
+
+          <div
+            style={{
+              marginTop: 28,
+              fontSize: 30,
+              lineHeight: 1.4,
+              color: BODY,
+            }}
+          >
+            {settings.tagline}
           </div>
         </div>
       </div>
@@ -153,8 +175,9 @@ export default async function OpenGraphImage() {
     {
       ...size,
       fonts: [
-        { name: "GeistMono", data: regular, weight: 400, style: "normal" },
-        { name: "GeistMono", data: bold, weight: 700, style: "normal" },
+        { name: "Geist", data: sans, weight: 400, style: "normal" },
+        { name: "Geist", data: sansMedium, weight: 500, style: "normal" },
+        { name: "GeistMono", data: mono, weight: 400, style: "normal" },
       ],
     },
   );

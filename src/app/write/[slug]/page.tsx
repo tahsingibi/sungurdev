@@ -81,7 +81,7 @@ export default async function PostPage({ params }: PostPageProps) {
   };
 
   return (
-    <div className="relative flex flex-1 flex-col">
+    <div className="flex flex-col gap-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -94,14 +94,14 @@ export default async function PostPage({ params }: PostPageProps) {
         eylemler sola hizalansın.
       */}
       <nav
-        className="flex flex-wrap items-center gap-2 border-b border-border px-6 py-4"
+        className="flex flex-wrap items-center gap-2"
         aria-label="Article actions"
       >
         <BackButton
-          text="blog"
-          variant="outline"
-          size="sm"
-          className="text-xs uppercase tracking-[0.16em]"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Back to blog"
+          className="-ml-1.5"
         />
         <span className="ml-auto" />
         <ArticleActions
@@ -111,10 +111,8 @@ export default async function PostPage({ params }: PostPageProps) {
           githubUrl={post.githubUrl}
         />
       </nav>
-      <article>
+      <article className="flex flex-col gap-8">
         <ArticleHeader
-          // Arşivdeki kartla aynı kayıt numarası: aynı yazı, aynı künye.
-          record={`log_${String(posts.length - index).padStart(2, "0")}`}
           category={post.category}
           date={post.publishDate}
           readingMinutes={readingMinutes}
@@ -124,11 +122,10 @@ export default async function PostPage({ params }: PostPageProps) {
 
         {/*
           Gövde `text-base` ve daha açık bir renk: `text-sm` + muted, uzun
-          okumada gözü yoruyordu. Yatay dolgu burada dar tutulup metin
-          bloklarına ayrıca veriliyor (bkz. PROSE_INSET) — böylece kod ve
-          görseller daha geniş kalıyor.
+          okumada gözü yoruyordu. Kolon zaten okuma genişliğinde, o yüzden
+          metne ayrıca yatay dolgu verilmiyor.
         */}
-        <div className="px-6 py-12 text-base leading-8 text-foreground/80 sm:px-8">
+        <div className="text-base leading-8 text-foreground/80">
           <post.Content />
         </div>
       </article>
@@ -137,7 +134,7 @@ export default async function PostPage({ params }: PostPageProps) {
       {newer || older ? (
         <nav
           aria-label="Nearby posts"
-          className="grid gap-px border-t border-border bg-border sm:grid-cols-2"
+          className="-mx-3 flex flex-col border-t border-border pt-4"
         >
           {[
             { post: older, label: "older" },
@@ -147,18 +144,16 @@ export default async function PostPage({ params }: PostPageProps) {
               <Link
                 key={label}
                 href={`/write/${neighbour.slug}`}
-                className="group flex flex-col gap-1.5 bg-background px-6 py-5 transition-colors hover:bg-primary/[0.04]"
+                className="flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent/70"
               >
-                <span className="text-2xs uppercase tracking-[0.3em] text-muted-foreground">
+                <span className="font-mono text-2xs lowercase text-muted-foreground">
                   {label}
                 </span>
-                <span className="text-xs leading-snug transition-colors group-hover:text-primary">
+                <span className="text-sm leading-snug text-foreground">
                   {neighbour.title}
                 </span>
               </Link>
-            ) : (
-              <span key={label} className="hidden bg-background sm:block" />
-            ),
+            ) : null,
           )}
         </nav>
       ) : null}
