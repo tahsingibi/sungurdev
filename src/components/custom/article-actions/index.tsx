@@ -99,9 +99,9 @@ export function ArticleActions({
         <DropdownMenuTrigger asChild>
           <Button
             type="button"
-            variant="outline"
+            variant="ghost"
             size="sm"
-            className="text-xs uppercase tracking-[0.16em]"
+            className="text-xs text-muted-foreground"
           >
             <Share2 className="size-3.5" />
             share
@@ -150,9 +150,9 @@ export function ArticleActions({
         <DropdownMenuTrigger asChild>
           <Button
             type="button"
-            variant="outline"
+            variant="ghost"
             size="sm"
-            className="text-xs uppercase tracking-[0.16em]"
+            className="text-xs text-muted-foreground"
           >
             <Copy className="size-3.5" />
             copy page

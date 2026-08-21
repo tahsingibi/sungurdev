@@ -11,19 +11,19 @@ import { NotFoundTerminal } from "./terminal";
  */
 export default function NotFoundView() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-8 p-6 py-20 sm:py-28">
+    <div className="flex flex-1 flex-col items-center justify-center gap-8 py-20">
       <div className="w-full max-w-md text-left">
         <NotFoundTerminal />
       </div>
 
       <div className="flex flex-col items-center gap-4">
-        <p className="text-2xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground">
           press{" "}
-          <kbd className="border border-border px-1.5 py-0.5 text-foreground">
+          <kbd className="rounded-sm border border-border px-1.5 py-0.5 font-mono text-foreground">
             ⌘K
           </kbd>{" "}
           or{" "}
-          <kbd className="border border-border px-1.5 py-0.5 text-foreground">
+          <kbd className="rounded-sm border border-border px-1.5 py-0.5 font-mono text-foreground">
             /
           </kbd>{" "}
           to search everything
@@ -34,7 +34,7 @@ export default function NotFoundView() {
             <Link
               key={item.id}
               href={item.path}
-              className="text-2xs uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-primary"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.name}
             </Link>

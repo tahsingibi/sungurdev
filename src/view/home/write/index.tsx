@@ -1,60 +1,62 @@
-import { Panel } from "@/components/custom/panel";
-import { PostCard } from "@/components/custom/post-card";
-import { PostIndex } from "@/components/custom/post-index";
+import { Row, Rows, Section } from "@/components/custom/section";
 import { getPosts } from "@/lib/posts";
 import settings from "@/lib/settings";
-import Link from "next/link";
+
+/** `2026-08-16` → `16 Aug 2026`. Tarih okunacak bir şey, kod değil. */
+function formatDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
 
 /**
- * Blog bandı — dizin şeridi + kartlar.
+ * Son yazılar.
  *
- * Deneyim bölümüyle aynı ritim: üstte bölümü tek bakışta özetleyen bir
- * panel, altında okunacak kayıtlar. Dizin sağda dar bir raydayken sayı ile
- * çubukları arasında boşluk kalıyor, yazılar da sıkışıyordu; yatay şeride
- * dönünce üç kart eşit genişlikte tam sıraya giriyor.
+ * Kart ızgarası yerine liste: dar kolonda üç kart alt alta dizilince her biri
+ * kendi çerçevesiyle bir bölüm gibi görünüyordu. Satırda okunacak tek şey
+ * başlık; kategori ve tarih onun altında, ikinci sırada duruyor.
  */
 export default async function Write() {
   const { pages } = settings;
-  const allPosts = await getPosts();
-  // Sayaçlar ve dağılım toplamı göstermeli; kartlarda yalnızca son üçü var.
-  const posts = allPosts.slice(0, 3);
-  const { path, heading, description } = pages.write;
+  const posts = (await getPosts()).slice(0, 3);
+
+  if (!posts.length) {
+    return (
+      <Section title="latest notes">
+        <p className="text-sm text-muted-foreground">{pages.write.error}</p>
+      </Section>
+    );
+  }
 
   return (
-    <section className="relative flex flex-col">
-      {posts.length ? (
-        <div className="flex flex-col gap-4 px-6 pb-8">
-          <Panel
-            label="index"
-            action={
-              <Link
-                href={path}
-                className="text-2xs text-muted-foreground transition-colors hover:text-primary"
-              >
-                archive →
-              </Link>
+    <Section
+      title="latest notes"
+      link={{ href: pages.write.path }}
+    >
+      <Rows>
+        {posts.map((post) => (
+          <Row
+            key={post.slug}
+            href={`/write/${post.slug}`}
+            title={post.title}
+            subtitle={
+              <span className="inline-flex items-center gap-2">
+                <span className="rounded-sm border border-border px-1.5 py-px font-mono text-2xs lowercase">
+                  {post.category}
+                </span>
+                <time dateTime={post.publishDate}>
+                  {formatDate(post.publishDate)}
+                </time>
+              </span>
             }
-          >
-            <PostIndex posts={allPosts} />
-          </Panel>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            {posts.map((post, index) => (
-              <PostCard
-                key={post.slug}
-                post={post}
-                /* Kayıt numarası kırpılmış listeye göre değil, arşivdeki
-                   gerçek sırasına göre. */
-                record={`log_${String(allPosts.length - index).padStart(2, "0")}`}
-              />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <p className="px-6 pb-8 text-xs text-muted-foreground">
-          {pages.write.error}
-        </p>
-      )}
-    </section>
+          />
+        ))}
+      </Rows>
+    </Section>
   );
 }

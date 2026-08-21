@@ -1,17 +1,22 @@
 import { SocialIcon } from "@/components/custom/social-icon";
-import { Ticker } from "@/components/custom/ticker";
 import settings from "@/lib/settings";
+import { ArrowDownToLine } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 /**
  * ASCII banner.
  *
- * Sayfanın tek büyük görsel öğesi ve tüm dili tek başına kuran şey. Metin
- * olarak duruyor (görsel değil): seçilebiliyor, temayla renk değiştiriyor,
- * her ekran genişliğinde ölçekleniyor ve tek bir bayt bile indirilmiyor.
+ * Sayfanın imzası. Kolonun tamamını kaplarken bir afişti ve altındaki her
+ * şeyi bastırıyordu; şimdi künyenin üstünde duran bir başlık — ilk bakılan
+ * şey olmayı sürdürüyor ama sırasını bekliyor.
  *
- * `aria-label` var çünkü ekran okuyucuya blok karakterleri okumak işkence;
- * içerik `aria-hidden` ve isim `h1`in etiketinden geliyor.
+ * Metin olarak duruyor (görsel değil): seçilebiliyor, temayla renk
+ * değiştiriyor, her ekran genişliğinde ölçekleniyor ve tek bir bayt bile
+ * indirilmiyor.
+ *
+ * `aria-hidden` çünkü ekran okuyucuya blok karakterleri okumak işkence;
+ * isim `h1`in kendisinden geliyor.
  */
 const BANNER = String.raw`
  ███████╗██╗   ██╗███╗   ██╗ ██████╗ ██╗   ██╗██████╗
@@ -21,159 +26,103 @@ const BANNER = String.raw`
  ███████║╚██████╔╝██║ ╚████║╚██████╔╝╚██████╔╝██║  ██║
  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝`;
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex gap-4 max-sm:flex-col max-sm:gap-0.5 sm:items-baseline">
-      <dt className="w-24 shrink-0 text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-        {label}
-      </dt>
-      <dd className="min-w-0 text-xs leading-relaxed">{children}</dd>
-    </div>
-  );
-}
-
 export default function Hero() {
   const {
     name,
+    slug,
     title,
-    currentCompany,
     about,
     social,
     hiring,
     resume,
     experience,
-    work,
     location,
-    stack,
+    image,
   } = settings;
 
   const aboutContent = about
     .replaceAll("{lastwork}", experience[0].name)
     .replaceAll("{lastworklink}", experience[0].path);
 
-  // "Şu an ne yayında" — canlı olan projeler künyenin içinde duruyor.
-  const shipping = work.filter((project) => project.live).slice(0, 3);
-
   return (
-    <section className="flex flex-col px-6 pt-8 pb-8">
+    <section className="flex flex-col gap-5">
       <h1 className="sr-only">
         {name} — {title}
       </h1>
 
-      <pre aria-hidden className="nfo-banner nfo-glow text-primary select-all">
+      {/* <pre aria-hidden className="ascii-banner select-all text-primary">
         {BANNER}
-      </pre>
+      </pre> */}
 
-      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-2xs uppercase tracking-[0.16em] text-muted-foreground">
-        <span className="text-foreground">{name}</span>
-        <span aria-hidden>·</span>
-        <span className="text-foreground">{title}</span>
-        <span aria-hidden>·</span>
-        <span>{location}</span>
-        <span aria-hidden>·</span>
-        <span className={hiring ? "text-primary" : undefined}>
-          {hiring ? "● available" : "○ not looking"}
-        </span>
-        <span aria-hidden className="nfo-caret text-primary">
-          █
-        </span>
+      <div className="flex flex-wrap items-center gap-3.5">
+        <Image
+          src={image}
+          alt=""
+          width={44}
+          height={44}
+          priority
+          className="size-11 shrink-0 rounded-xl object-cover"
+        />
+        <div className="flex min-w-0 flex-col">
+          <span className="text-base font-medium text-foreground">{name}</span>
+          <span className="text-sm text-muted-foreground">@{slug}</span>
+        </div>
+
+        {/*
+          Durum rozeti künyenin sağ ucunda: aranan tek bilgi "müsait mi", ve
+          göz zaten satırın sonunu tarıyor. Yazı hover'da açılıyor (bkz.
+          `.status` / `.status-label`), duran şey yalnızca nokta — ama metin
+          DOM'da kaldığı için okuyucudan gizlenmiş olmuyor.
+        */}
+        {hiring ? (
+          <span
+            tabIndex={0}
+            className="status ml-auto inline-flex shrink-0 items-center gap-2 rounded-full font-mono text-2xs text-emerald-500 outline-none"
+          >
+            <span
+              aria-hidden
+              className="size-2 shrink-0 rounded-full bg-emerald-500 ring-4 ring-emerald-500/15"
+            />
+            <span className="status-label whitespace-nowrap">open to work</span>
+          </span>
+        ) : null}
       </div>
 
-      <div className="mt-6 border-t border-border pt-6">
-        <dl className="flex flex-col gap-2">
-          <Field label="current">
-            {currentCompany ? (
-              <>
-                <Link
-                  href={experience[0].path}
-                  className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
-                >
-                  {currentCompany}
-                </Link>
-                <span className="text-muted-foreground">
-                  {" "}
-                  — end-to-end web apps for individual and corporate clients
-                </span>
-              </>
-            ) : (
-              <span className="text-muted-foreground">independent</span>
-            )}
-          </Field>
+      <p
+        dangerouslySetInnerHTML={{ __html: aboutContent }}
+        className="text-sm leading-loose text-muted-foreground [&_.mark]:font-medium [&_.mark]:text-foreground [&_a]:font-mono [&_a]:text-[0.92em] [&_a]:text-foreground [&_a]:underline [&_a]:decoration-border [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+      />
 
-          {shipping.length ? (
-            <Field label="shipping">
-              <span className="flex flex-wrap items-center gap-x-2">
-                {shipping.map((project, index) => (
-                  <span key={project.id}>
-                    {index > 0 ? (
-                      <span aria-hidden className="text-border">
-                        {" · "}
-                      </span>
-                    ) : null}
-                    <Link
-                      href={project.live as string}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
-                    >
-                      {project.name.toLowerCase()}
-                    </Link>
-                  </span>
-                ))}
-              </span>
-            </Field>
-          ) : null}
+      {/*
+        Sosyal alan yalnızca ikon: adları yazınca satır beş etikete bölünüyor
+        ve hiçbiri okunmuyordu — bu ikonlar zaten tanınan markalar. `resume`
+        etiketli kalıyor, çünkü onun adı bilginin kendisi: dosya, ikon değil.
+      */}
+      <div className="flex flex-wrap items-center gap-1">
+        {social.map((link) => (
+          <Link
+            key={link.id}
+            href={link.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.name}
+            className="grid size-9 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <SocialIcon name={link.icon} className="size-[1.05rem]" />
+          </Link>
+        ))}
 
-          <Field label="contact">
-            <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              {social.map((link) => (
-                <Link
-                  key={link.id}
-                  href={link.path}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
-                >
-                  <SocialIcon name={link.icon} className="size-3.5" />
-                  {link.name}
-                </Link>
-              ))}
-              {resume ? (
-                <Link
-                  href={resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-current"
-                >
-                  resume.pdf
-                </Link>
-              ) : null}
-            </span>
-          </Field>
-
-          {/*
-            Arsenal künyenin son satırı — ve künyedeki diğerleri gibi tek satır.
-            Otuz küsur teknoloji alt alta sarınca hero'nun yarısını yiyordu;
-            oysa bu bir liste değil, arka plan bilgisi. Kayan şerit hem tek
-            satıra indiriyor hem de yeni teknoloji eklendiğinde hero'nun boyu
-            değişmiyor. Etiketler `[ FRONTEND ]` biçiminde akıyor ki hangi
-            öğenin nereye ait olduğu şerit geçerken de belli olsun.
-          */}
-          <Field label="arsenal">
-            <Ticker groups={stack} />
-          </Field>
-        </dl>
-
-        <p
-          dangerouslySetInnerHTML={{ __html: aboutContent }}
-          className="mt-6 text-xs leading-relaxed text-muted-foreground [&_.mark]:text-foreground [&_a]:text-foreground [&_a]:underline [&_a]:decoration-border [&_a]:underline-offset-4 [&_a:hover]:text-primary [&_a:hover]:decoration-current"
-        />
+        {resume ? (
+          <Link
+            href={resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 inline-flex h-9 items-center gap-2 rounded-lg px-3 font-mono text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            resume.pdf
+            <ArrowDownToLine aria-hidden className="size-3.5" />
+          </Link>
+        ) : null}
       </div>
     </section>
   );
