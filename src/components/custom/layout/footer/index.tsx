@@ -34,10 +34,10 @@ function FootLink({
 /**
  * Altbilgi.
  *
- * Dört hücreli künye ızgarasının yerini iki satır aldı: 490px'lik kolonda o
- * ızgara her genişlikte alt alta yığılıp sayfanın en ağır bloğu oluyordu —
- * bir künye, gövdeden daha fazla yer kaplamamalı. Buna karşılık v1'in tek
- * satırlık altbilgisi de kaynak ve besleme bağlantısını hiç göstermiyordu.
+ * Dört hücreli künye ızgarasının yerini iki satır aldı: dar ekranda o ızgara
+ * her genişlikte alt alta yığılıp sayfanın en ağır bloğu oluyordu — bir künye,
+ * gövdeden daha fazla yer kaplamamalı. Buna karşılık v1'in tek satırlık
+ * altbilgisi de kaynak ve besleme bağlantısını hiç göstermiyordu.
  *
  * Kalan iki satır: üstte kimlik ve araçlar, altta telif ve teknik künye.
  * Sosyal bağlantılar burada tekrar edilmiyor; künyede, hemen yukarıda,
