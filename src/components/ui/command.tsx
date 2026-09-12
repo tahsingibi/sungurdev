@@ -1,9 +1,8 @@
 "use client"
 
-import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
+import * as React from "react"
 
-import { cn } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -15,7 +14,8 @@ import {
   InputGroup,
   InputGroupAddon,
 } from "@/components/ui/input-group"
-import { SearchIcon, CheckIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { CheckIcon, SearchIcon } from "lucide-react"
 
 function Command({
   className,
@@ -70,8 +70,8 @@ function CommandInput({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
-    <div data-slot="command-input-wrapper">
-      <InputGroup className="h-12! rounded-none! border-0 border-b border-border bg-transparent shadow-none! *:data-[slot=input-group-addon]:pl-4!">
+    <div data-slot="command-input-wrapper" className="p-2">
+      <InputGroup className="h-10! border-border bg-transparent shadow-none! *:data-[slot=input-group-addon]:pl-4!">
         <CommandPrimitive.Input
           data-slot="command-input"
           className={cn(
@@ -96,7 +96,7 @@ function CommandList({
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "no-scrollbar max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto p-1.5 outline-none",
+        "no-scrollbar max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto p-1.5 outline-none **:[[cmdk-list-sizer]]:flex **:[[cmdk-list-sizer]]:flex-col **:[[cmdk-list-sizer]]:gap-4 ",
         className
       )}
       {...props}
@@ -184,12 +184,7 @@ function CommandShortcut({
 
 export {
   Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandShortcut,
-  CommandSeparator,
+  CommandDialog, CommandEmpty,
+  CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut
 }
+

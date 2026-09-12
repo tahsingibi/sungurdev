@@ -1,5 +1,6 @@
 import { InlineScript } from "@/components/custom/inline-script";
 import Layout from "@/components/custom/layout";
+import { ScrollOverlay } from "@/components/custom/layout/scroll-overlay";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { WebVitals } from "@/components/custom/web-vitals";
 import { Toaster } from "@/components/ui/sonner";
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>
@@ -113,6 +115,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <ThemeProvider>
           <Layout>{children}</Layout>
+          <ScrollOverlay />
           <WebVitals
             endpoint={settings.analytics.webVitalsEndpoint}
             googleAnalyticsId={settings.analytics.googleAnalyticsId}

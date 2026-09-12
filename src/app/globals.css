@@ -227,6 +227,15 @@
 .dark .divider-hatch {
   --divider-color: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 8L8 0' stroke='oklch(1 0 0 / 10%25)'/%3E%3C/svg%3E");
 }
+
+@utility surface-hatch {
+  background-color: var(--background);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 8L8 0' stroke='oklch(0.922 0 0)'/%3E%3C/svg%3E");
+}
+
+.dark .surface-hatch {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M0 8L8 0' stroke='oklch(1 0 0 / 10%25)'/%3E%3C/svg%3E");
+}
 @utility divider-block {
   --divider-size: 1.5rem;
   --divider-color: transparent;
@@ -379,8 +388,8 @@
   font-family: var(--font-mono);
   /*
    * 54 sütunluk blok. Punto kolonun kendi genişliğinden (`cqw`) türetiliyor:
-   * kolon 490px'de sabitlendiği için `vw` tabanlı bir hesap geniş ekranda
-   * banner'ı kolondan taşırıyordu.
+   * kolon `max-w-3xl` ile sınırlı olduğu için `vw` tabanlı bir hesap geniş
+   * ekranda banner'ı kolondan taşırıyordu.
    *
    * Bölen 56, yani blok kolonun yaklaşık %58'ini kaplıyor. Tam genişlikte
    * bir afişti ve sayfanın geri kalanı yanında fısıldıyordu; bu boyutta hâlâ
@@ -484,4 +493,95 @@
   &:hover::-webkit-scrollbar-thumb {
     background: var(--muted-foreground);
   }
+}
+
+/* ===========================================================================
+ * KAYDIRMA ÖRTÜLERİ
+ *
+ * Viewport'un üstü ve altı, sayfa zeminine karışan bir sis. Amaç bir "fade
+ * bileşeni" göstermek değil: içerik kenarda biterken zemine süzülsün, kenar
+ * bir makas izi gibi kesilmesin.
+ *
+ * Görünürlük kaydırma mesafesine bağlı — eşik yok, geçiş yok. Kalan yol
+ * 160px'in içindeyken opacity smoothstep ile 0'a/1'e gider; belirmeye ya da
+ * kaybolmaya başladığı an, bakınca yakalanamayacak kadar yavaş.
+ *
+ * Renk `transparent`'a karıştırılmıyor: o yol renk uzayında çamur bırakır.
+ * Zeminin ta kendisi maskeleniyor, yalnızca alpha süzülüyor.
+ * =========================================================================== */
+
+.scroll-overlay {
+  --scroll-overlay-engine: js;
+  --scroll-overlay-range: 160px;
+  --scroll-overlay-size: 6.5rem;
+  --scroll-overlay-mask: linear-gradient(
+    to bottom,
+    #000 0%,
+    rgb(0 0 0 / 0.78) 22%,
+    rgb(0 0 0 / 0.42) 48%,
+    rgb(0 0 0 / 0.14) 72%,
+    rgb(0 0 0 / 0.03) 90%,
+    transparent 100%
+  );
+
+  position: fixed;
+  inset-inline: 0;
+  height: var(--scroll-overlay-size);
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0;
+  background: var(--background);
+  -webkit-mask-image: var(--scroll-overlay-mask);
+  mask-image: var(--scroll-overlay-mask);
+}
+
+.scroll-overlay-top {
+  top: 0;
+}
+
+.scroll-overlay-bottom {
+  bottom: 0;
+  --scroll-overlay-mask: linear-gradient(
+    to top,
+    #000 0%,
+    rgb(0 0 0 / 0.78) 22%,
+    rgb(0 0 0 / 0.42) 48%,
+    rgb(0 0 0 / 0.14) 72%,
+    rgb(0 0 0 / 0.03) 90%,
+    transparent 100%
+  );
+}
+
+@supports (animation-timeline: scroll(root)) {
+  .scroll-overlay {
+    --scroll-overlay-engine: css;
+  }
+
+  .scroll-overlay-top,
+  .scroll-overlay-bottom {
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+    animation-fill-mode: both;
+    animation-timeline: scroll(root);
+  }
+
+  .scroll-overlay-top {
+    animation-name: scroll-overlay-in;
+    animation-range: 0 160px;
+  }
+
+  .scroll-overlay-bottom {
+    animation-name: scroll-overlay-out;
+    animation-range: calc(100% - 160px) 100%;
+  }
+}
+
+@keyframes scroll-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scroll-overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
