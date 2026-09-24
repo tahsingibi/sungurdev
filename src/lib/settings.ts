@@ -135,6 +135,16 @@ const settings: Settings = {
         "<p>Sometime around 2018 or a bit earlier, I started developing using HTML/CSS and WordPress, which I continued as a side job until 2022. Regardless of my main occupation, I persisted in constantly improving my coding skills. In 2022, I decided to make coding my primary occupation and began enhancing my expertise in React/Next.js. Before venturing into a freelance frontend developer career, I delivered numerous WordPress products and released a couple of WordPress themes. Some of the projects I worked on during my freelance period include:</p>",
       projects: [
         {
+          id: 13,
+          name: "Kurye 35 - İzmir Vardiyası",
+          explain: "İzmir courier arcade game",
+          tech: "Next.js, TypeScript, Canvas API",
+          icon: "gamepad-line",
+          live: "https://kurye35.sungur.dev/",
+          repo: "https://github.com/tahsingibi/kurye35-game",
+          year: 2026,
+        },
+        {
           id: 12,
           name: "OrbitCast",
           explain: "Synchronised radio broadcast",
@@ -248,6 +258,16 @@ const settings: Settings = {
     },
   ],
   work: [
+    {
+      id: 7,
+      name: "Kurye 35 - İzmir Vardiyası",
+      explain: "İzmir courier arcade game",
+      tech: "Next.js, TypeScript, Canvas API",
+      icon: "gamepad-line",
+      live: "https://kurye35.sungur.dev/",
+      repo: "https://github.com/tahsingibi/kurye35-game",
+      year: 2026,
+    },
     {
       id: 6,
       name: "OrbitCast",
