@@ -1,0 +1,102 @@
+export const metadata = {
+  title: `ADBroom: Android TV'nizi Mac'te debloat (temizleme) uygulaması`,
+  publishDate: "2026-09-27",
+  description: `Mert Çobanov'un "Clean up your Android TV" rehberinin uygulama hali: Android TV'yi Mac'ten yöneten, reklam ve gereksiz fabrika uygulamalarını hiçbir şeyi silmeden kapatan açık kaynak bir macOS uygulaması.`,
+  category: "Project",
+};
+
+ADBroom, [Mert Çobanov](https://cobanov.dev)'un [Clean up your Android TV](https://tv.cobanov.dev/) projesinden yola çıkılarak geliştirilmiş bir uygulama. Aşağıda anlattığım her kural onun rehberinden geliyor. Uygulama kurmadan, Claude & Codex yardımı ile ilerlemeyi tercih edersen, [tv.cobanov.dev](https://tv.cobanov.dev/) adresindeki rehberi ve yapay zekâ ajanları için hazırladığı promptları izleyerek aynı sonuca ulaşabilirsin.
+
+Android TV'lerin çoğu kutudan reklam şeritleri, izleme servisleri ve kimsenin açmadığı fabrika uygulamalarıyla çıkıyor. Bunlar hem ana ekranı dolduruyor hem de zaten kısıtlı olan RAM'i yiyor.
+
+[ADBroom](https://adbroom.sungur.dev) bu paketleri Mac'ten, hiçbir şeyi silmeden kapatan küçük bir macOS uygulaması. Bağlantı zaten kurulmuşken TV'yi kumanda gibi yönetmeyi ve ekranını izlemeyi de ekledim.
+
+### Neden ADB?
+
+Root, bootloader açma ya da custom ROM gibi yollar TV'yi fabrika ayarına döndürüyor ve Widevine sertifikasını L1'den L3'e düşürebiliyor. Bu da Netflix gibi uygulamaların SD çözünürlüğe inmesi demek.
+
+ADB ise TV'nin kendi geliştirici seçeneklerinden açılıyor. Root istemiyor, TV'ye hiçbir şey kurmuyor.
+
+### Kurallar
+
+Rehberin koyduğu kurallar basit ama kritik. ADBroom bunları koda döktü:
+
+- **Asla silme.** Yalnızca `pm disable-user --user 0`. Kapatılan her paket `pm enable` ile geri geliyor. Uygulamada `pm uninstall` diye bir satır yok.
+- **Az az ilerle, test et.** Birkaç paket kapat, sonra Kaynak tuşunu, HDMI'yı, sesi, klavyeyi ve uygulamaları dene.
+- **TV'yi ayakta tutan paketlere dokunma.** Ana ekran, klavye, TV girişleri, kumanda, Play Servisleri.
+- **Kayıt tut.** Neyi ne zaman kapattığını bil; tek tek ya da hepsini birden geri alabil.
+
+### Kritik paketler isimden tahmin edilmez
+
+Son kuralın zor kısmı, markaların bu paketlere farklı adlar vermesi. Rehberde TCL televizyonlar için bir örnek var: kumandadaki Kaynak menüsü `com.tcl.suspension` adlı bir pakette duruyor. Adı çöp gibi görünüyor, ama kapatırsan HDMI'ya geçemiyorsun.
+
+Bazı MediaTek TV'lerde aynı menü `fusion.android.tv.demo` adlı bir pakette çıkıyor. Adında "demo" geçen bir paketi tanıtım uygulaması sanıp kapatmak çok kolay.
+
+Bu yüzden ADBroom kritik paketleri bir listeden değil, **bağlandığı TV'nin kendisinden** okuyor:
+
+```bash
+cmd package resolve-activity -a android.intent.action.MAIN -c android.intent.category.HOME  # ana ekran
+ime list -s                                                                                # klavyeler
+dumpsys tv_input                                                                           # HDMI / anten servisleri
+dumpsys package   # TV_INPUT_BUTTON dinleyicisi → Kaynak tuşu
+```
+
+Bunların üstüne sabit bir kural listesi var: sistem çekirdeği, Play Servisleri, kumanda ve Bluetooth. Kilitli bir paketin yanında "Kapat" düğmesi hiç çıkmıyor.
+
+Bilinen gereksiz paketler (reklam kanalları, ACR izleme servisleri, ekran koruyucular, otomatik uygulama kurucular) açıklamalarıyla listeleniyor. Kapatınca yan etkisi olanlar, örneğin sesli asistan ya da Chromecast, ayrıca uyarıyla işaretleniyor. Veritabanında olmayan bir paketi kapatmadan önce de uygulama uyarıyor.
+
+Kapatılan her paket `~/Library/Application Support/ADBroom/devices/<seri-no>/` altında kaydediliyor. Her TV'nin kaydı ayrı, her işlemin geri alma komutu log'da.
+
+### Özellikler
+
+- **Kumanda.** Yön tuşları, ses, kanal, Kaynak, Ayarlar, asistan, medya tuşları. Mac klavyesinden kısayollarla ve TV'deki arama kutusuna metin göndererek.
+- **Ekran.** TV'yi sesli ve görüntülü, dört kalite seçeneğiyle izleme ([scrcpy](https://github.com/Genymobile/scrcpy) üzerinden). Pencere yalnızca izlemek için; kontrol kumanda sekmesinde.
+- **Uygulamalar.** TV'deki uygulamaları listeleme, açma, takılanı durdurma.
+- **Paketler.** Kapat, geri aç, tümünü geri al. Filtreler, arama, kilitler, kayıt.
+- **Sistem.** RAM, depolama, açık kalma süresi, önbellek temizleme, animasyon hızı, yeniden başlatma.
+- **Bağlantı.** IP ile ya da Android 11+ kablosuz hata ayıklama için eşleştirme koduyla. Türkçe ve İngilizce arayüz.
+
+Android TV, Google TV ve Fire TV cihazlarıyla çalışıyor.
+
+### Ekran izlemenin sınırları
+
+İzleme sırasında görüntü TV'de sıkıştırılıyor. Donanımsal video kodlayıcısı olan TV'lerde bu akıcı çalışıyor. Olmayanlarda her kare işlemcide sıkıştırılıyor ve TV takılabiliyor. Bunu `scrcpy --list-encoders` ile görebilirsin: listedeki kodlayıcıların hepsi `(sw)` ise TV'nde donanım kodlayıcı yok demektir. O durumda düşük kalite en az yoran seçenek.
+
+İki sınır daha var:
+
+- **Anten, HDMI ve DRM'li içerik siyah görünüyor.** Birçok TV bu görüntüyü Android'i atlayıp doğrudan panele gönderiyor; Netflix gibi uygulamalar da kopya korumalı. Android'in görmediği ya da görmesine izin verilmeyen görüntü kopyalanamıyor.
+- **Android 11'de ses yakalamak** için TV'de bir anlığına boş bir ekran açılıyor. O sırada oynayan video duraklayabiliyor. Önce izlemeyi başlatıp sonra içeriği açmak yeterli.
+
+Küçük bir ayrıntı: bazı üretici yazılımları `screencap` çıktısının önüne sürücü mesajları basıyor ve görüntü dosyası bozuk görünüyor. ADBroom ham görüntüyü alıp başlığı verinin sonundan geriye doğru arayarak okuyor; bu mesajlardan etkilenmiyor.
+
+### Neyi çözemedim
+
+- **Kalıcı fabrika servisleri.** Bazı üretici servisleri `PERSISTENT` işaretiyle geliyor. Kapatılsalar da sistem onları yeniden başlatıyor; root olmadan durdurmanın temiz bir yolu yok.
+- **Uygulamaların kendi öneri şeritleri.** YouTube ve Netflix gibi uygulamalar ana ekrana kendi şeritlerini gönderiyor. Bunları paket kapatarak durdurmak, uygulamanın kendisini kapatmak demek. Kesin çözüm alternatif bir ana ekran; onu da yenisini kurup test ettikten sonra yapmak gerekiyor.
+- **Derin uykudan açma.** Wake-on-LAN deneniyor, ama TV desteklemiyorsa kumanda gerekiyor.
+- **Notarize değil.** Uygulama ad-hoc imzalı; ilk açılışta _Sistem Ayarları → Gizlilik ve Güvenlik → Yine de Aç_ demek gerekiyor.
+
+### TV'yi hazırla (bir kez)
+
+1. **Geliştirici seçeneklerini aç:** Ayarlar → Cihaz Tercihleri → Hakkında → **Derleme / Build** satırına 7 kez bas.
+2. **Hata ayıklamayı aç:** Ayarlar → Cihaz Tercihleri → Geliştirici seçenekleri → **USB hata ayıklama** (bazı TV'lerde **Ağ üzerinden hata ayıklama** veya **Kablosuz hata ayıklama**).
+3. **TV'nin IP adresini bul:** Ayarlar → Ağ ve İnternet → bağlı ağ. Mac ile TV aynı ağda olmalı.
+4. ADBroom'da kenar çubuğuna IP'yi yaz ve **Bağlan**'a bas. TV'de **Bu bilgisayardan her zaman izin ver**'i işaretleyip **İzin ver**'e bas.
+
+**TV eşleştirme kodu mu istiyor?** (Android 11+ "Kablosuz hata ayıklama", çoğu Google TV) TV'de **Cihazı eşleştirme koduyla eşle**'yi seç, ADBroom'da **Eşleştir…**'e bas ve ekrandaki `IP:bağlantı noktası` ile 6 haneli kodu gir. Sonra Kablosuz hata ayıklama ekranında görünen `IP:bağlantı noktası` ile bağlan (eşleştirme portundan farklıdır).
+
+Menü adları markadan markaya biraz değişir.
+
+### Kurulum
+
+```bash
+brew install android-platform-tools scrcpy
+```
+
+Sonra [Releases](https://github.com/tahsingibi/adbroom/releases/latest) sayfasından DMG'yi indirip ADBroom'u Uygulamalar'a sürükle. TV'de _Hakkında → Derleme_'ye yedi kez bas, _Geliştirici seçenekleri_'nden _USB hata ayıklama_'yı aç, TV'nin IP'sini uygulamaya yaz ve TV'deki izin sorusunu onayla.
+
+macOS 14 ve üstü, Apple Silicon ve Intel. MIT lisanslı.
+
+- Site: [adbroom.sungur.dev](https://adbroom.sungur.dev)
+- Kaynak kod: [github.com/tahsingibi/adbroom](https://github.com/tahsingibi/adbroom)
+- Rehber ve promptlar: [tv.cobanov.dev](https://tv.cobanov.dev/)
