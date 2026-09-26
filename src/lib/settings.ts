@@ -135,6 +135,16 @@ const settings: Settings = {
         "<p>Sometime around 2018 or a bit earlier, I started developing using HTML/CSS and WordPress, which I continued as a side job until 2022. Regardless of my main occupation, I persisted in constantly improving my coding skills. In 2022, I decided to make coding my primary occupation and began enhancing my expertise in React/Next.js. Before venturing into a freelance frontend developer career, I delivered numerous WordPress products and released a couple of WordPress themes. Some of the projects I worked on during my freelance period include:</p>",
       projects: [
         {
+          id: 14,
+          name: "ADBroom - Android TV debloat (macOS)",
+          explain: "Android TV debloat app for macOS",
+          tech: "Swift, SwiftUI, ADB",
+          icon: "tv-2-line",
+          live: "https://adbroom.sungur.dev/",
+          repo: "https://github.com/tahsingibi/adbroom",
+          year: 2026,
+        },
+        {
           id: 13,
           name: "Kurye 35 - İzmir Vardiyası",
           explain: "İzmir courier arcade game",
@@ -258,6 +268,16 @@ const settings: Settings = {
     },
   ],
   work: [
+    {
+      id: 8,
+      name: "ADBroom - Android TV debloat (macOS)",
+      explain: "Android TV debloat app for macOS",
+      tech: "Swift, SwiftUI, ADB",
+      icon: "tv-2-line",
+      live: "https://adbroom.sungur.dev/",
+      repo: "https://github.com/tahsingibi/adbroom",
+      year: 2026,
+    },
     {
       id: 7,
       name: "Kurye 35 - İzmir Vardiyası",
