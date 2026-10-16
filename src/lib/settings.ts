@@ -135,6 +135,16 @@ const settings: Settings = {
         "<p>Sometime around 2018 or a bit earlier, I started developing using HTML/CSS and WordPress, which I continued as a side job until 2022. Regardless of my main occupation, I persisted in constantly improving my coding skills. In 2022, I decided to make coding my primary occupation and began enhancing my expertise in React/Next.js. Before venturing into a freelance frontend developer career, I delivered numerous WordPress products and released a couple of WordPress themes. Some of the projects I worked on during my freelance period include:</p>",
       projects: [
         {
+          id: 16,
+          name: "Hâl",
+          explain: "A personal status board",
+          tech: "Swift, SwiftUI",
+          icon: "book-open-line",
+          live: "https://github.com/tahsingibi/hal/releases/",
+          repo: "https://github.com/tahsingibi/hal",
+          year: 2026,
+        },
+        {
           id: 15,
           name: "İKRA - Açık kaynak Kur’an okuma uygulaması",
           explain: "Açık kaynak Kur’an okuma uygulaması",
@@ -278,6 +288,16 @@ const settings: Settings = {
     },
   ],
   work: [
+    {
+      id: 10,
+      name: "Hâl",
+      explain: "A personal status board",
+      tech: "Swift, SwiftUI",
+      icon: "book-open-line",
+      live: "https://github.com/tahsingibi/hal/releases/",
+      repo: "https://github.com/tahsingibi/hal",
+      year: 2026,
+    },
     {
       id: 9,
       name: "İKRA",
