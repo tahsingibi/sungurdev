@@ -1,7 +1,8 @@
 import settings from "@/lib/settings";
+import { themeSrgb } from "@/lib/theme";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { ImageResponse } from "next/og";
+import { createOpenGraphImage } from "@/lib/opengraph";
 
 /**
  * OpenGraph kartı — sayfanın kendi dilinde.
@@ -33,13 +34,14 @@ export const contentType = "image/png";
  * Renkler koyu temanın token'larıyla aynı, yalnızca opak: satori `oklch()`
  * ve CSS değişkeni okumuyor, her değer düz bir hex olmak zorunda.
  */
-const BG = "#09090b"; /* zinc-950 — sayfanın zemini */
-const CARD = "#121214"; /* künyenin zemini, sayfadaki gibi bir tık açık */
-const LINE = "#202024";
-const FG = "#fafafa";
-const BODY = "#d4d4d8"; /* zinc-300 */
-const DIM = "#71717a"; /* zinc-500 */
-const GREEN = "#34d399";
+const colors = themeSrgb.dark;
+const BG = colors.background;
+const CARD = colors.card;
+const LINE = colors.border;
+const FG = colors.foreground;
+const BODY = colors["body-foreground"];
+const DIM = colors["muted-foreground"];
+const GREEN = colors.success;
 
 export default async function OpenGraphImage() {
   const fontDir = path.join(process.cwd(), "public", "fonts");
@@ -51,7 +53,7 @@ export default async function OpenGraphImage() {
 
   const host = settings.url.replace(/^https?:\/\/|\/$/g, "");
 
-  return new ImageResponse(
+  return createOpenGraphImage(
     (
       <div
         style={{

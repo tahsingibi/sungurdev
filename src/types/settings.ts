@@ -1,6 +1,7 @@
 export interface NavigationItem {
   id: number;
   name: string;
+  description?: string;
   path: string;
   icon: string;
 }
@@ -8,8 +9,14 @@ export interface NavigationItem {
 export interface SocialLink {
   id: number;
   name: string;
+  label: string;
   icon: string;
   path: string;
+}
+
+export interface ProjectLogo {
+  src: string;
+  monochrome?: boolean;
 }
 
 export interface Project {
@@ -18,6 +25,7 @@ export interface Project {
   explain?: string;
   image?: string;
   icon?: string;
+  logo?: ProjectLogo;
   live?: string;
   repo?: string;
   tech: string;
@@ -31,6 +39,7 @@ export interface Experience {
   name: string;
   title: string;
   year: string;
+  period: string;
   path: string;
   description: string;
   projects: Project[];
@@ -69,7 +78,30 @@ export interface BlogSettings {
   repositoryBranch: string;
 }
 
+export interface GalleryPhoto {
+  id: string;
+  name: string;
+  src: string;
+}
+
+export interface HomeContent {
+  about: {
+    heading: string;
+    introduction: string;
+    companyId: number;
+    projectsIntroduction: string;
+    projectIds: string[];
+    closing: string;
+    personal: string;
+  };
+  experience: { heading: string };
+  projects: { heading: string; ids: string[]; moreLabel: string };
+  blog: { heading: string; limit: number; moreLabel: string };
+  contact: { heading: string; introduction: string; emailLabel: string };
+}
+
 export interface Settings {
+  routes: { home: string; works: string; write: string; rss: string };
   name: string;
   slug: string;
   title: string;
@@ -89,6 +121,9 @@ export interface Settings {
   social: SocialLink[];
   experience: Experience[];
   work: Project[];
+  projects: Record<string, Project>;
+  gallery: GalleryPhoto[];
+  home: HomeContent;
   stack: StackCategory[];
   pages: {
     write: PageSettings;

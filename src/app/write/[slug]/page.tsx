@@ -125,7 +125,7 @@ export default async function PostPage({ params }: PostPageProps) {
           okumada gözü yoruyordu. Kolon zaten okuma genişliğinde, o yüzden
           metne ayrıca yatay dolgu verilmiyor.
         */}
-        <div className="text-base leading-8 text-foreground/80">
+        <div className="text-base leading-8 text-[var(--copy-foreground)]">
           <post.Content />
         </div>
       </article>
@@ -143,8 +143,8 @@ export default async function PostPage({ params }: PostPageProps) {
             neighbour ? (
               <Link
                 key={label}
-                href={`/write/${neighbour.slug}`}
-                className="flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent/70"
+                href={neighbour.path}
+                className="flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent"
               >
                 <span className="font-mono text-2xs lowercase text-muted-foreground">
                   {label}

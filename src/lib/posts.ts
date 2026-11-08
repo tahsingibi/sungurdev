@@ -13,6 +13,7 @@ export interface PostMetadata {
 
 export interface Post extends PostMetadata {
   slug: string;
+  path: string;
   markdown: string;
   body: string;
   Content: ComponentType;
@@ -53,18 +54,24 @@ async function buildPost(slug: string): Promise<Post> {
     import(`../../content/blogs/${slug}.mdx`) as Promise<PostModule>,
     import(`../../content/blogs/${slug}.mdx?raw`) as Promise<{ default: string }>,
   ]);
-  const markdown = raw.default;
-  const body = stripMetadata(markdown);
+  const body = stripMetadata(raw.default).replace(
+    /^(`{3,})([^\s/]+)\/filename=(.+)$/gm,
+    (_match, fence: string, language: string, filename: string) =>
+      `**${filename}**\n\n${fence}${language}`,
+  );
+  const markdown = `# ${mod.metadata.title}\n\n${body}\n`;
   const siteUrl = settings.url.replace(/\/$/, "");
+  const path = `${settings.routes.write}/${slug}`;
 
   return {
     slug,
+    path,
     ...mod.metadata,
     markdown,
     body,
     Content: mod.default,
-    canonicalUrl: `${siteUrl}/write/${slug}`,
-    markdownUrl: `${siteUrl}/write/${slug}.md`,
+    canonicalUrl: `${siteUrl}${path}`,
+    markdownUrl: `${siteUrl}${path}.md`,
     githubUrl: `${settings.blog.repository}/blob/${settings.blog.repositoryBranch}/${settings.blog.contentDirectory}/${slug}.mdx`,
   };
 }

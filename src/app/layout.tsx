@@ -1,22 +1,26 @@
 import { InlineScript } from "@/components/custom/inline-script";
 import Layout from "@/components/custom/layout";
-import { ScrollOverlay } from "@/components/custom/layout/scroll-overlay";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { WebVitals } from "@/components/custom/web-vitals";
 import { Toaster } from "@/components/ui/sonner";
 import settings from "@/lib/settings";
+import { themeColors, themeStyles } from "@/lib/theme";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./portfolio.css";
 
 const themeBootstrapScript = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=([^;]*)/);var t=m?decodeURIComponent(m[1]):null;var v=t==="light"||t==="dark"||t==="system"?t:"system";var r=v==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):v;var e=document.documentElement;e.classList.remove("light","dark");e.classList.add(r);e.style.colorScheme=r}catch(e){}})()`;
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: settings.seo.themeColor,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: themeColors.light.background },
+    { media: "(prefers-color-scheme: dark)", color: themeColors.dark.background },
+  ],
   colorScheme: "light dark",
 };
 
@@ -45,14 +49,12 @@ export const metadata: Metadata = {
     siteName: settings.name,
     title: `${settings.name} — ${settings.title}`,
     description: settings.seo.description,
-    images: [{ url: settings.image, alt: settings.name }],
   },
   twitter: {
     card: "summary_large_image",
     creator: `@${settings.slug}`,
     title: `${settings.name} — ${settings.title}`,
     description: settings.seo.description,
-    images: [settings.image],
   },
   robots: {
     index: true,
@@ -104,6 +106,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
+        <style id="site-theme">{themeStyles}</style>
         <InlineScript html={themeBootstrapScript} />
       </head>
       <body className="flex min-h-full flex-col bg-background">
@@ -115,7 +118,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <ThemeProvider>
           <Layout>{children}</Layout>
-          <ScrollOverlay />
           <WebVitals
             endpoint={settings.analytics.webVitalsEndpoint}
             googleAnalyticsId={settings.analytics.googleAnalyticsId}

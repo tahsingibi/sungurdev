@@ -25,7 +25,7 @@ function Command({
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "flex size-full flex-col overflow-hidden bg-popover text-popover-foreground",
+        "flex size-full min-h-0 flex-col overflow-hidden bg-popover text-popover-foreground",
         className
       )}
       {...props}
@@ -54,7 +54,7 @@ function CommandDialog({
       </DialogHeader>
       <DialogContent
         className={cn(
-          "top-[14%] translate-y-0 gap-0 overflow-hidden rounded-xl border border-border p-0 ring-0",
+          "top-[14%] max-h-[calc(86svh-1rem)] translate-y-0 gap-0 overflow-hidden rounded-xl border border-border p-0 ring-0",
           className
         )}
         showCloseButton={showCloseButton}
@@ -70,7 +70,7 @@ function CommandInput({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
-    <div data-slot="command-input-wrapper" className="p-2">
+    <div data-slot="command-input-wrapper" className="shrink-0 p-2">
       <InputGroup className="h-10! border-border bg-transparent shadow-none! *:data-[slot=input-group-addon]:pl-4!">
         <CommandPrimitive.Input
           data-slot="command-input"
@@ -96,7 +96,7 @@ function CommandList({
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "no-scrollbar max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto p-1.5 outline-none **:[[cmdk-list-sizer]]:flex **:[[cmdk-list-sizer]]:flex-col **:[[cmdk-list-sizer]]:gap-4 ",
+        "no-scrollbar min-h-0 flex-1 max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto p-1.5 outline-none **:[[cmdk-list-sizer]]:flex **:[[cmdk-list-sizer]]:flex-col **:[[cmdk-list-sizer]]:gap-4 ",
         className
       )}
       {...props}
