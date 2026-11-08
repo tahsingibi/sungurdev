@@ -151,7 +151,7 @@ function CopyCodeButton({ value }: { value: string }) {
           transition={{ duration: 0.15 }}
           className={
             status === "success"
-              ? "text-emerald-500"
+              ? "text-[var(--success)]"
               : status === "error"
                 ? "text-destructive"
                 : "text-muted-foreground"
@@ -249,14 +249,14 @@ function CodeContent({
          *
          * 490px'lik bir kolonda yatay kaydırma pratikte kodun yarısını
          * gizlemek demekti — okur çubuğu görmeden satırın bittiğini sanıyor.
-         * `whitespace-pre-wrap` girintiyi koruyarak sarıyor, `break-words`
-         * ise sarılacak boşluğu olmayan tek parça uzun dizeleri (URL, hash)
-         * kaba sığdırıyor.
+         * `break-spaces` girintiyi korurken uzun boşluk dizilerini de sarar;
+         * hizalanmış yorumlar küçük ekranlarda bloğun dışına taşmaz.
+         * `overflow-wrap:anywhere` uzun URL ve hash'leri kaba sığdırır.
          */
         className={
           compact
-            ? "m-0 w-full p-3 font-mono text-xs leading-6 break-words whitespace-pre-wrap text-foreground/85"
-            : `m-0 w-full p-4 font-mono text-xs leading-6 break-words whitespace-pre-wrap text-foreground/85 ${
+            ? "m-0 w-full p-3 font-mono text-xs leading-6 whitespace-break-spaces [overflow-wrap:anywhere] text-[var(--body-foreground)]"
+            : `m-0 w-full p-4 font-mono text-xs leading-6 whitespace-break-spaces [overflow-wrap:anywhere] text-[var(--body-foreground)] ${
                 reserveAction ? "pr-12 sm:pr-14" : ""
               }`
         }
@@ -282,7 +282,7 @@ function CodeContent({
 
 function CodeFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="relative rounded-lg border border-border bg-background dark:bg-zinc-950">
+    <div className="relative rounded-lg border border-border bg-background">
       {children}
     </div>
   );

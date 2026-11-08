@@ -42,7 +42,7 @@ export default async function Write() {
         {posts.map((post) => (
           <Row
             key={post.slug}
-            href={`/write/${post.slug}`}
+            href={post.path}
             title={post.title}
             subtitle={
               <span className="inline-flex items-center gap-2">

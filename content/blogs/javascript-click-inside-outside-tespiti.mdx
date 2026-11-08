@@ -7,4 +7,27 @@ export const metadata = {
 
 Bir elementin içine/dışına tıklanma durumunu tespit eden javascript kodu;
 
-<ComponentPreview name="click-inside-outside" />
+```html
+<div id="click-area">
+  <div id="target">Click here</div>
+  <output id="result">Click somewhere</output>
+</div>
+
+<script>
+  const clickArea = document.getElementById('click-area');
+  const target = document.getElementById('target');
+  const result = document.getElementById('result');
+
+  clickArea.addEventListener('click', (event) => {
+    if (event.composedPath().includes(target)) {
+      result.innerText = 'Click inside';
+    } else {
+      target.dispatchEvent(new CustomEvent('outside'));
+    }
+  });
+
+  target.addEventListener('outside', () => {
+    result.innerText = 'Click outside';
+  });
+</script>
+```

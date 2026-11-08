@@ -17,8 +17,8 @@
  * sunucu paketine de girer, orada hiç çalışmayacak bir kod için yer kaplardı.
  */
 import type { SupportedLanguage } from "@/lib/highlighter-langs";
-import githubDark from "@shikijs/themes/github-dark";
-import githubLight from "@shikijs/themes/github-light";
+import { themeSrgb } from "@/lib/theme";
+import type { ThemeRegistration } from "shiki";
 import bash from "@shikijs/langs/bash";
 import bat from "@shikijs/langs/bat";
 import css from "@shikijs/langs/css";
@@ -33,9 +33,28 @@ import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 /** Vurgulayıcı bir kez kuruluyor; her kod bloğu için yeniden kurmak pahalı. */
 let highlighterPromise: Promise<HighlighterCore> | null = null;
 
+function codeTheme(mode: "light" | "dark"): ThemeRegistration {
+  const colors = themeSrgb[mode];
+  return {
+    name: `sungur-${mode}`,
+    type: mode,
+    colors: {
+      "editor.background": colors.background,
+      "editor.foreground": colors["body-foreground"],
+    },
+    tokenColors: [
+      { scope: ["comment", "punctuation.definition.comment"], settings: { foreground: colors["muted-foreground"] } },
+      { scope: ["keyword", "storage", "constant.language"], settings: { foreground: colors.foreground, fontStyle: "bold" } },
+      { scope: ["string", "constant.numeric", "constant.character"], settings: { foreground: colors["copy-foreground"] } },
+      { scope: ["entity.name", "support.function"], settings: { foreground: colors.foreground } },
+      { scope: ["punctuation", "meta.brace"], settings: { foreground: colors["muted-foreground"] } },
+    ],
+  };
+}
+
 function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
-    themes: [githubLight, githubDark],
+    themes: [codeTheme("light"), codeTheme("dark")],
     // jsx/tsx, javascript/typescript gramerlerinin içinden geliyor.
     langs: [javascript, typescript, bash, bat, powershell, html, css, json],
     engine: createJavaScriptRegexEngine(),
@@ -49,7 +68,7 @@ export async function highlight(code: string, lang: SupportedLanguage) {
 
   return highlighter.codeToHtml(code, {
     lang,
-    themes: { light: "github-light", dark: "github-dark" },
+    themes: { light: "sungur-light", dark: "sungur-dark" },
     defaultColor: false,
     structure: "inline",
   });

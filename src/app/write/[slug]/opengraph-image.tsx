@@ -1,8 +1,9 @@
 import { getPost, getPosts } from "@/lib/posts";
 import settings from "@/lib/settings";
+import { themeSrgb } from "@/lib/theme";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { ImageResponse } from "next/og";
+import { createOpenGraphImage } from "@/lib/opengraph";
 
 /**
  * Yazıya özel OpenGraph kartı.
@@ -20,12 +21,13 @@ export const dynamicParams = false;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BG = "#09090b";
-const CARD = "#121214";
-const LINE = "#202024";
-const FG = "#fafafa";
-const BODY = "#d4d4d8";
-const DIM = "#71717a";
+const colors = themeSrgb.dark;
+const BG = colors.background;
+const CARD = colors.card;
+const LINE = colors.border;
+const FG = colors.foreground;
+const BODY = colors["body-foreground"];
+const DIM = colors["muted-foreground"];
 
 /** `2026-08-16` → `16 Aug 2026`. Kartta da sitedeki biçim. */
 function formatDate(value?: string) {
@@ -72,7 +74,7 @@ export default async function PostOpenGraphImage({
       ? `${post.description.slice(0, 127).trimEnd()}…`
       : post?.description;
 
-  return new ImageResponse(
+  return createOpenGraphImage(
     (
       <div
         style={{
