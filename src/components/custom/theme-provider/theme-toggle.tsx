@@ -1,38 +1,21 @@
 "use client";
 
-import { useTheme, type Theme } from "@/components/custom/theme-provider";
-import { Button } from "@/components/ui/button";
-import { Monitor, Moon, Sun } from "lucide-react";
-
-const CYCLE: Theme[] = ["system", "dark", "light"];
-
-const ICONS: Record<Theme, typeof Sun> = {
-  system: Monitor,
-  dark: Moon,
-  light: Sun,
-};
-
-const LABELS: Record<Theme, string> = {
-  system: "System",
-  dark: "Dark",
-  light: "Light",
-};
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/components/custom/theme-provider";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const Icon = ICONS[theme];
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  const Icon = isDark ? Sun : Moon;
 
   return (
-    <Button
+    <button
       type="button"
-      size="icon-sm"
-      variant="ghost"
-      aria-label={`Theme: ${LABELS[theme]}. Click to change.`}
-      onClick={() =>
-        setTheme(CYCLE[(CYCLE.indexOf(theme) + 1) % CYCLE.length])
-      }
+      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:text-primary"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
     >
-      <Icon className="size-4" />
-    </Button>
+      <Icon size={16} strokeWidth={1.6} aria-hidden="true" />
+    </button>
   );
 }

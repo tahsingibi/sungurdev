@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/command";
 import settings from "@/lib/settings";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/custom/theme-provider";
 import { useCallback, useEffect, useState } from "react";
 
 /** Paleti dışarıdan açmak için yayınlanan olay. */
@@ -94,7 +94,7 @@ export function CommandPalette() {
         bulamıyor ve "cannot read properties of undefined (reading 'subscribe')"
         ile düşüyor — sarmalama burada, tüketicide.
       */}
-      <Command>
+      <Command className="max-h-[calc(86svh-1.125rem)]">
         <CommandInput placeholder="type a command or search…" />
         <CommandList>
           <CommandEmpty>nothing found.</CommandEmpty>
@@ -121,7 +121,9 @@ export function CommandPalette() {
                   value={`project ${project.name} ${project.explain ?? ""} ${project.tech ?? ""}`}
                   onSelect={() => (url ? open_(url) : undefined)}
                 >
-                  {project.name}
+                  <span className="min-w-0 flex-1 truncate" title={project.name}>
+                    {project.name}
+                  </span>
                   <CommandShortcut>{project.tech}</CommandShortcut>
                 </CommandItem>
               );
@@ -165,7 +167,7 @@ export function CommandPalette() {
           punto için yer var. Rozeti başlıkta küçültmeye çalışmak `⌘` glifini
           okunmaz hâle getiriyordu.
         */}
-        <div className="flex items-center gap-4 border-t border-border px-4 py-2.5 font-mono text-2xs text-muted-foreground">
+        <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 border-t border-border px-4 py-2.5 font-mono text-2xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <kbd className="rounded-sm border border-border px-1.5 py-0.5 text-foreground">
               ↑↓

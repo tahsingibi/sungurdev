@@ -1,5 +1,7 @@
 "use client";
 
+import { themeColors } from "@/lib/theme";
+
 import {
   createContext,
   useCallback,
@@ -62,6 +64,9 @@ function applyTheme(theme: Theme) {
   root.classList.remove("light", "dark");
   root.classList.add(resolvedTheme);
   root.style.colorScheme = resolvedTheme;
+  document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+    meta.setAttribute("content", themeColors[resolvedTheme].background);
+  });
 }
 
 function subscribe(onStoreChange: () => void) {

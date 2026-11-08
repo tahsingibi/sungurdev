@@ -5,11 +5,11 @@ import WriteView from "@/view/write";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: settings.home.blog.heading,
   description: settings.pages.write.description,
   alternates: {
-    canonical: "/write",
-    types: { "application/rss+xml": [{ url: "/rss.xml", title: `${settings.name} RSS` }] },
+    canonical: settings.routes.write,
+    types: { "application/rss+xml": [{ url: settings.routes.rss, title: `${settings.name} RSS` }] },
   },
 };
 

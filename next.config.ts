@@ -31,6 +31,19 @@ const nextConfig: NextConfig = {
   compress: true,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   webpack(config) {
+    // @next/mdx adds its loader before this callback. Raw imports must bypass
+    // that loader, or asset/source receives compiled React code instead of MDX.
+    for (const rule of config.module.rules) {
+      if (
+        rule &&
+        typeof rule === "object" &&
+        rule.test instanceof RegExp &&
+        rule.test.test("article.mdx") &&
+        rule.use
+      ) {
+        rule.resourceQuery = { not: [/raw/] };
+      }
+    }
     config.module.rules.push({
       test: /\.mdx$/,
       resourceQuery: /raw/,
@@ -70,20 +83,4 @@ const withMDX = createMDX();
 
 export default withMDX(nextConfig);
 
-/*
- * `initOpenNextCloudflareForDev()` bilerek çağrılmıyor.
- *
- * Tek işi `next dev` içinde Cloudflare binding'lerini (`getCloudflareContext`)
- * ayağa kaldırmak — bu projede ne `wrangler.jsonc` içinde tanımlı bir binding
- * var ne de çağıran bir yer. Buna karşılık geliştirmede OpenGraph üretimini
- * kırıyordu: `next/og`, satori'nin ürettiği SVG'yi `TextEncoder` ile sharp'a
- * veriyor ve hook'un yüklediği workerd uyumlu global'lerle o tampon
- * tanınmıyor; her iki `opengraph-image` rotası da "Input buffer contains
- * unsupported image format" ile düşüyordu. `next build` aynı kodu sorunsuz
- * üretiyordu, yani hata yalnızca dev sunucusunda görünüyordu.
- *
- * KV / R2 / D1 gibi bir binding eklendiğinde geri gelmeli:
- *   import("@opennextjs/cloudflare").then((m) =>
- *     m.initOpenNextCloudflareForDev(),
- *   );
- */
+/* No Cloudflare bindings are needed by next dev in this project. */

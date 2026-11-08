@@ -1,18 +1,19 @@
-import { CommandHint } from "./command-hint";
+import Link from "next/link";
+import { ThemeToggle } from "@/components/custom/theme-provider/theme-toggle";
+import settings from "@/lib/settings";
 import Nav from "./nav";
 
-/**
- * Başlık — yalnızca gezinme.
- *
- * Sabitlenmiyor ve zemini yok: kolon zaten dar, üç bağlantı sayfayla birlikte
- * kayıp gidiyor. Logo da kalktı; adın kendisi hemen altında, banner'ın
- * içinde ve künye satırında zaten iki kez geçiyordu.
- */
 export default function Header() {
   return (
-    <header className="mt-8 flex items-center justify-between gap-4">
-      <Nav />
-      <CommandHint />
+    <header className="reference-header">
+      <Link href="/" aria-label="Tahsin Sungur — home">
+        <h1>{settings.name}</h1>
+        <span>{settings.title}</span>
+      </Link>
+      <div className="header-controls">
+        <Nav items={settings.nav} />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:content": "node --test tests/content.test.mjs",
+    "test:og": "node scripts/verify-opengraph.mjs",
     "build": "next build --webpack",
     "dev": "next dev --webpack",
     "start": "next start",

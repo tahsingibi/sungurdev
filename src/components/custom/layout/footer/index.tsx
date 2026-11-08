@@ -80,7 +80,7 @@ export default function Footer() {
           <span aria-hidden className="text-border">
             ·
           </span>
-          <FootLink href="/rss.xml">rss</FootLink>
+          <FootLink href={settings.routes.rss}>rss</FootLink>
           {nextVersion ? (
             <>
               <span aria-hidden className="text-border">

@@ -1,21 +1,10 @@
 import { PageHeader } from "@/components/custom/page-header";
+import { PostMeta } from "@/components/custom/post-meta";
 import { Row, Rows } from "@/components/custom/section";
 import { getPosts } from "@/lib/posts";
 import settings from "@/lib/settings";
 import { Rss } from "lucide-react";
 import Link from "next/link";
-
-/** `2026-08-16` → `16 Aug 2026`. */
-function formatDate(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(date);
-}
 
 /**
  * Yazı arşivi.
@@ -41,7 +30,7 @@ export default async function WriteView() {
         meta={`${String(posts.length).padStart(2, "0")} posts`}
         action={
           <Link
-            href="/rss.xml"
+            href={settings.routes.rss}
             aria-label="RSS"
             className="grid size-9 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
@@ -55,21 +44,14 @@ export default async function WriteView() {
           {posts.map((post) => (
             <Row
               key={post.slug}
-              href={`/write/${post.slug}`}
+              href={post.path}
               title={post.title}
               subtitle={
-                <span className="flex flex-col gap-1">
+                <span className="flex flex-col gap-2">
+                  <PostMeta date={post.publishDate} category={post.category} />
                   {post.description ? (
                     <span className="line-clamp-2">{post.description}</span>
                   ) : null}
-                  <span className="inline-flex items-center gap-2">
-                    <span className="rounded-sm border border-border px-1.5 py-px font-mono text-2xs lowercase">
-                      {post.category}
-                    </span>
-                    <time dateTime={post.publishDate}>
-                      {formatDate(post.publishDate)}
-                    </time>
-                  </span>
                 </span>
               }
             />

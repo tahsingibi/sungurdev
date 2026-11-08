@@ -77,11 +77,11 @@ export default function Hero() {
         {hiring ? (
           <span
             tabIndex={0}
-            className="status ml-auto inline-flex shrink-0 items-center gap-2 rounded-full font-mono text-2xs text-emerald-500 outline-none"
+            className="status ml-auto inline-flex shrink-0 items-center gap-2 rounded-full font-mono text-2xs text-[var(--success)] outline-none"
           >
             <span
               aria-hidden
-              className="size-2 shrink-0 rounded-full bg-emerald-500 ring-4 ring-emerald-500/15"
+              className="size-2 shrink-0 rounded-full bg-[var(--success)] ring-4 ring-[color-mix(in_srgb,var(--success)_15%,transparent)]"
             />
             <span className="status-label whitespace-nowrap">open to work</span>
           </span>

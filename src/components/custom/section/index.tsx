@@ -167,7 +167,7 @@ export function Row({
   );
 
   const className =
-    "group flex flex-wrap items-center gap-x-3.5 gap-y-2 rounded-lg px-3 py-3 transition-colors hover:bg-accent/70 active:translate-y-px";
+    "group flex flex-wrap items-center gap-x-3.5 gap-y-2 rounded-lg px-3 py-3 transition-colors hover:bg-accent active:translate-y-px";
 
   if (!href) return <div className={className}>{body}</div>;
 

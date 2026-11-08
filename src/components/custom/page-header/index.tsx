@@ -25,7 +25,7 @@ export function PageHeader({
   action?: ReactNode;
 }) {
   return (
-    <header className="-mx-3 flex flex-col gap-2 rounded-xl bg-accent/70 px-3 py-3.5">
+    <header className="-mx-3 flex flex-col gap-2 rounded-xl bg-card px-3 py-3.5">
       <div className="flex items-baseline gap-3">
         <h1 className="text-xl font-medium lowercase text-foreground">
           {heading}
