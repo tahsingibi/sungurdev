@@ -35,6 +35,12 @@ yarn test:og --build # production çıktısını denetler
 
 ## OpenGraph
 
-Ana kart `src/app/opengraph-image.tsx`, yazı kartları `src/app/write/[slug]/opengraph-image.tsx` ile Next.js'in dosya tabanlı metadata sisteminde üretilir. Ortak renderer `src/lib/opengraph.ts`, `next/og` kullanır. Next 16.3'te `next/image` ile paylaşılan Sharp ayarı SVG tamponlarını kapattığı için bu modülde dar bir uyumluluk düzeltmesi vardır; SVG görsellerini optimize etme seçeneği açılmaz.
+Ana kart `src/app/opengraph-image.tsx`, yazı kartları `src/app/write/[slug]/opengraph-image.tsx` ile Next.js'in dosya tabanlı metadata sisteminde üretilir. Ortak renderer `src/lib/opengraph.ts`, `next/og` kullanır. Next 16.3'te `next/image` ile paylaşılan Sharp ayarı SVG tamponlarını kapattığı için yalnızca geliştirme ortamında dar bir uyumluluk düzeltmesi uygulanır; SVG görsellerini optimize etme seçeneği açılmaz. Bu geliştirme kodu production paketinden çıkarılır. Cloudflare'da OpenNext, OG renderer'ını Worker uyumlu WASM sürümüne dönüştürür; native Sharp uygulama koduna eklenmez.
 
 `test:og`, önce görsel optimizasyonunu çalıştırıp ardından sayfaların OG/Twitter etiketlerini ve tüm PNG içeriklerini doğrular. Böylece yalnızca build sırasında görünmeyen bu çalışma sırası hatası da kontrol edilir.
+
+## Cloudflare Workers Builds
+
+Dashboard'da build komutunu `yarn build:cloudflare`, deploy komutunu `yarn deploy:cloudflare` olarak ayarlayın. İlk komut Next.js çıktısını üretip OpenNext ile Worker paketine dönüştürür; ikinci komut hazırlanan paketi yayınlar. Böylece Next.js build'i iki kez çalıştırılmaz.
+
+Yerelden tek komutla build ve yayın için mevcut `yarn deploy` kullanılabilir. Yalnızca paketin hazırlanmasını doğrulamak için `yarn build:cloudflare` çalıştırın; bu komut yayın yapmaz.
