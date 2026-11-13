@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, FileText } from "lucide-react";
 import Link from "next/link";
 import { PostMeta } from "@/components/custom/post-meta";
 import { ProjectIcon } from "@/components/custom/project-icon";
@@ -17,9 +17,8 @@ function ProjectBadge({ project }: { project: Project }) {
 }
 
 export default async function HomepageView() {
-  const { home, projects, experience, social, routes } = settings;
+  const { home, projects, experience, social, routes, resume } = settings;
   const posts = (await getPosts()).slice(0, home.blog.limit);
-  const email = social.find((link) => link.name === "mail")!;
   const github = social.find((link) => link.name === "github")!;
   const company = experience.find((job) => job.id === home.about.companyId)!;
 
@@ -29,7 +28,10 @@ export default async function HomepageView() {
         <h2>{home.about.heading}</h2>
         <p>
           {home.about.introduction}{" "}
-          <Link className="text-link" href={company.path}>{company.name}</Link>.{" "}
+          <Link className="inline-company" href={company.path}>
+            <BriefcaseBusiness size={14} aria-hidden="true" />
+            {company.name}
+          </Link>.{" "}
           {home.about.projectsIntroduction}{" "}
           {home.about.projectIds.map((id, index, items) => (
             <Fragment key={id}>
@@ -40,6 +42,24 @@ export default async function HomepageView() {
         </p>
         <PhotoGallery photos={settings.gallery} />
         <p>{home.about.personal}</p>
+      </section>
+
+      <section id="contact" className="reference-contact" aria-label={home.contact.heading}>
+        <div className="reference-socials">
+          {social.map((link) => (
+            <span className="reference-contact-item" key={link.id}>
+              <a href={link.path} target={link.name === "mail" ? undefined : "_blank"} rel="noreferrer">{link.label}</a>
+            </span>
+          ))}
+          {resume ? (
+            <span className="reference-contact-item">
+            <a className="reference-resume" href={resume} target="_blank" rel="noopener noreferrer" aria-label="View CV (PDF, opens in a new tab)">
+              <FileText size={14} aria-hidden="true" />
+              CV <span aria-hidden="true">·</span> PDF
+            </a>
+            </span>
+          ) : null}
+        </div>
       </section>
 
       <section id="experience" className="reference-experience">
@@ -87,16 +107,6 @@ export default async function HomepageView() {
           ))}
         </div>
         <Link href={routes.write} className="reference-more">{home.blog.moreLabel}</Link>
-      </section>
-
-      <section id="contact" className="reference-contact">
-        <h2>{home.contact.heading}</h2>
-        <p>{home.contact.introduction}{" "}<a className="text-link" href={email.path}>{home.contact.emailLabel}</a>.</p>
-        <div className="reference-socials">
-          {social.filter((link) => link.name !== "mail").map((link) => (
-            <a href={link.path} key={link.id} target="_blank" rel="noreferrer">{link.label}<ArrowUpRight size={12} aria-hidden="true" /></a>
-          ))}
-        </div>
       </section>
     </div>
   );
