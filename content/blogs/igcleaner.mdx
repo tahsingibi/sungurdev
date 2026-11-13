@@ -1,0 +1,36 @@
+import { IGCleanerSource } from "@/components/custom/igcleaner-source";
+
+export const metadata = {
+  title: "IGCleaner: Instagram sohbetlerini ve kaydedilenleri temizle",
+  publishDate: "2026-11-14",
+  description: "Instagram sohbetlerini ve kaydedilen gönderileri seçerek temizlemek için geliştirdiğim, tarayıcıda çalışan tek dosyalık JavaScript aracı.",
+  category: "Script",
+};
+
+Instagram'da biriken sohbetleri ve kaydedilen gönderileri tek tek temizlemek yerine aynı panelden yönetmek için IGCleaner'ı hazırladım. Kurulum gerektirmiyor; açık Instagram sekmende çalışıyor. Türkçe ve İngilizce arayüzü, ayarlanabilir bekleme süreleri ve JSON / Excel raporları var.
+
+**Uyarı: Otomatik işlemler hesabının kısıtlanmasına veya askıya alınmasına yol açabilir. Bekleme süreleri bu riski ortadan kaldırmaz. IGCleaner, Instagram veya Meta'nın resmi bir ürünü değildir.**
+
+<figure className="mx-auto my-8 max-w-sm">
+
+![IGCleaner paneli: mesaj seçimi, bekleme ayarları ve Türkçe / İngilizce dil düğmesi](https://raw.githubusercontent.com/tahsingibi/igcleaner/main/screenshot.png)
+
+<figcaption className="text-center text-xs leading-relaxed text-muted-foreground">
+  IGCleaner arayüzü. Görüntüdeki sohbetler ve kullanıcı adları kurgusaldır.
+</figcaption>
+</figure>
+
+## Nasıl kullanılır?
+
+1. [Instagram](https://www.instagram.com/) hesabına bilgisayarından giriş yap.
+2. Aşağıdaki bağlantıdan kodun tamamını kopyala ve Instagram sekmesindeki geliştirici araçlarının **Console / Konsol** bölümüne yapıştırıp Enter'a bas.
+3. Açılan panelde **Mesaj sil** veya **Kaydedilenler** bölümünü seç. Dişli düğmesinden bekleme ayarlarını kontrol edip **Taramayı başlat** düğmesine bas.
+4. Listeyi incele, işlem yapmak istediklerini seç ve onayla. Silmeden yalnızca rapor almak da mümkün.
+
+Kodu yapıştırmak kendiliğinden tarama veya silme başlatmaz. Sohbetler yalnızca senin kutundan silinir; karşı tarafın kopyası durur. Kaydedilenlerden kaldırmak gönderinin kendisini silmez. Tamamlanan taramalar aynı hesap için tarayıcıda 24 saat saklanır; kayıtlı sonuç gösterildiğinde tarihi belirtilir.
+
+## Güncel kod
+
+<IGCleanerSource />
+
+Kaynak kod ve ayrıntılı kullanım: [tahsingibi/igcleaner](https://github.com/tahsingibi/igcleaner). Konsola yapıştırmadan önce kodu incele; raporları paylaşırken kişisel bilgileri kontrol et.
