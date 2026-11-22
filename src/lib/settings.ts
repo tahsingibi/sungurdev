@@ -159,7 +159,7 @@ const projects: Record<string, Project> = {
     explain: "Real-time cryptocurrency market tracker.",
     tech: "React, Websocket",
     repo: "https://github.com/tahsingibi/cryptos",
-    live: "https://cryptos-view.vercel.app/",
+    live: "https://cryptos.sungur.dev/",
     year: 2024,
   },
   "company-crm": {
@@ -168,7 +168,7 @@ const projects: Record<string, Project> = {
     name: "CompanyCRM",
     explain: "React Antd-based admin panel design.",
     tech: "React, Antd",
-    live: "https://companycrm.vercel.app/",
+    live: "https://companycrm.sungur.dev/",
     year: 2024,
   },
   bountyhub: {
